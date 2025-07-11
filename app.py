@@ -8,7 +8,7 @@ from utils.sync_utils import sync_to_supabase
 st.set_page_config(page_title="MedGuide Diagnostic Assistant", layout="centered")
 
 # Logo and title
-st.image("assets/logo.png", width=100)
+st.image("assets/logo.png.png", width=100)
 st.title("🩺 MedGuide – Offline Diagnostic Assistant")
 st.markdown("Helping rural clinics make informed medical decisions — offline.")
 
