@@ -1,6 +1,0 @@
-streamlit
-pandas
-scikit-learn
-psycopg2-binary
-requests
-sqlite3
