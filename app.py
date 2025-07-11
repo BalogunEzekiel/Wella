@@ -9,7 +9,7 @@ st.set_page_config(page_title="MedGuide Diagnostic Assistant", layout="centered"
 
 # Logo and title
 st.image("assets/logo.png.png", width=100)
-st.title("🩺 MedGuide – Offline Diagnostic Assistant")
+st.title("🩺 Wella – Offline Diagnostic Assistant")
 st.markdown("Helping rural clinics make informed medical decisions — offline.")
 
 # Symptom input form
@@ -23,6 +23,7 @@ if submit and symptoms:
     st.subheader("🧠 Diagnosis Result")
     st.write(result)
     st.success("Recommendations generated successfully.")
+    st.rerun()
 
 # Manual sync option
 if st.button("🔄 Sync Records to Supabase"):
