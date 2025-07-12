@@ -156,7 +156,7 @@ if is_connected():
         upcoming = df[df['appointment_date'] == today.strftime('%Y-%m-%d')]
         for _, row in upcoming.iterrows():
             st.sidebar.info(f"📩 Reminder: Appointment today for {row['name']}")
-            # Here, integrate actual SMS API (e.g., Twilio) to send SMS
+            # TODO: Integrate SMS API (Twilio, Termii, etc.)
         conn.close()
     except:
         pass
