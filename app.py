@@ -5,14 +5,11 @@ import os
 from datetime import datetime
 from utils.diagnosis_engine import run_diagnosis
 from utils.sync_utils import sync_to_supabase
-import sqlite3
 from utils.report_generator import generate_medical_report
+from utils.db import get_connection
 
 # Configuration
 st.set_page_config(page_title="Wella Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
-
-conn = sqlite3.connect("wella.db")
-cursor = conn.cursor()
 
 # Branding
 st.sidebar.image("assets/logo.png", width=120)
@@ -45,7 +42,7 @@ if submitted and symptoms:
     st.success("Diagnosis generated successfully.")
 
     # Save to local SQLite
-    conn = sqlite3.connect("medguide.db")
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO patients (name, age, gender, symptoms, diagnosis, confidence, recommendation)
@@ -71,7 +68,7 @@ if show_dashboard:
     st.markdown("---")
     st.subheader("📊 Admin Dashboard – Patient Records")
     try:
-        conn = sqlite3.connect("medguide.db")
+        conn = get_connection()
         df = pd.read_sql_query("SELECT * FROM patients ORDER BY created_at DESC", conn)
         st.dataframe(df)
         conn.close()
