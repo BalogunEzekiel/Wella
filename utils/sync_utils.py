@@ -1,15 +1,15 @@
 import sqlite3
 import requests
-import os
 
-# Replace with your Supabase details
-SUPABASE_URL = "https://<your-project>.supabase.co"
-SUPABASE_API_KEY = "<your-api-key>"
+# Supabase Configuration — update these values!
+SUPABASE_URL = "https://your-project.supabase.co"
+SUPABASE_API_KEY = "your-api-key"
 SUPABASE_TABLE = "patients"
 
 def sync_to_supabase():
     try:
-        conn = sqlite3.connect("medguide.db")
+        # Connect to local SQLite database
+        conn = sqlite3.connect("wella.db")
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM patients")
         rows = cursor.fetchall()
@@ -21,6 +21,7 @@ def sync_to_supabase():
             "Content-Type": "application/json"
         }
 
+        failed = []
         for row in rows:
             payload = {
                 "name": row[1],
@@ -30,7 +31,11 @@ def sync_to_supabase():
                 "diagnosis": row[5],
                 "confidence": row[6],
                 "recommendation": row[7],
-                "created_at": row[8]
+                "created_at": row[8],
+                "temperature": row[9] if len(row) > 9 else None,
+                "blood_pressure": row[10] if len(row) > 10 else None,
+                "weight": row[11] if len(row) > 11 else None,
+                "appointment_date": row[12] if len(row) > 12 else None
             }
 
             response = requests.post(
@@ -40,8 +45,10 @@ def sync_to_supabase():
             )
 
             if not response.ok:
-                return f"❌ Sync failed for record: {payload['name']}"
+                failed.append(row[1])  # Track failed name
 
+        if failed:
+            return f"❌ Sync failed for: {', '.join(failed)}"
         return "✅ All records synced successfully to Supabase."
 
     except Exception as e:
