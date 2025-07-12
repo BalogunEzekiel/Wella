@@ -73,8 +73,6 @@ Symptoms: {symptoms}
 
     pdf.image(qr_path, x=160, y=250, w=30)
 
-    # Output
-    output = BytesIO()
-    pdf.output(output)
-    output.seek(0)
-    return output
+    # Output to BytesIO
+    pdf_output = pdf.output(dest='S').encode('latin1')
+    return BytesIO(pdf_output)
