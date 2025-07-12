@@ -5,7 +5,6 @@ import os
 from datetime import datetime, date
 from utils.diagnosis_engine import run_diagnosis
 from utils.sync_utils import sync_to_supabase
-from utils.report_generator import generate_medical_report
 from utils.db import get_connection
 
 # Configuration
