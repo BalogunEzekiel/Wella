@@ -20,14 +20,14 @@ def generate_medical_report(name, age, gender, symptoms, result):
     # Patient Info
     pdf.set_font("Arial", "B", 13)
     pdf.ln(8)
-    pdf.cell(0, 10, "👤 Patient Information", ln=True)
+    pdf.cell(0, 10, "Patient Information", ln=True)
     pdf.set_font("Arial", "", 12)
     pdf.multi_cell(0, 8, f"Name: {name}\nAge: {age}\nGender: {gender}\nSymptoms: {symptoms}")
 
     # Diagnosis Section
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
-    pdf.cell(0, 10, "🧠 Diagnosis Summary", ln=True)
+    pdf.cell(0, 10, "Diagnosis Summary", ln=True)
 
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(240, 248, 255)  # Light blue
