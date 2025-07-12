@@ -8,9 +8,11 @@ from utils.sync_utils import sync_to_supabase
 import sqlite3
 from utils.report_generator import generate_medical_report
 
-
 # Configuration
 st.set_page_config(page_title="Wella Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
+
+conn = sqlite3.connect("wella.db")
+cursor = conn.cursor()
 
 # Branding
 st.sidebar.image("assets/logo.png", width=120)
