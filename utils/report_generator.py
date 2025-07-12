@@ -50,15 +50,15 @@ Symptoms: {symptoms}
     pdf.set_font("Arial", "B", 14)
     pdf.cell(0, 10, "Diagnosis Result", ln=True)
     pdf.set_font("Arial", "", 12)
-    pdf.cell(0, 10, f"Diagnosis: {result['Diagnosis']}", ln=True)
-    pdf.cell(0, 10, f"Confidence: {result['Confidence']}%", ln=True)
+    pdf.cell(0, 10, f"Diagnosis: {result.get('Diagnosis', 'N/A')}", ln=True)
+    pdf.cell(0, 10, f"Confidence: {result.get('Confidence', 'N/A')}%", ln=True)
 
     # Recommendation
     pdf.ln(5)
     pdf.set_font("Arial", "B", 14)
     pdf.cell(0, 10, "Professional Recommendation & Prescription", ln=True)
     pdf.set_font("Arial", "", 12)
-    pdf.multi_cell(0, 10, result['Recommendation'])
+    pdf.multi_cell(0, 10, result.get('Recommendation', 'No recommendation available.'))
 
     # QR Code
     pdf.ln(10)
