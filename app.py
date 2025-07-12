@@ -72,6 +72,8 @@ if submitted and symptoms:
                 conn.commit()
                 conn.close()
                 st.info("✅ Patient record and vitals saved locally.")
+                time.sleep(1)
+                st.rerun()
             except Exception as db_err:
                 st.error(f"Database Error: {db_err}")
 
