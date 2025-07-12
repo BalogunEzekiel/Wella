@@ -10,32 +10,6 @@ from utils.db import get_connection
 # Page Configuration
 st.set_page_config(page_title="WellaAI Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
 
-# --- Run DB Migrations ---
-def run_migrations():
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS patients (
-            patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            age INTEGER,
-            gender TEXT,
-            symptoms TEXT,
-            diagnosis TEXT,
-            confidence TEXT,
-            recommendation TEXT,
-            temperature TEXT,
-            blood_pressure TEXT,
-            weight TEXT,
-            appointment_date DATE,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    conn.commit()
-    conn.close()
-
-run_migrations()
-
 # --- Branding ---
 st.sidebar.image("assets/logo.png", width=120)
 st.sidebar.title("Wella")
