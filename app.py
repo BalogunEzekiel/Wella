@@ -39,6 +39,7 @@ if submitted and symptoms:
     result = run_diagnosis(symptoms)
     st.subheader("🧠 Diagnosis Result")
     st.write(result)
+    st.json(result)  # For debugging
     st.success("Diagnosis generated successfully.")
 
     # Save to local SQLite
@@ -47,7 +48,15 @@ if submitted and symptoms:
     cursor.execute("""
         INSERT INTO patients (name, age, gender, symptoms, diagnosis, confidence, recommendation)
         VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (name, age, gender, symptoms, result['Diagnosis'], result['Confidence'], result['Recommendation']))
+    """, (
+        name,
+        age,
+        gender,
+        symptoms,
+        result.get('Diagnosis', 'N/A'),
+        result.get('Confidence', 'N/A'),
+        result.get('Recommendation', 'N/A')
+    ))
     conn.commit()
     conn.close()
     st.info("Patient record saved locally.")
