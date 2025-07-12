@@ -14,7 +14,7 @@ class PDF(FPDF):
 
     def header(self):
         self.set_font("Arial", "B", 16)
-        self.cell(0, 10, "🩺 Medical Diagnostic Report", ln=True, align="C")
+        self.cell(0, 10, "Medical Diagnostic Report", ln=True, align="C")
         self.ln(5)
 
     def footer(self):
@@ -26,7 +26,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf = PDF()
     pdf.add_page()
     pdf.set_font("Arial", "", 12)
-    pdf.set_line_height(7.5 * 1.5)  # or simply pdf._line_height = 11.25
+    pdf.set_line_height(7.5 * 1.5)  # 11.25
 
     # Patient Details
     pdf.set_font("Arial", "B", 12)
