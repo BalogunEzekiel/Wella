@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
-from datetime import datetime
+from datetime import datetime, date
 from utils.diagnosis_engine import run_diagnosis
 from utils.sync_utils import sync_to_supabase
 from utils.report_generator import generate_medical_report
@@ -40,6 +40,10 @@ with st.form("diagnosis_form", clear_on_submit=True):
     age = st.number_input("Age", min_value=0, max_value=120)
     gender = st.radio("Gender", ["Male", "Female", "Other"])
     symptoms = st.text_area("Symptoms (comma-separated)", placeholder="e.g. fever, headache, vomiting")
+    temperature = st.text_input("Temperature (°C)", placeholder="e.g. 37.2")
+    blood_pressure = st.text_input("Blood Pressure (mmHg)", placeholder="e.g. 120/80")
+    weight = st.text_input("Weight (kg)", placeholder="e.g. 65")
+    appointment_date = st.date_input("Next Appointment Date")
     submitted = st.form_submit_button("Run Diagnosis")
 
 if submitted and symptoms:
@@ -55,8 +59,8 @@ if submitted and symptoms:
                 conn = get_connection()
                 cursor = conn.cursor()
                 cursor.execute("""
-                    INSERT INTO patients (name, age, gender, symptoms, diagnosis, confidence, recommendation)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO patients (name, age, gender, symptoms, diagnosis, confidence, recommendation, temperature, blood_pressure, weight, appointment_date)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     name,
                     age,
@@ -64,11 +68,15 @@ if submitted and symptoms:
                     symptoms,
                     result.get('Diagnosis', 'N/A'),
                     result.get('Confidence', 'N/A'),
-                    result.get('Recommendation', 'N/A')
+                    result.get('Recommendation', 'N/A'),
+                    temperature,
+                    blood_pressure,
+                    weight,
+                    appointment_date.strftime('%Y-%m-%d')
                 ))
                 conn.commit()
                 conn.close()
-                st.info("Patient record saved locally.")
+                st.info("Patient record and vitals saved locally.")
             except Exception as db_err:
                 st.error(f"Database Error: {db_err}")
 
@@ -107,6 +115,17 @@ if show_dashboard:
             df = df[df['created_at'].dt.date == date_filter]
 
         st.dataframe(df)
+
+        # Visualize upcoming appointments
+        st.markdown("---")
+        st.subheader("📅 Upcoming Appointments")
+        today = pd.to_datetime(date.today())
+        upcoming = df[df['appointment_date'] >= today.strftime('%Y-%m-%d')]
+        if not upcoming.empty:
+            st.table(upcoming[['name', 'appointment_date', 'gender', 'age']].sort_values(by='appointment_date'))
+        else:
+            st.info("No upcoming appointments found.")
+
         conn.close()
     except Exception as e:
         st.error(f"Could not load records: {e}")
@@ -128,5 +147,18 @@ if is_connected():
     st.sidebar.info("🌐 Online – Auto Sync Enabled")
     sync_msg = sync_to_supabase()
     st.sidebar.success(sync_msg)
+
+    # Optional: Trigger SMS reminders
+    try:
+        conn = get_connection()
+        df = pd.read_sql_query("SELECT name, appointment_date FROM patients", conn)
+        today = pd.to_datetime(date.today())
+        upcoming = df[df['appointment_date'] == today.strftime('%Y-%m-%d')]
+        for _, row in upcoming.iterrows():
+            st.sidebar.info(f"📩 Reminder: Appointment today for {row['name']}")
+            # Here, integrate actual SMS API (e.g., Twilio) to send SMS
+        conn.close()
+    except:
+        pass
 else:
     st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
