@@ -53,6 +53,17 @@ if submitted and symptoms:
     conn.close()
     st.info("Patient record saved locally.")
 
+    # ✅ Generate PDF Medical Report
+    pdf_file = generate_medical_report(name, age, gender, symptoms, result)
+
+    # ✅ Download button
+    st.download_button(
+        label="📄 Download Medical Report (PDF)",
+        data=pdf_file,
+        file_name=f"{name.replace(' ', '_')}_Wella_Report.pdf",
+        mime="application/pdf"
+    )
+
 # Admin Dashboard
 if show_dashboard:
     st.markdown("---")
