@@ -1,85 +1,164 @@
-from fpdf import FPDF
-from datetime import datetime
-from io import BytesIO
-import random
+import streamlit as st
+import pandas as pd
+import numpy as np
+import os
+from datetime import datetime, date
+from utils.diagnosis_engine import run_diagnosis
+from utils.sync_utils import sync_to_supabase
+from utils.report_generator import generate_medical_report
+from utils.db import get_connection
 
-# Add Watermark
-def add_watermark(pdf: FPDF):
-    pdf.set_text_color(220, 220, 220)
-    pdf.set_font("Arial", "B", 48)
-    pdf.rotate(45, x=70, y=180)
-    pdf.text(60, 190, "WELLA AI")
-    pdf.rotate(0)
+# Configuration
+st.set_page_config(page_title="Wella Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
 
-# Main function to create the report
-def generate_medical_report(name, age, gender, symptoms, result, temperature="", blood_pressure="", weight="", appointment_date=""):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 8
+# Branding
+st.sidebar.image("assets/logo.png", width=120)
+st.sidebar.title("Wella")
+st.sidebar.markdown("Your Offline Health Companion")
 
-    # Watermark
-    add_watermark(pdf)
+st.title("🩺 Wella – AI Diagnostic Assistant for Primary Healthcare")
+st.markdown("Helping rural clinics make informed medical decisions — even offline.")
 
-    # Header
-    pdf.set_font("Arial", "B", 16)
-    pdf.set_text_color(0, 70, 120)
-    pdf.cell(200, 10, "Wella Diagnostic Medical Report", ln=True, align="C")
-    pdf.set_font("Arial", "", 12)
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(0, 10, f"Date: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True)
+# Role Selection
+role = st.sidebar.selectbox("Login Role", ["Select Role", "Nurse", "Admin"])
 
-    # Patient Info
-    pdf.ln(5)
-    pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, line_spacing, "👤 Patient Details", ln=True)
-    pdf.set_font("Arial", "", 12)
-    pdf.cell(0, line_spacing, f"Name: {name}", ln=True)
-    pdf.cell(0, line_spacing, f"Age: {age}     Gender: {gender}", ln=True)
-    pdf.cell(0, line_spacing, f"Symptoms: {symptoms}", ln=True)
+# PIN-protected Admin Dashboard toggle
+show_dashboard = False
+if role == "Admin":
+    with st.sidebar.expander("🔐 Admin Login"):
+        admin_pin = st.text_input("Enter 4-digit Admin PIN", type="password")
+        show_dashboard = admin_pin == "4321"
+        if admin_pin and not show_dashboard:
+            st.error("❌ Incorrect PIN")
+elif role == "Nurse":
+    show_dashboard = False
 
-    # Diagnosis Table
-    pdf.ln(5)
-    pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, line_spacing, "🧠 Diagnosis Summary", ln=True)
+# Patient Symptom Form
+with st.form("diagnosis_form", clear_on_submit=True):
+    st.subheader("📋 Patient Symptom Entry")
+    name = st.text_input("Patient Name", placeholder="Enter full name")
+    age = st.number_input("Age", min_value=0, max_value=120)
+    gender = st.radio("Gender", ["Male", "Female", "Other"])
+    symptoms = st.text_area("Symptoms (comma-separated)", placeholder="e.g. fever, headache, vomiting")
+    temperature = st.text_input("Temperature (°C)", placeholder="e.g. 37.2")
+    blood_pressure = st.text_input("Blood Pressure (mmHg)", placeholder="e.g. 120/80")
+    weight = st.text_input("Weight (kg)", placeholder="e.g. 65")
+    appointment_date = st.date_input("Next Appointment Date")
+    submitted = st.form_submit_button("Run Diagnosis")
 
-    pdf.set_fill_color(230, 240, 255)
-    pdf.set_font("Arial", "", 12)
-    pdf.cell(50, line_spacing, "Diagnosis", border=1, fill=True)
-    pdf.cell(40, line_spacing, "Confidence (%)", border=1, fill=True)
-    pdf.cell(100, line_spacing, "Recommendation", border=1, ln=True, fill=True)
+if submitted and symptoms:
+    try:
+        with st.spinner("Running AI diagnosis..."):
+            result = run_diagnosis(symptoms)
+            st.subheader("🧠 Diagnosis Result")
+            st.write(result)
+            st.success("Diagnosis generated successfully.")
 
-    pdf.set_fill_color(255, 255, 255)
-    pdf.cell(50, line_spacing, result.get('Diagnosis', 'N/A'), border=1)
-    pdf.cell(40, line_spacing, result.get('Confidence', 'N/A'), border=1)
-    pdf.cell(100, line_spacing, result.get('Recommendation', 'N/A')[:45] + "...", border=1, ln=True)
+            # Save to local SQLite
+            try:
+                conn = get_connection()
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO patients (name, age, gender, symptoms, diagnosis, confidence, recommendation, temperature, blood_pressure, weight, appointment_date)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    name,
+                    age,
+                    gender,
+                    symptoms,
+                    result.get('Diagnosis', 'N/A'),
+                    result.get('Confidence', 'N/A'),
+                    result.get('Recommendation', 'N/A'),
+                    temperature,
+                    blood_pressure,
+                    weight,
+                    appointment_date.strftime('%Y-%m-%d')
+                ))
+                conn.commit()
+                conn.close()
+                st.info("Patient record and vitals saved locally.")
+            except Exception as db_err:
+                st.error(f"Database Error: {db_err}")
 
-    # Vitals Table
-    pdf.ln(5)
-    pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, line_spacing, "🩺 Vitals & Clinical Observations", ln=True)
+            # ✅ Generate PDF Medical Report
+            pdf_file = generate_medical_report(name, age, gender, symptoms, result)
 
-    pdf.set_font("Arial", "", 12)
-    pdf.set_fill_color(245, 245, 245)
-    pdf.cell(50, line_spacing, "Temperature (°C)", border=1, fill=True)
-    pdf.cell(40, line_spacing, "Blood Pressure", border=1, fill=True)
-    pdf.cell(40, line_spacing, "Weight (kg)", border=1, fill=True)
-    pdf.cell(60, line_spacing, "Next Appointment", border=1, ln=True, fill=True)
+            # ✅ Download button
+            st.download_button(
+                label="📄 Download Medical Report (PDF)",
+                data=pdf_file,
+                file_name=f"{name.replace(' ', '_')}_Wella_Report.pdf",
+                mime="application/pdf"
+            )
+    except Exception as diag_err:
+        st.error(f"Diagnosis Engine Error: {diag_err}")
 
-    pdf.set_fill_color(255, 255, 255)
-    pdf.cell(50, line_spacing, temperature or "N/A", border=1)
-    pdf.cell(40, line_spacing, blood_pressure or "N/A", border=1)
-    pdf.cell(40, line_spacing, weight or "N/A", border=1)
-    pdf.cell(60, line_spacing, appointment_date or "N/A", border=1, ln=True)
+# Admin Dashboard
+if show_dashboard:
+    st.markdown("---")
+    st.subheader("📊 Admin Dashboard – Patient Records")
+    try:
+        conn = get_connection()
+        df = pd.read_sql_query("SELECT * FROM patients ORDER BY created_at DESC", conn)
 
-    # Footnote & Barcode
-    pdf.ln(15)
-    pdf.set_font("Arial", "I", 10)
-    pdf.set_text_color(100, 100, 100)
-    pdf.cell(0, 6, "Visit https://wella.healthcare/verify to authenticate this report.", ln=True)
-    report_id = f"W-{random.randint(100000,999999)}-{datetime.now().strftime('%y%m%d')}"
-    pdf.cell(0, 6, f"Report ID: {report_id}", ln=True)
+        # Truncate long symptom texts
+        df['symptoms'] = df['symptoms'].apply(lambda x: x if len(x) <= 50 else x[:50] + '...')
 
-    # Return PDF
-    pdf_output = pdf.output(dest="S").encode("latin1")
-    return BytesIO(pdf_output)
+        # Filters
+        name_filter = st.text_input("🔍 Search by Patient Name")
+        date_filter = st.date_input("📅 Filter by Date", [])
+
+        if name_filter:
+            df = df[df['name'].str.contains(name_filter, case=False)]
+        if date_filter:
+            df['created_at'] = pd.to_datetime(df['created_at'])
+            df = df[df['created_at'].dt.date == date_filter]
+
+        st.dataframe(df)
+
+        # Visualize upcoming appointments
+        st.markdown("---")
+        st.subheader("📅 Upcoming Appointments")
+        today = pd.to_datetime(date.today())
+        upcoming = df[df['appointment_date'] >= today.strftime('%Y-%m-%d')]
+        if not upcoming.empty:
+            st.table(upcoming[['name', 'appointment_date', 'gender', 'age']].sort_values(by='appointment_date'))
+        else:
+            st.info("No upcoming appointments found.")
+
+        conn.close()
+    except Exception as e:
+        st.error(f"Could not load records: {e}")
+
+    if st.button("🔄 Sync to Supabase"):
+        status = sync_to_supabase()
+        st.success(status)
+
+# Auto Sync (when internet available)
+def is_connected():
+    import socket
+    try:
+        socket.create_connection(("1.1.1.1", 53))
+        return True
+    except:
+        return False
+
+if is_connected():
+    st.sidebar.info("🌐 Online – Auto Sync Enabled")
+    sync_msg = sync_to_supabase()
+    st.sidebar.success(sync_msg)
+
+    # Optional: Trigger SMS reminders
+    try:
+        conn = get_connection()
+        df = pd.read_sql_query("SELECT name, appointment_date FROM patients", conn)
+        today = pd.to_datetime(date.today())
+        upcoming = df[df['appointment_date'] == today.strftime('%Y-%m-%d')]
+        for _, row in upcoming.iterrows():
+            st.sidebar.info(f"📩 Reminder: Appointment today for {row['name']}")
+            # TODO: Integrate SMS API (Twilio, Termii, etc.)
+        conn.close()
+    except:
+        pass
+else:
+    st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
