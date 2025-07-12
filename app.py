@@ -6,6 +6,8 @@ from datetime import datetime
 from utils.diagnosis_engine import run_diagnosis
 from utils.sync_utils import sync_to_supabase
 import sqlite3
+from utils.report_generator import generate_medical_report
+
 
 # Configuration
 st.set_page_config(page_title="Wella Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
