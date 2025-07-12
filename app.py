@@ -46,8 +46,8 @@ if submitted and symptoms:
     try:
         with st.spinner("Running AI diagnosis..."):
             result = run_diagnosis(symptoms)
-            st.subheader("🧠 Diagnosis Result")
-            st.write(result)
+#            st.subheader("🧠 Diagnosis Result")
+#            st.write(result)
             st.success("Diagnosis generated successfully.")
 
             # Save to database
