@@ -10,14 +10,42 @@ from utils.db import get_connection
 python utils/migrations.py
 
 # Configuration
-st.set_page_config(page_title="Wella Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="WellaAI Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
+
+from utils.db import get_connection
+
+# ✅ Run DB migration to ensure table is ready
+def run_migrations():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS patients (
+            patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            age INTEGER,
+            gender TEXT,
+            symptoms TEXT,
+            diagnosis TEXT,
+            confidence TEXT,
+            recommendation TEXT,
+            temperature TEXT,
+            blood_pressure TEXT,
+            weight TEXT,
+            appointment_date DATE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+run_migrations()  # 🔁 This ensures the table exists
 
 # Branding
 st.sidebar.image("assets/logo.png", width=120)
 st.sidebar.title("Wella")
 st.sidebar.markdown("Your Offline Health Companion")
 
-st.title("🩺 Wella – AI Diagnostic Assistant for Primary Healthcare")
+st.title("🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
 st.markdown("Helping rural clinics make informed medical decisions — even offline.")
 
 # Role Selection
