@@ -9,14 +9,15 @@ from utils.db import get_connection
 import time
 
 # Page Configuration
-st.set_page_config(page_title="WellaAI Diagnostic Assistant", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="expanded")
 
 # --- Branding ---
 st.sidebar.image("assets/logo.png", width=120)
-st.sidebar.title("Wella")
+st.sidebar.title("Wella.AI")
 st.sidebar.markdown("Your Offline Health Companion")
 
-st.title("🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
+#st.title("🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
+st.markdown("### 🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
 st.markdown("Helping rural clinics make informed medical decisions — even offline.")
 
 # --- Role Selection ---
