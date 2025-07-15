@@ -18,8 +18,7 @@ def alter_patients_table():
     new_columns = {
         "temperature": "TEXT",
         "blood_pressure": "TEXT",
-        "weight": "TEXT",
-        "appointment_date": "TEXT"
+        "weight": "TEXT"
     }
 
     print("🔄 Checking and applying migrations for 'patients' table...")
