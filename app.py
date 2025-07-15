@@ -40,15 +40,13 @@ with st.form("diagnosis_form", clear_on_submit=True):
     temperature = st.text_input("Temperature (°C)", placeholder="e.g. 37.2")
     blood_pressure = st.text_input("Blood Pressure (mmHg)", placeholder="e.g. 120/80")
     weight = st.text_input("Weight (kg)", placeholder="e.g. 65")
-    appointment_date = st.date_input("Next Appointment Date")
+#    appointment_date = st.date_input("Next Appointment Date")
     submitted = st.form_submit_button("Run Diagnosis")
 
 if submitted and symptoms:
     try:
         with st.spinner("Running AI diagnosis..."):
             result = run_diagnosis(symptoms)
-#            st.subheader("🧠 Diagnosis Result")
-#            st.write(result)
             st.success("Diagnosis generated successfully.")
 
             # Save to database
@@ -108,16 +106,6 @@ if show_dashboard:
             df = df[df['created_at'].dt.date == date_filter]
 
         st.dataframe(df)
-
-        # Upcoming Appointments
-        st.markdown("---")
-        st.subheader("📅 Upcoming Appointments")
-        today = pd.to_datetime(date.today())
-        upcoming = df[df['appointment_date'] >= today.strftime('%Y-%m-%d')]
-        if not upcoming.empty:
-            st.table(upcoming[['name', 'appointment_date', 'gender', 'age']].sort_values(by='appointment_date'))
-        else:
-            st.info("No upcoming appointments found.")
 
         conn.close()
     except Exception as e:
