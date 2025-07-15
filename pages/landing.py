@@ -106,6 +106,6 @@ def landing_page():
     </div>
 
     <div class="footer">
-        &copy; 2025 Wella.AI. All rights reserved.
+        &copy; © 2025 Wella.AI. All rights reserved.
     </div>
     """, unsafe_allow_html=True)
