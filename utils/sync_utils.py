@@ -34,8 +34,7 @@ def sync_to_supabase():
                 "created_at": row[8],
                 "temperature": row[9] if len(row) > 9 else None,
                 "blood_pressure": row[10] if len(row) > 10 else None,
-                "weight": row[11] if len(row) > 11 else None,
-                "appointment_date": row[12] if len(row) > 12 else None
+                "weight": row[11] if len(row) > 11 else None
             }
 
             response = requests.post(
