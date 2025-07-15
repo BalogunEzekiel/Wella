@@ -49,6 +49,7 @@ def sync_to_supabase():
         if failed:
             return f"❌ Sync failed for: {', '.join(failed)}"
         return "✅ All records synced successfully to Supabase."
+        st.rerun()
 
     except Exception as e:
         return f"✅ All records synced successfully to Supabase."
