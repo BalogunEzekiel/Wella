@@ -71,24 +71,25 @@ def generate_medical_report(name, age, gender, symptoms, result):
         barcode_obj.write(temp_barcode)
         temp_barcode.close()
 
-        # Add barcode image to PDF
-        pdf.set_y(-45)
-        pdf.image(temp_barcode.name, x=80, w=50, h=15)
+        # Prevent auto-splitting
+        pdf.set_auto_page_break(auto=False)
 
-        # Clean up temp file (optional)
+        # Footer Y position
+        footer_y = 270  # Position close to bottom without overflow
+
+        # Left-aligned text
+        pdf.set_xy(10, footer_y)
+        pdf.set_font("Arial", "I", 10)
+        pdf.set_text_color(100, 100, 100)
+        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.health", align="L")
+
+        # Right-aligned barcode
+        pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
+
+        # Clean up temp file
         os.unlink(temp_barcode.name)
 
     except Exception as e:
         pdf.set_y(-40)
         pdf.set_text_color(255, 0, 0)
         pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
-
-    # Footer text
-    pdf.set_font("Arial", "I", 10)
-    pdf.set_text_color(100, 100, 100)
-    pdf.ln(18)
-    pdf.cell(0, 6, f"Report ID: {report_id}", ln=True, align="C")
-    pdf.cell(0, 6, "Verify this report at: https://www.wella.health", ln=True, align="C")
-
-    # Return as in-memory PDF file
-    return BytesIO(pdf.output(dest='S').encode('latin1'))
