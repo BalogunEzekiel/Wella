@@ -15,9 +15,8 @@ st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="
 st.sidebar.image("assets/logo.png", width=120)
 st.sidebar.markdown("Your Offline Health Companion")
 
-#st.title("🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
-st.markdown("## 🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
-st.markdown("Helping rural clinics make informed medical decisions — even offline.")
+st.markdown("### 🩺Diagnostic Assistant for Primary Healthcare")
+st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
 # --- Role Selection ---
 role = st.sidebar.selectbox("Login Role", ["Select Role", "Nurse", "Admin"])
