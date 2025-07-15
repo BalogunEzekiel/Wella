@@ -53,4 +53,5 @@ def sync_to_supabase():
 
     except Exception as e:
         return f"✅ All records synced successfully to Supabase."
+        st,rerun()
 #        return f"❌ Sync failed: {str(e)}"
