@@ -10,3 +10,4 @@ mdurl==0.1.2
 fpdf
 Pillow
 python-barcode
+datetime
