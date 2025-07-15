@@ -13,11 +13,10 @@ st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="
 
 # --- Branding ---
 st.sidebar.image("assets/logo.png", width=120)
-st.sidebar.title("Wella.AI")
 st.sidebar.markdown("Your Offline Health Companion")
 
 #st.title("🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
-st.markdown("### 🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
+st.markdown("## 🩺 WellaAI Diagnostic Assistant for Primary Healthcare")
 st.markdown("Helping rural clinics make informed medical decisions — even offline.")
 
 # --- Role Selection ---
