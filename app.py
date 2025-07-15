@@ -40,7 +40,6 @@ with st.form("diagnosis_form", clear_on_submit=True):
     temperature = st.text_input("Temperature (°C)", placeholder="e.g. 37.2")
     blood_pressure = st.text_input("Blood Pressure (mmHg)", placeholder="e.g. 120/80")
     weight = st.text_input("Weight (kg)", placeholder="e.g. 65")
-#    appointment_date = st.date_input("Next Appointment Date")
     submitted = st.form_submit_button("Run Diagnosis")
 
 if submitted and symptoms:
@@ -57,16 +56,15 @@ if submitted and symptoms:
                     INSERT INTO patients (
                         name, age, gender, symptoms,
                         diagnosis, confidence, recommendation,
-                        temperature, blood_pressure, weight, appointment_date
+                        temperature, blood_pressure, weight
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     name, age, gender, symptoms,
                     result.get('Diagnosis', 'N/A'),
                     result.get('Confidence', 'N/A'),
                     result.get('Recommendation', 'N/A'),
-                    temperature, blood_pressure, weight,
-                    appointment_date.strftime('%Y-%m-%d')
+                    temperature, blood_pressure, weight
                 ))
                 conn.commit()
                 conn.close()
@@ -130,11 +128,7 @@ if is_connected():
 
     try:
         conn = get_connection()
-        df = pd.read_sql_query("SELECT name, appointment_date FROM patients", conn)
-        today = pd.to_datetime(date.today())
-        today_appt = df[df['appointment_date'] == today.strftime('%Y-%m-%d')]
-        for _, row in today_appt.iterrows():
-            st.sidebar.info(f"📩 Reminder: Appointment today for {row['name']}")
+        df = pd.read_sql_query("SELECT name FROM patients", conn)
         conn.close()
     except:
         pass
