@@ -112,6 +112,7 @@ if show_dashboard:
     if st.button("🔄 Sync to Supabase"):
         status = sync_to_supabase()
         st.success(status)
+        st.rerun()
 
 # --- Connectivity Check ---
 def is_connected():
