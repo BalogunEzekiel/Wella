@@ -14,7 +14,7 @@ st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="
 #=============== Landing Page ==========================
 from landing import landing_page  # If in a separate file
 
-page = st.experimental_get_query_params().get("page", ["landing"])[0]
+page = st.query_params.get("page", "landing")
 
 if page == "landing":
     landing_page()
