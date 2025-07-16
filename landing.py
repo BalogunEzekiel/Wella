@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
 
+# Load Lottie animation JSON
 def load_lottie_url(url: str):
     r = requests.get(url)
     if r.status_code != 200:
@@ -11,6 +12,7 @@ def load_lottie_url(url: str):
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
 
+    # Custom Styles
     st.markdown("""
     <style>
     @media (max-width: 768px) {
@@ -71,6 +73,7 @@ def landing_page():
         border-radius: 50%;
         width: 60px;
         height: 60px;
+        object-fit: cover;
     }
 
     .footer {
@@ -85,7 +88,7 @@ def landing_page():
     # Logo
     st.image("assets/logo.png", width=150)
 
-    # Hero section
+    # Hero Section
     st.markdown("""
     <div class="hero">
         <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
@@ -96,12 +99,15 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Lottie animation
+    # Lottie Animation
     lottie_url = "https://lottie.host/7e56cd0e-4cf6-46e4-9df7-44c23db0de64/vnmWBYb7Hq.json"
     lottie_json = load_lottie_url(lottie_url)
-    st_lottie(lottie_json, height=300, speed=1)
+    if lottie_json:
+        st_lottie(lottie_json, height=300, speed=1)
+    else:
+        st.warning("⚠️ Lottie animation failed to load.")
 
-    # Features
+    # Feature Highlights
     st.subheader("💡 Key Features")
     st.markdown('<div class="features-grid">', unsafe_allow_html=True)
     st.markdown("""
@@ -129,12 +135,12 @@ def landing_page():
 
     testimonials = [
         {
-            "img": "assets/testimonial1.jpg",
+            "img": "assets/Ezekiel Balogun.jpg",
             "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
             "name": "Dr. Grace Okoro"
         },
         {
-            "img": "assets/testimonial2.jpg",
+            "img": "assets/picturepucture0001.jpg",
             "quote": "We no longer panic during network outages—Wella.AI is always ready.",
             "name": "Nurse Michael Yusuf"
         }
@@ -152,4 +158,4 @@ def landing_page():
         """, unsafe_allow_html=True)
 
     # Footer
-    st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">&copy; © 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
