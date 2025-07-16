@@ -12,3 +12,4 @@ Pillow
 python-barcode
 datetime
 streamlit-lottie
+langdetect
