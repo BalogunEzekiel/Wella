@@ -124,7 +124,7 @@ testimonials = [
         "name": "Dr. Grace Okoro"
     },
     {
-        "img": "assets/nurse.jpg",
+        "img": "assets/nurse.png",
         "quote": "We no longer panic during network outages—Wella.AI is always ready.",
         "name": "Nurse Michael Yusuf"
     }
