@@ -11,7 +11,9 @@ def detect_language():
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
 
-    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
+    # Hidden or removed sidebar input
+    if "text_input" not in st.session_state:
+        st.session_state["text_input"] = "Wella.AI empowers healthcare anywhere."
 
     lang = detect_language()[:2]
     greetings = {
@@ -134,7 +136,7 @@ def landing_page():
         with st.container():
             colA, colB = st.columns([1, 4])
             with colA:
-                st.image(t["img"], width=200, caption="")  # Displays image properly
+                st.image(t["img"], width=200, caption="")
             with colB:
                 st.markdown(f"""
                     <div style="
