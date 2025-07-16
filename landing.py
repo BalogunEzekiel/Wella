@@ -100,7 +100,7 @@ def landing_page():
     """, unsafe_allow_html=True)
 
     # Lottie Animation
-    lottie_url = "https://lottie.host/7e56cd0e-4cf6-46e4-9df7-44c23db0de64/vnmWBYb7Hq.json"
+    lottie_url = "https://lottiefiles.com/free-animation/a-girl-with-a-flag-shadow-4p7T12aEul"
     lottie_json = load_lottie_url(lottie_url)
     if lottie_json:
         st_lottie(lottie_json, height=300, speed=1)
