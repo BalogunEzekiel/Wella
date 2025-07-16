@@ -1,18 +1,11 @@
 import streamlit as st
-import requests
-from langdetect import detect
-
-# Auto-detect language
-import streamlit as st
 from langdetect import detect, LangDetectException
 
 def detect_language():
     try:
         lang = detect(st.session_state.get("text_input", "Wella.AI empowers healthcare anywhere."))
         return lang
-    except LangDetectException:
-        return "en"
-    except Exception:
+    except (LangDetectException, Exception):
         return "en"
 
 def landing_page():
@@ -20,7 +13,7 @@ def landing_page():
 
     st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
 
-    lang = detect_language()[:2]  # Use first 2 chars for consistency
+    lang = detect_language()[:2]
     greetings = {
         "en": "Welcome to Wella.AI",
         "fr": "Bienvenue sur Wella.AI",
@@ -36,12 +29,6 @@ def landing_page():
     # Custom CSS
     st.markdown("""
     <style>
-    @media (max-width: 768px) {
-        .hero h1 { font-size: 2rem !important; }
-        .hero p { font-size: 1rem !important; }
-        .feature-box h4 { font-size: 1rem; }
-    }
-
     .hero {
         background: linear-gradient(to right, #00b894, #00cec9);
         color: white;
@@ -50,7 +37,6 @@ def landing_page():
         border-radius: 1rem;
         margin-bottom: 3rem;
     }
-
     .launch-button {
         background-color: white;
         color: #00b894;
@@ -62,41 +48,6 @@ def landing_page():
         cursor: pointer;
         margin-top: 2rem;
     }
-
-    .features-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.5rem;
-        justify-content: center;
-    }
-
-    .feature-box {
-        background: #f9f9f9;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        width: 260px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .testimonial-card {
-        background-color: #ffffff;
-        border-radius: 1rem;
-        padding: 1rem;
-        margin: 1rem 0;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .testimonial-card img {
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-    }
-
     .footer {
         text-align: center;
         font-size: 0.9rem;
@@ -120,68 +71,63 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Features section
-    st.subheader("💡 Key Features")
-    st.markdown('<div class="features-grid">', unsafe_allow_html=True)
-    st.markdown("""
-        <div class="feature-box">
-            <h4>🧠 AI-Powered Diagnosis</h4>
-            <p>Instant suggestions based on symptoms.</p>
-        </div>
-        <div class="feature-box">
-            <h4>📴 Offline Mode</h4>
-            <p>Designed for areas without stable internet.</p>
-        </div>
-        <div class="feature-box">
-            <h4>👥 Role-Based Access</h4>
-            <p>Admins, Doctors, Nurses with restricted views.</p>
-        </div>
-        <div class="feature-box">
-            <h4>☁️ Cloud Sync</h4>
-            <p>Auto sync with Supabase when online.</p>
-        </div>
-    """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    # Section: Two columns (Image | Text)
+    st.subheader("🌍 Supporting Underserved Communities")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        st.image("assets/image1.jpg", use_column_width=True)
+    with col2:
+        st.markdown("""
+        **Rural clinics often lack access to specialists.**
+        <br><br>
+        Wella.AI provides frontline healthcare workers with intelligent diagnostic tools to ensure no patient is left behind.
+        """, unsafe_allow_html=True)
 
-    # Embedded video
+    # Section: Three columns (Image | Text | Image)
+    st.subheader("⚙️ Seamless Workflow Integration")
+    col3, col4, col5 = st.columns([1.2, 1.6, 1.2])
+    with col3:
+        st.image("assets/image2.jpg", use_column_width=True)
+    with col4:
+        st.markdown("""
+        **Works online and offline**<br>
+        Syncs to the cloud when connected and runs diagnoses offline when not.<br><br>
+        **Built for simplicity**<br>
+        Designed with input from actual field nurses and doctors.
+        """, unsafe_allow_html=True)
+    with col5:
+        st.image("assets/image3.jpg", use_column_width=True)
+
+    # Section: Two columns (Text | Image)
+    st.subheader("🔐 Secure and Role-Based Access")
+    col6, col7 = st.columns([2, 1])
+    with col6:
+        st.markdown("""
+        **Multiple user roles.**<br><br>
+        Wella.AI supports Admins, Doctors, and Nurses, each with unique access rights and logs to ensure proper patient handling.
+        """, unsafe_allow_html=True)
+    with col7:
+        st.image("assets/image4.jpg", use_column_width=True)
+
+    # Embedded video section
     st.subheader("🎥 See Wella.AI in Action")
-
     video_path = "assets/video/video01.mp4"
-    
-    video_html = f"""
-    <video width="100%" autoplay loop muted controls>
-      <source src="{video_path}" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    """
-    
-    st.markdown(video_html, unsafe_allow_html=True)
+    st.video(video_path)
 
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
-    testimonials = [
-        {
-            "img": "assets/Ezekiel.jpg",
-            "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
-            "name": "Dr. Grace Okoro"
-        },
-        {
-            "img": "assets/PICTURE.jpg",
-            "quote": "We no longer panic during network outages—Wella.AI is always ready.",
-            "name": "Nurse Michael Yusuf"
-        }
-    ]
-
-    for t in testimonials:
-        st.markdown(f"""
-        <div class="testimonial-card">
-            <img src="{t['img']}" alt="avatar" />
-            <div>
-                <p><strong>{t['name']}</strong></p>
-                <p style="font-style:italic;">“{t['quote']}”</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    for t in [
+        {"img": "assets/Ezekiel.jpg", "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.", "name": "Dr. Grace Okoro"},
+        {"img": "assets/PICTURE.jpg", "quote": "We no longer panic during network outages—Wella.AI is always ready.", "name": "Nurse Michael Yusuf"}
+    ]:
+        colA, colB = st.columns([1, 4])
+        with colA:
+            st.image(t["img"], width=60)
+        with colB:
+            st.markdown(f"""
+            **{t['name']}**  
+            *“{t['quote']}”*
+            """)
 
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
