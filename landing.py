@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie
 import requests
 
 # Load Lottie animation JSON
-def load_lottie_url(url: str):
+def load_lottie_url(url: https://lottiefiles.com/free-animation/scooter-vqYtmwE0r4):
     r = requests.get(url)
     if r.status_code != 200:
         return None
