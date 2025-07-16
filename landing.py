@@ -2,8 +2,6 @@ import streamlit as st
 from langdetect import detect, LangDetectException
 from components import render_header
 
-render_header(active="home")
-
 def detect_language():
     try:
         lang = detect(st.session_state.get("text_input", "Wella.AI empowers healthcare anywhere."))
@@ -13,8 +11,11 @@ def detect_language():
 
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
+    
+    # 🔒 Static Header
+    render_header(active="home")
 
-    # ✅ Place the input at the top (MAIN page)
+    # Input field at the top
     st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
 
     lang = detect_language()[:2]
@@ -56,7 +57,8 @@ def landing_page():
         text-align: center;
         font-size: 0.9rem;
         color: gray;
-        margin-top: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -75,7 +77,7 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Section: Two columns (Image | Text)
+    # Two columns (Image | Text)
     st.subheader("🌍 Supporting Underserved Communities")
     col1, col2 = st.columns([1, 2])
     with col1:
@@ -87,7 +89,7 @@ def landing_page():
         Wella.AI provides frontline healthcare workers with intelligent diagnostic tools to ensure no patient is left behind.
         """, unsafe_allow_html=True)
 
-    # Section: Three columns (Image | Text | Image)
+    # Three columns (Image | Text | Image)
     st.subheader("⚙️ Seamless Workflow Integration")
     col3, col4, col5 = st.columns([1.2, 1.6, 1.2])
     with col3:
@@ -102,7 +104,7 @@ def landing_page():
     with col5:
         st.image("assets/Ezekiel.jpg", use_container_width=True)
 
-    # Section: Two columns (Text | Image)
+    # Two columns (Text | Image)
     st.subheader("🔐 Secure and Role-Based Access")
     col6, col7 = st.columns([2, 1])
     with col6:
@@ -113,14 +115,13 @@ def landing_page():
     with col7:
         st.image("assets/Ezekiel.jpg", use_container_width=True)
 
-    # Embedded video section
+    # Video section
     st.subheader("🎥 See Wella.AI in Action")
     video_path = "assets/video/video01.mp4"
     st.video(video_path)
 
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
-
     testimonials = [
         {
             "img": "assets/image.jpg",
@@ -156,7 +157,3 @@ def landing_page():
 
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
-
-def landing_page():
-    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
-    render_header()  # Static header here
