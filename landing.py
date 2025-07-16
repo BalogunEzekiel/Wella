@@ -134,7 +134,7 @@ def landing_page():
         with st.container():
             colA, colB = st.columns([1, 4])
             with colA:
-                st.image(t["img"], width=100, caption="")  # Displays image properly
+                st.image(t["img"], width=200, caption="")  # Displays image properly
             with colB:
                 st.markdown(f"""
                     <div style="
