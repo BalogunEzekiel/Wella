@@ -3,18 +3,24 @@ import requests
 from langdetect import detect
 
 # Auto-detect language
+import streamlit as st
+from langdetect import detect, LangDetectException
+
 def detect_language():
     try:
         lang = detect(st.session_state.get("text_input", "Wella.AI empowers healthcare anywhere."))
         return lang
-    except:
+    except LangDetectException:
+        return "en"
+    except Exception:
         return "en"
 
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
 
-    # Auto language detection message
-    lang = detect_language()
+    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
+
+    lang = detect_language()[:2]  # Use first 2 chars for consistency
     greetings = {
         "en": "Welcome to Wella.AI",
         "fr": "Bienvenue sur Wella.AI",
