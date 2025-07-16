@@ -1,5 +1,6 @@
 import streamlit as st
 from langdetect import detect, LangDetectException
+from components import render_header
 
 def detect_language():
     try:
@@ -153,3 +154,7 @@ def landing_page():
 
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
+
+def landing_page():
+    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
+    render_header()  # Static header here
