@@ -1,6 +1,7 @@
 import streamlit as st
 from langdetect import detect, LangDetectException
 from components import render_header
+import streamlit.components.v1 as components
 
 def detect_language():
     try:
@@ -120,40 +121,149 @@ def landing_page():
     video_path = "assets/video/video01.mp4"
     st.video(video_path)
 
-    # Testimonials
+    # Testimonials    
     st.subheader("🗣️ What People Are Saying")
-    testimonials = [
-        {
-            "img": "assets/image.jpg",
-            "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
-            "name": "Dr. Grace Okoro"
-        },
-        {
-            "img": "assets/nurse.png",
-            "quote": "We no longer panic during network outages—Wella.AI is always ready.",
-            "name": "Nurse Michael Yusuf"
-        }
-    ]
     
-    for t in testimonials:
-        with st.container():
-            colA, colB = st.columns([1, 4])
-            with colA:
-                st.image(t["img"], width=200, caption="")
-            with colB:
-                st.markdown(f"""
-                    <div style="
-                        background: linear-gradient(to right, #f0f4f8, #e6f7ff);
-                        border-radius: 16px;
-                        padding: 15px 20px;
-                        margin-top: 10px;
-                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                    ">
-                        <p style="margin: 0; font-weight: bold; font-size: 1.2rem; color: #003366;">{t['name']}</p>
-                        <p style="margin: 4px 0 6px; font-size: 1rem; color: #ffaa00;">★★★★★ <span style="font-size: 0.9rem; color: #444;">5/5</span></p>
-                        <p style="margin: 0; font-size: 1.05rem; font-style: italic; color: #333;">“{t['quote']}”</p>
-                    </div>
-                """, unsafe_allow_html=True)
+    testimonials_html = """
+    <style>
+    .testimonial-carousel {
+        max-width: 100%;
+        margin: auto;
+        overflow: hidden;
+        position: relative;
+        padding: 10px;
+    }
+    .testimonial-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 20px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: transform 0.5s ease;
+        min-height: 260px;
+    }
+    .testimonial-card img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 25px;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .testimonial-text {
+        font-size: 1.1rem;
+        font-style: italic;
+        color: #333;
+    }
+    .testimonial-name {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #0077b6;
+    }
+    .stars {
+        color: #ffa500;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+    }
+    .dot-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .dot {
+        height: 12px;
+        width: 12px;
+        margin: 4px 6px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+    .active-dot {
+        background-color: #0077b6;
+    }
+    </style>
+    
+    <div class="testimonial-carousel" id="carousel">
+      <div class="testimonial-card" id="slide">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/image.jpg">
+        <div>
+          <div class="testimonial-text">“Wella.AI has revolutionized how we handle patients in our village clinic.”</div>
+          <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+          <div class="testimonial-name">Dr. Grace Okoro</div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="display: none;">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/nurse.png">
+        <div>
+          <div class="testimonial-text">“We no longer panic during network outages—Wella.AI is always ready.”</div>
+          <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+          <div class="testimonial-name">Nurse Michael Yusuf</div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="display: none;">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/community_worker.jpg">
+        <div>
+          <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
+          <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+          <div class="testimonial-name">Amaka Udo, Community Health Worker</div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="display: none;">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo_partner.jpg">
+        <div>
+          <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
+          <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+          <div class="testimonial-name">John Mensah, MedServe Africa</div>
+        </div>
+      </div>
+      <div class="testimonial-card" style="display: none;">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/local_govt_rep.jpg">
+        <div>
+          <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
+          <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+          <div class="testimonial-name">Hon. Aisha Bello, Health Commissioner</div>
+        </div>
+      </div>
+      <div class="dot-container">
+        <span class="dot active-dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+    
+    <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.testimonial-card');
+    const dots = document.querySelectorAll('.dot');
+    
+    function showSlide(index) {
+        slides.forEach((s, i) => s.style.display = i === index ? 'flex' : 'none');
+        dots.forEach((d, i) => d.className = i === index ? 'dot active-dot' : 'dot');
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    dots.forEach((dot, index) => {
+        dot.onclick = () => {
+            currentSlide = index;
+            showSlide(index);
+        };
+    });
+    
+    setInterval(nextSlide, 5000);
+    </script>
+    """
+    
+    components.html(testimonials_html, height=420)
 
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
