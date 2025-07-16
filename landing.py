@@ -11,9 +11,8 @@ def detect_language():
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
 
-    # Hidden or removed sidebar input
-    if "text_input" not in st.session_state:
-        st.session_state["text_input"] = "Wella.AI empowers healthcare anywhere."
+    # ✅ Place the input at the top (MAIN page)
+    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
 
     lang = detect_language()[:2]
     greetings = {
