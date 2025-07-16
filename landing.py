@@ -119,12 +119,12 @@ def landing_page():
 
     testimonials = [
         {
-            "img": "assets/image.jpg",
+            "img": "assets/logo.png",
             "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
             "name": "Dr. Grace Okoro"
         },
         {
-            "img": "assets/nurse.jpg",
+            "img": "assets/Ezekiel.jpg",
             "quote": "We no longer panic during network outages—Wella.AI is always ready.",
             "name": "Nurse Michael Yusuf"
         }
