@@ -145,7 +145,14 @@ def landing_page():
 
     # Embedded video
     st.subheader("🎥 See Wella.AI in Action")
-    st.video("https://www.youtube.com/embed/VA5dyYpHT9I")
+
+    video_path = "assets/video/video01.mp4"
+    
+    try:
+        with open(video_path, "rb") as video_file:
+            st.video(video_file.read())
+    except FileNotFoundError:
+        st.error("❌ Video not found at: " + video_path)
 
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
