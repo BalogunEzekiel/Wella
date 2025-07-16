@@ -2,6 +2,8 @@ import streamlit as st
 from langdetect import detect, LangDetectException
 from components import render_header
 
+render_header(active="home")
+
 def detect_language():
     try:
         lang = detect(st.session_state.get("text_input", "Wella.AI empowers healthcare anywhere."))
