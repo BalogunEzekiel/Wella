@@ -1,18 +1,33 @@
 import streamlit as st
-from streamlit_lottie import st_lottie
 import requests
+from langdetect import detect
 
-# Load Lottie animation JSON
-def load_lottie_url(url: https://lottiefiles.com/free-animation/scooter-vqYtmwE0r4):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+# Auto-detect language
+def detect_language():
+    try:
+        lang = detect(st.session_state.get("text_input", "Wella.AI empowers healthcare anywhere."))
+        return lang
+    except:
+        return "en"
 
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
 
-    # Custom Styles
+    # Auto language detection message
+    lang = detect_language()
+    greetings = {
+        "en": "Welcome to Wella.AI",
+        "fr": "Bienvenue sur Wella.AI",
+        "sw": "Karibu Wella.AI",
+        "yo": "Kaabo si Wella.AI",
+        "ha": "Barka da zuwa Wella.AI",
+        "ig": "Nnọọ na Wella.AI",
+        "es": "Bienvenido a Wella.AI"
+    }
+    welcome = greetings.get(lang, greetings["en"])
+    st.success(welcome)
+
+    # Custom CSS
     st.markdown("""
     <style>
     @media (max-width: 768px) {
@@ -88,7 +103,7 @@ def landing_page():
     # Logo
     st.image("assets/logo.png", width=150)
 
-    # Hero Section
+    # Hero section
     st.markdown("""
     <div class="hero">
         <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
@@ -99,15 +114,7 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Lottie Animation
-    lottie_url = "https://lottiefiles.com/free-animation/a-girl-with-a-flag-shadow-4p7T12aEul"
-    lottie_json = load_lottie_url(lottie_url)
-    if lottie_json:
-        st_lottie(lottie_json, height=300, speed=1)
-    else:
-        st.warning("⚠️ Lottie animation failed to load.")
-
-    # Feature Highlights
+    # Features section
     st.subheader("💡 Key Features")
     st.markdown('<div class="features-grid">', unsafe_allow_html=True)
     st.markdown("""
@@ -130,9 +137,12 @@ def landing_page():
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
+    # Embedded video
+    st.subheader("🎥 See Wella.AI in Action")
+    st.video("https://www.youtube.com/embed/VA5dyYpHT9I")
+
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
-
     testimonials = [
         {
             "img": "assets/Ezekiel Balogun.jpg",
@@ -158,4 +168,4 @@ def landing_page():
         """, unsafe_allow_html=True)
 
     # Footer
-    st.markdown('<div class="footer">&copy; © 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
