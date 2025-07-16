@@ -148,11 +148,14 @@ def landing_page():
 
     video_path = "assets/video/video01.mp4"
     
-    try:
-        with open(video_path, "rb") as video_file:
-            st.video(video_file.read())
-    except FileNotFoundError:
-        st.error("❌ Video not found at: " + video_path)
+    video_html = f"""
+    <video width="100%" autoplay loop muted controls>
+      <source src="{video_path}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    """
+    
+    st.markdown(video_html, unsafe_allow_html=True)
 
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
