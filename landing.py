@@ -161,12 +161,12 @@ def landing_page():
     st.subheader("🗣️ What People Are Saying")
     testimonials = [
         {
-            "img": "assets/Ezekiel Balogun.jpg",
+            "img": "assets/Ezekiel.jpg",
             "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
             "name": "Dr. Grace Okoro"
         },
         {
-            "img": "assets/picturepucture0001.jpg",
+            "img": "assets/PICTURE.jpg",
             "quote": "We no longer panic during network outages—Wella.AI is always ready.",
             "name": "Nurse Michael Yusuf"
         }
