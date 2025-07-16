@@ -75,7 +75,7 @@ def landing_page():
     st.subheader("🌍 Supporting Underserved Communities")
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("assets/image1.jpg", use_column_width=True)
+        st.image("assets/Ezekiel.jpg", use_container_width=True)
     with col2:
         st.markdown("""
         **Rural clinics often lack access to specialists.**
@@ -87,7 +87,7 @@ def landing_page():
     st.subheader("⚙️ Seamless Workflow Integration")
     col3, col4, col5 = st.columns([1.2, 1.6, 1.2])
     with col3:
-        st.image("assets/image2.jpg", use_column_width=True)
+        st.image("assets/Ezekiel.jpg", use_container_width=True)
     with col4:
         st.markdown("""
         **Works online and offline**<br>
@@ -96,7 +96,7 @@ def landing_page():
         Designed with input from actual field nurses and doctors.
         """, unsafe_allow_html=True)
     with col5:
-        st.image("assets/image3.jpg", use_column_width=True)
+        st.image("assets/Ezekiel.jpg", use_container_width=True)
 
     # Section: Two columns (Text | Image)
     st.subheader("🔐 Secure and Role-Based Access")
@@ -107,7 +107,7 @@ def landing_page():
         Wella.AI supports Admins, Doctors, and Nurses, each with unique access rights and logs to ensure proper patient handling.
         """, unsafe_allow_html=True)
     with col7:
-        st.image("assets/image4.jpg", use_column_width=True)
+        st.image("assets/Ezekiel.jpg", use_container_width=True)
 
     # Embedded video section
     st.subheader("🎥 See Wella.AI in Action")
