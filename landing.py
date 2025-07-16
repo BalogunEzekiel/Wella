@@ -117,40 +117,38 @@ def landing_page():
     # Testimonials
     st.subheader("🗣️ What People Are Saying")
 
-    testimonials = [
-        {
-            "img": "assets/logo.png",
-            "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
-            "name": "Dr. Grace Okoro"
-        },
-        {
-            "img": "assets/Ezekiel.jpg",
-            "quote": "We no longer panic during network outages—Wella.AI is always ready.",
-            "name": "Nurse Michael Yusuf"
-        }
-    ]
-    
-    for t in testimonials:
-        st.markdown(f"""
-        <div style="
-            background: linear-gradient(to right, #f0f4f8, #e6f7ff);
-            border-radius: 18px;
-            padding: 20px 25px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        ">
-            <div style="flex-shrink: 0;">
-                <img src="{t['img']}" width="100" style="border-radius: 50%; border: 3px solid #0078d4; margin-right: 20px;">
-            </div>
-            <div>
-                <p style="margin: 0; font-weight: bold; font-size: 1.2rem; color: #003366;">{t['name']}</p>
-                <p style="margin: 4px 0 6px; font-size: 1rem; color: #ffaa00;">★★★★★ <span style="font-size: 0.9rem; color: #444;">5/5</span></p>
-                <p style="margin: 0; font-size: 1.05rem; font-style: italic; color: #333;">“{t['quote']}”</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+testimonials = [
+    {
+        "img": "assets/image.jpg",
+        "quote": "Wella.AI has revolutionized how we handle patients in our village clinic.",
+        "name": "Dr. Grace Okoro"
+    },
+    {
+        "img": "assets/nurse.jpg",
+        "quote": "We no longer panic during network outages—Wella.AI is always ready.",
+        "name": "Nurse Michael Yusuf"
+    }
+]
+
+for t in testimonials:
+    with st.container():
+        colA, colB = st.columns([1, 4])
+        with colA:
+            st.image(t["img"], width=100, caption="")  # Displays image properly
+        with colB:
+            st.markdown(f"""
+                <div style="
+                    background: linear-gradient(to right, #f0f4f8, #e6f7ff);
+                    border-radius: 16px;
+                    padding: 15px 20px;
+                    margin-top: 10px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                ">
+                    <p style="margin: 0; font-weight: bold; font-size: 1.2rem; color: #003366;">{t['name']}</p>
+                    <p style="margin: 4px 0 6px; font-size: 1rem; color: #ffaa00;">★★★★★ <span style="font-size: 0.9rem; color: #444;">5/5</span></p>
+                    <p style="margin: 0; font-size: 1.05rem; font-style: italic; color: #333;">“{t['quote']}”</p>
+                </div>
+            """, unsafe_allow_html=True)
 
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
