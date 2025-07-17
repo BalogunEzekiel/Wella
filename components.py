@@ -1,74 +1,79 @@
 import streamlit as st
 from PIL import Image
+import base64
+from io import BytesIO
+
+def get_base64_image(image_path):
+    img = Image.open(image_path)
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_b64 = base64.b64encode(buffered.getvalue()).decode()
+    return img_b64
 
 def render_header(active="home"):
-    logo = Image.open("assets/logo.png")
+    logo_base64 = get_base64_image("assets/logo.png")
 
-    st.markdown("""
+    st.markdown(f"""
     <style>
-    .top-nav-wrapper {
+    .top-nav-wrapper {{
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #00b894;
-        padding: 1.5rem 2rem;
+        padding: 2rem;
         height: auto;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         position: sticky;
         top: 0;
         z-index: 999;
         flex-wrap: wrap;
-    }
+    }}
 
-    .logo-container img {
-        height: 70px;
-        margin-right: 20px;
-    }
+    .logo-container img {{
+        height: 80px;
+        margin-right: 30px;
+    }}
 
-    .top-nav {
+    .top-nav {{
         display: flex;
-        gap: 20px;
+        gap: 24px;
         flex-wrap: wrap;
         align-items: center;
-    }
+    }}
 
-    .top-nav a {
+    .top-nav a {{
         color: white;
         text-decoration: none;
         font-weight: 600;
-        font-size: 1rem;
-        padding: 10px 16px;
-        border-radius: 6px;
-        transition: background-color 0.2s ease-in-out;
-    }
+        font-size: 1.1rem;
+        padding: 10px 18px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-in-out;
+    }}
 
-    .top-nav a:hover {
+    .top-nav a:hover {{
         background-color: #009973;
-    }
+    }}
 
-    .top-nav a.active {
+    .top-nav a.active {{
         background-color: #007b5e;
         text-decoration: underline;
-    }
+    }}
 
-    @media (max-width: 768px) {
-        .top-nav-wrapper {
+    @media (max-width: 768px) {{
+        .top-nav-wrapper {{
             flex-direction: column;
             align-items: flex-start;
-        }
-
-        .top-nav {
-            margin-top: 10px;
-        }
-    }
+        }}
+        .top-nav {{
+            margin-top: 12px;
+        }}
+    }}
     </style>
-    """, unsafe_allow_html=True)
 
-    # Header HTML structure
-    st.markdown(f"""
     <div class="top-nav-wrapper">
         <div class="logo-container">
-            <img src="data:image/png;base64,{st.image_to_bytes(logo).decode()}" />
+            <img src="data:image/png;base64,{logo_base64}" alt="Wella.AI Logo" />
         </div>
         <div class="top-nav">
             <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
