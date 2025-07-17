@@ -82,7 +82,7 @@ def landing_page():
     st.subheader("🌍 Supporting Underserved Communities")
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.image("assets/Ezekiel.jpg", use_container_width=True)
+        st.image("assets/robot.png", use_container_width=True)
     with col2:
         st.markdown("""
         **Rural clinics often lack access to specialists.**
@@ -111,7 +111,7 @@ def landing_page():
     with col6:
         st.markdown("""
         **Multiple user roles.**<br><br>
-        Wella.AI supports Admins, Doctors, and Nurses, each with unique access rights and logs to ensure proper patient handling.
+        Wella.AI supports Admins, Doctors and Nurses, each with unique access rights and logs to ensure proper patient handling.
         """, unsafe_allow_html=True)
     with col7:
         st.image("assets/Ezekiel.jpg", use_container_width=True)
@@ -205,7 +205,7 @@ def landing_page():
         </div>
       </div>
       <div class="testimonial-card" style="display: none;">
-        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/community_worker.jpg">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/offline.png">
         <div>
           <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
           <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -221,7 +221,7 @@ def landing_page():
         </div>
       </div>
       <div class="testimonial-card" style="display: none;">
-        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/local_govt_rep.jpg">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commissioner.jpg">
         <div>
           <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
           <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
