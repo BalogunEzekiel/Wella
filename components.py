@@ -21,7 +21,7 @@ def render_header(active="home"):
         justify-content: space-between;
         padding: 1.2rem 2rem;
         position: fixed;
-        top: 30px;
+        top: 50px;
         left: 0;
         width: 100%;
         z-index: 99999;
@@ -37,7 +37,7 @@ def render_header(active="home"):
     }}
 
     .logo-container img {{
-        height: 55px;
+        height: 110px;
         display: block;
         margin-right: 20px;
     }}
@@ -71,7 +71,7 @@ def render_header(active="home"):
     }}
 
     body, .main {{
-        padding-top: 130px !important;
+        padding-top: 150px !important;
         margin-top: 0 !important;
     }}
 
