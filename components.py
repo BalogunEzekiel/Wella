@@ -11,7 +11,7 @@ def get_base64_image(image_path):
     return img_b64
 
 def render_header(active="home"):
-    logo_base64 = get_base64_image("assets/logo.png")
+    logo_base64 = get_base64_image("assets/logo.png")  # Confirm the path is correct
 
     st.markdown(f"""
     <style>
@@ -22,6 +22,9 @@ def render_header(active="home"):
         background-color: #00b894;
         padding: 1.5rem 2rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 9999;
         height: auto;
         flex-wrap: wrap;
     }}
@@ -33,6 +36,7 @@ def render_header(active="home"):
 
     .logo-container img {{
         height: 70px;
+        display: block;
         margin-right: 20px;
     }}
 
@@ -42,27 +46,35 @@ def render_header(active="home"):
         gap: 1rem;
     }}
 
-    .top-nav button {{
-        background-color: transparent;
-        border: none;
+    .top-nav a {{
         color: white;
+        text-decoration: none;
         font-weight: 600;
         font-size: 1.1rem;
         padding: 10px 18px;
         border-radius: 8px;
-        cursor: pointer;
         transition: background-color 0.3s ease-in-out;
+        display: block;
     }}
 
-    .top-nav button:hover {{
+    .top-nav a:hover {{
         background-color: #009973;
     }}
 
-    .top-nav button.active {{
+    .top-nav a.active {{
         background-color: #007b5e;
         text-decoration: underline;
     }}
 
+    @media (max-width: 768px) {{
+        .top-nav-wrapper {{
+            flex-direction: column;
+            align-items: flex-start;
+        }}
+        .top-nav {{
+            margin-top: 12px;
+        }}
+    }}
     </style>
 
     <div class="top-nav-wrapper">
@@ -70,19 +82,11 @@ def render_header(active="home"):
             <img src="data:image/png;base64,{logo_base64}" alt="Wella.AI Logo" />
         </div>
         <div class="top-nav">
-            <form action="" method="post">
-                <button class="{ 'active' if active == 'home' else '' }" name="nav" value="home">Home</button>
-                <button class="{ 'active' if active == 'service' else '' }" name="nav" value="service">Service</button>
-                <button class="{ 'active' if active == 'diagnosis' else '' }" name="nav" value="diagnosis">Diagnosis</button>
-                <button class="{ 'active' if active == 'about' else '' }" name="nav" value="about">About</button>
-                <button class="{ 'active' if active == 'contact' else '' }" name="nav" value="contact">Contact</button>
-            </form>
+            <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
+            <a href="/?page=service" class="{ 'active' if active == 'service' else '' }">Service</a>
+            <a href="/?page=login" class="{ 'active' if active == 'diagnosis' else '' }">Diagnosis</a>
+            <a href="/?page=about" class="{ 'active' if active == 'about' else '' }">About</a>
+            <a href="/?page=contact" class="{ 'active' if active == 'contact' else '' }">Contact</a>
         </div>
     </div>
     """, unsafe_allow_html=True)
-
-    # Get navigation result
-    nav = st.session_state.get("nav", active)
-    if "nav" in st.experimental_get_query_params():
-        nav = st.experimental_get_query_params()["nav"][0]
-    return nav
