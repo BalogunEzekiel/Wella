@@ -1,35 +1,41 @@
 import streamlit as st
 import pandas as pd
 import socket
+import time
 from datetime import datetime, date
+
 from utils.diagnosis_engine import run_diagnosis
 from utils.sync_utils import sync_to_supabase
 from utils.report_generator import generate_medical_report
 from utils.db import get_connection
-import time
 
-# Page Configuration
+# ⬇️ NEW: Import shared UI
+from components import render_header
+from landing import landing_page
+
+# Configure page
 st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="expanded")
 
-#=============== Landing Page ==========================
-from landing import landing_page  # If in a separate file
+# Detect current page from query parameters
+page = st.query_params.get("page", ["landing"])[0]
 
-page = st.query_params.get("page", "landing")
+# ⬇️ Display sticky top menu
+render_header(active=page)
 
-if page == "landing":
+# =============== Landing Page ==========================
+if page == "landing" or page == "home":
     landing_page()
     st.stop()
 
-#=============== Login and App Page ====================
+# =============== Login & App Page ======================
 if page == "login":
-    # --- Branding ---
+    # Sidebar branding
     st.sidebar.image("assets/logo.png", width=120)
     st.sidebar.markdown("Your Offline Health Companion")
 
     st.markdown("### 🩺Diagnostic Assistant for Primary Healthcare")
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
-    # --- Role Selection ---
     role = st.sidebar.selectbox("Login Role", ["Select Role", "Nurse", "Admin"])
     show_dashboard = False
 
@@ -40,7 +46,7 @@ if page == "login":
             if admin_pin and not show_dashboard:
                 st.error("❌ Incorrect PIN")
 
-    # --- Diagnosis Form ---
+    # Diagnosis Form
     with st.form("diagnosis_form", clear_on_submit=True):
         st.subheader("📋 Patient Symptom Entry")
         name = st.text_input("Patient Name", placeholder="Enter full name")
@@ -58,7 +64,7 @@ if page == "login":
                 result = run_diagnosis(symptoms)
                 st.success("Diagnosis generated successfully.")
 
-                # Save to database
+                # Save to DB
                 try:
                     conn = get_connection()
                     cursor = conn.cursor()
@@ -95,7 +101,7 @@ if page == "login":
         except Exception as diag_err:
             st.error(f"Diagnosis Engine Error: {diag_err}")
 
-    # --- Admin Dashboard ---
+    # Admin Dashboard
     if show_dashboard:
         st.markdown("---")
         st.subheader("📊 Admin Dashboard – Patient Records")
@@ -103,7 +109,6 @@ if page == "login":
             conn = get_connection()
             df = pd.read_sql_query("SELECT * FROM patients ORDER BY created_at DESC", conn)
 
-            # Filters
             name_filter = st.text_input("🔍 Search by Patient Name")
             date_filter = st.date_input("📅 Filter by Date", [])
 
@@ -114,7 +119,6 @@ if page == "login":
                 df = df[df['created_at'].dt.date == date_filter]
 
             st.dataframe(df)
-
             conn.close()
         except Exception as e:
             st.error(f"Could not load records: {e}")
@@ -124,7 +128,7 @@ if page == "login":
             st.success(status)
             st.rerun()
 
-    # --- Connectivity Check ---
+    # Connectivity Check
     def is_connected():
         try:
             socket.create_connection(("1.1.1.1", 53))
@@ -136,12 +140,18 @@ if page == "login":
         st.sidebar.success("🌐 Online – Auto Sync Enabled")
         sync_msg = sync_to_supabase()
         st.sidebar.info(sync_msg)
-
-        try:
-            conn = get_connection()
-            df = pd.read_sql_query("SELECT name FROM patients", conn)
-            conn.close()
-        except:
-            pass
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
+
+# Optional additional pages
+elif page == "service":
+    st.title("Our Services")
+    st.write("Describe Wella.AI's services here.")
+
+elif page == "about":
+    st.title("About Us")
+    st.write("We are building AI health solutions for rural clinics...")
+
+elif page == "contact":
+    st.title("Contact Us")
+    st.write("You can reach us at support@wella.ai")
