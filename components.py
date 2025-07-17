@@ -1,76 +1,88 @@
 import streamlit as st
 
 def render_header(active="home"):
-    st.markdown(f"""
+    st.markdown("""
     <style>
-    .top-nav-wrapper {{
+    /* Fix Streamlit default margin issues */
+    .css-18e3th9 {
+        padding-top: 0 !important;
+    }
+
+    .top-nav-wrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #00b894;
-        padding: 1rem 1.5rem;
-        height: 80px;
+        padding: 1.2rem 2rem;
+        height: 90px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         position: sticky;
         top: 0;
         z-index: 999;
-    }}
+    }
 
-    .logo {{
-        height: 60px;
-    }}
+    .logo {
+        height: 70px;
+        margin-right: 30px;
+    }
 
-    .top-nav {{
+    .top-nav {
         display: flex;
-        gap: 20px;
+        gap: 24px;
         flex-wrap: wrap;
-    }}
+    }
 
-    .top-nav a {{
+    .top-nav a {
         color: white;
         text-decoration: none;
         font-weight: 600;
         font-size: 1rem;
-        padding: 8px 16px;
+        padding: 8px 18px;
         border-radius: 6px;
-        transition: background-color 0.2s;
-    }}
+        transition: background-color 0.2s ease-in-out;
+    }
 
-    .top-nav a:hover {{
-        background-color: #00a383;
-    }}
+    .top-nav a:hover {
+        background-color: #009973;
+    }
 
-    .top-nav a.active {{
+    .top-nav a.active {
+        background-color: #007b5e;
         text-decoration: underline;
-        background-color: #009d7a;
-    }}
+    }
 
-    @media (max-width: 768px) {{
-        .top-nav-wrapper {{
+    @media (max-width: 768px) {
+        .top-nav-wrapper {
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             height: auto;
-            padding: 1rem;
-        }}
+        }
 
-        .top-nav {{
-            justify-content: center;
-            margin-top: 0.5rem;
-        }}
+        .logo {
+            height: 60px;
+            margin-bottom: 12px;
+        }
 
-        .logo {{
-            height: 50px;
-        }}
-    }}
+        .top-nav {
+            justify-content: flex-start;
+        }
+    }
     </style>
 
     <div class="top-nav-wrapper">
-        <img src="assets/logo.png" class="logo" alt="Logo">
+        <img src="assets/logo.png" class="logo" alt="Wella.AI Logo">
         <div class="top-nav">
-            <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
-            <a href="/?page=home" class="{ 'active' if active == 'service' else '' }">Service</a>
-            <a href="/?page=login" class="{ 'active' if active == 'diagnosis' else '' }">Diagnosis</a>
-            <a href="/?page=home" class="{ 'active' if active == 'about' else '' }">About Us</a>
-            <a href="/?page=home" class="{ 'active' if active == 'contact' else '' }">Contact</a>
+            <a href="/?page=home" class="%s">Home</a>
+            <a href="/?page=home" class="%s">Service</a>
+            <a href="/?page=login" class="%s">Diagnosis</a>
+            <a href="/?page=home" class="%s">About</a>
+            <a href="/?page=home" class="%s">Contact</a>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """ % (
+        "active" if active == "home" else "",
+        "active" if active == "service" else "",
+        "active" if active == "diagnosis" else "",
+        "active" if active == "about" else "",
+        "active" if active == "contact" else ""
+    ), unsafe_allow_html=True)
