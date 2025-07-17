@@ -13,8 +13,6 @@ def detect_language():
 def landing_page():
     st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide", initial_sidebar_state="collapsed")
 
-    render_header(active="home")
-
     # Hide sidebar and top nav links (like app, init, landing)
     st.markdown("""
         <style>
