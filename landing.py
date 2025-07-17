@@ -68,15 +68,115 @@ def landing_page():
     st.image("assets/logo.png", width=150)
 
     # Hero section
-    st.markdown("""
-    <div class="hero">
-        <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
-        <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
-        <a href="/?page=login" target="_self">
-            <button class="launch-button">🚀 Launch Wella.AI</button>
-        </a>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        """
+        <style>
+            .hero-carousel {
+                position: relative;
+                width: 100%;
+                height: 400px;
+                overflow: hidden;
+                border-radius: 20px;
+                margin-bottom: 2rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            }
+    
+            .hero-carousel-slide {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+                background-size: cover;
+                background-position: center;
+            }
+    
+            .hero-carousel-slide.active {
+                opacity: 1;
+            }
+    
+            .hero-overlay {
+                position: absolute;
+                bottom: 30px;
+                left: 30px;
+                color: white;
+                background-color: rgba(0,0,0,0.6);
+                padding: 20px;
+                border-radius: 12px;
+            }
+    
+            .launch-button {
+                margin-top: 10px;
+                background-color: #00c78c;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 25px;
+                color: white;
+                font-size: 1.1rem;
+                cursor: pointer;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            }
+    
+            @keyframes heroSlider {
+                0% { opacity: 1; }
+                25% { opacity: 0; }
+                50% { opacity: 1; }
+                75% { opacity: 0; }
+                100% { opacity: 1; }
+            }
+    
+            .hero-carousel-slide:nth-child(1) {
+                animation: heroSlider 20s infinite;
+                animation-delay: 0s;
+            }
+            .hero-carousel-slide:nth-child(2) {
+                animation: heroSlider 20s infinite;
+                animation-delay: 5s;
+            }
+            .hero-carousel-slide:nth-child(3) {
+                animation: heroSlider 20s infinite;
+                animation-delay: 10s;
+            }
+            .hero-carousel-slide:nth-child(4) {
+                animation: heroSlider 20s infinite;
+                animation-delay: 15s;
+            }
+    
+        </style>
+    
+        <div class="hero-carousel">
+            <div class="hero-carousel-slide" style="background-image: url('assets/wella.jpg');">
+                <div class="hero-overlay">
+                    <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
+                    <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
+                    <a href="/?page=login"><button class="launch-button">🚀 Launch Wella.AI</button></a>
+                </div>
+            </div>
+            <div class="hero-carousel-slide" style="background-image: url('assets/illustration.jpg');">
+                <div class="hero-overlay">
+                    <h1>Transforming Healthcare Access</h1>
+                    <p>AI-powered tools designed to work even without internet.</p>
+                    <a href="/?page=login"><button class="launch-button">🚀 Try Wella.AI</button></a>
+                </div>
+            </div>
+            <div class="hero-carousel-slide" style="background-image: url('assets/logo.png');">
+                <div class="hero-overlay">
+                    <h1>Seamless Offline Diagnosis</h1>
+                    <p>Helping frontline workers make faster, smarter decisions.</p>
+                    <a href="/?page=login"><button class="launch-button">🚀 Explore Wella.AI</button></a>
+                </div>
+            </div>
+            <div class="hero-carousel-slide" style="background-image: url('assets/raspberry.avif');">
+                <div class="hero-overlay">
+                    <h1>Low-Cost Hardware Integration</h1>
+                    <p>Optimized for Raspberry Pi & other low-resource devices.</p>
+                    <a href="/?page=login"><button class="launch-button">🚀 Learn More</button></a>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     # Two columns (Image | Text)
     st.subheader("🌍 Supporting Underserved Communities")
@@ -94,7 +194,7 @@ def landing_page():
     st.subheader("⚙️ Seamless Workflow Integration")
     col3, col4, col5 = st.columns([1.2, 1.6, 1.2])
     with col3:
-        st.image("assets/Ezekiel.jpg", use_container_width=True)
+        st.image("assets/cloud.png", use_container_width=True)
     with col4:
         st.markdown("""
         **Works online and offline**<br>
@@ -213,7 +313,7 @@ def landing_page():
         </div>
       </div>
       <div class="testimonial-card" style="display: none;">
-        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo_partner.jpg">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
         <div>
           <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
           <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -221,7 +321,7 @@ def landing_page():
         </div>
       </div>
       <div class="testimonial-card" style="display: none;">
-        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commissioner.jpg">
+        <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
         <div>
           <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
           <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
