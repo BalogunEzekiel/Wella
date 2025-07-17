@@ -11,24 +11,24 @@ def get_base64_image(image_path):
     return img_b64
 
 def render_header(active="home"):
-    logo_base64 = get_base64_image("assets/logo.png")  # Confirm path is correct
+    logo_base64 = get_base64_image("assets/logo.png")  # Ensure the logo path is correct
 
     st.markdown(f"""
     <style>
     .top-nav-wrapper {{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.5rem 2rem;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         z-index: 9999;
-        background-color: transparent;  /* Removed background color */
-        backdrop-filter: blur(5px);  /* Optional subtle blur */
-        border-bottom: 1px solid #e0e0e0;  /* Optional bottom border */
+        background-color: rgba(255, 255, 255, 0.95); /* Transparent white background */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         flex-wrap: wrap;
+        font-family: 'Segoe UI', sans-serif;
     }}
 
     .logo-container {{
@@ -37,52 +37,53 @@ def render_header(active="home"):
     }}
 
     .logo-container img {{
-        height: 60px;
-        display: block;
-        margin-right: 20px;
+        height: 55px;
     }}
 
     .top-nav {{
         display: flex;
-        gap: 1rem;
         justify-content: center;
-        flex: 1;
+        align-items: center;
+        gap: 1.5rem;
+        flex-grow: 1;
     }}
 
     .top-nav a {{
-        color: #333;
         text-decoration: none;
-        font-weight: 600;
-        font-size: 1.05rem;
-        padding: 10px 16px;
-        border-radius: 8px;
-        transition: background-color 0.3s ease-in-out;
+        color: #333;
+        font-weight: 500;
+        font-size: 1rem;
+        position: relative;
+        padding: 8px 5px;
+        transition: color 0.3s ease-in-out;
     }}
 
     .top-nav a:hover {{
-        background-color: rgba(0,0,0,0.05);
+        color: #00b894;
     }}
 
-    .top-nav a.active {{
-        background-color: rgba(0,0,0,0.1);
-        text-decoration: underline;
+    .top-nav a.active::after {{
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #00b894;
+        border-radius: 10px;
     }}
 
-    /* Responsive Design */
+    /* Responsive adjustment */
     @media (max-width: 768px) {{
-        .top-nav-wrapper {{
-            flex-direction: column;
-            align-items: flex-start;
-        }}
         .top-nav {{
-            margin-top: 12px;
-            justify-content: flex-start;
-            width: 100%;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 10px;
         }}
     }}
 
-    body {{
-        padding-top: 100px;  /* Prevent content from hiding behind fixed nav */
+    .spacer {{
+        height: 80px;  /* Spacer to offset fixed nav height */
     }}
     </style>
 
@@ -98,4 +99,6 @@ def render_header(active="home"):
             <a href="/?page=contact" class="{ 'active' if active == 'contact' else '' }">Contact</a>
         </div>
     </div>
+
+    <div class="spacer"></div>
     """, unsafe_allow_html=True)
