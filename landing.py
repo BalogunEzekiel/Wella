@@ -11,59 +11,93 @@ def detect_language():
         return "en"
 
 def landing_page():
-    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide")
-    
-    # 🔒 Static Header
-    render_header(active="home")
+    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide", initial_sidebar_state="collapsed")
 
-    # Input field at the top
-    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
-
-    lang = detect_language()[:2]
-    greetings = {
-        "en": "Welcome to Wella.AI",
-        "fr": "Bienvenue sur Wella.AI",
-        "sw": "Karibu Wella.AI",
-        "yo": "Kaabo si Wella.AI",
-        "ha": "Barka da zuwa Wella.AI",
-        "ig": "Nnọọ na Wella.AI",
-        "es": "Bienvenido a Wella.AI"
-    }
-    welcome = greetings.get(lang, greetings["en"])
-    st.success(welcome)
-
-    # Custom CSS
+    # Hide sidebar and top nav links (like app, init, landing)
     st.markdown("""
-    <style>
-    .hero {
-        background: linear-gradient(to right, #00b894, #00cec9);
-        color: white;
-        padding: 4rem 2rem;
-        text-align: center;
-        border-radius: 1rem;
-        margin-bottom: 3rem;
-    }
-    .launch-button {
-        background-color: white;
-        color: #00b894;
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding: 0.75rem 2rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-        margin-top: 2rem;
-    }
-    .footer {
-        text-align: center;
-        font-size: 0.9rem;
-        color: gray;
-        margin-top: 2rem;
-        margin-bottom: 0.5rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+        <style>
+        [data-testid="stSidebar"], .css-1lcbmhc, .css-ng1t4o {
+            display: none !important;
+        }
+        [data-testid="collapsedControl"] {
+            display: none !important;
+        }
+        .hero-section {
+            position: relative;
+            height: 75vh;
+            overflow: hidden;
+        }
+        .hero-images {
+            display: flex;
+            width: 400%;
+            animation: slide 20s infinite;
+        }
+        .hero-images img {
+            width: 100vw;
+            height: 75vh;
+            object-fit: cover;
+        }
+        @keyframes slide {
+            0%   { transform: translateX(0%); }
+            25%  { transform: translateX(-100%); }
+            50%  { transform: translateX(-200%); }
+            75%  { transform: translateX(-300%); }
+            100% { transform: translateX(0%); }
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .hero-overlay h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hero-overlay p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .launch-button {
+            background-color: #00b894;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .launch-button:hover {
+            background-color: #009970;
+        }
+        </style>
 
+        <div class="hero-section">
+            <div class="hero-images">
+                <img src="assets/wella.jpg" />
+                <img src="assets/illustration.jpg" />
+                <img src="assets/raspberry.avif" />
+                <img src="assets/wella.jpg" />
+            </div>
+            <div class="hero-overlay">
+                <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
+                <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
+                <a href="/?page=login" target="_self">
+                    <button class="launch-button">🚀 Launch Wella.AI</button>
+                </a>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
     # Logo
     st.image("assets/logo.png", width=150)
 
