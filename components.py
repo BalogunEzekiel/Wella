@@ -4,57 +4,46 @@ import base64
 from io import BytesIO
 
 def get_base64_image(image_path):
-    try:
-        img = Image.open(image_path)
-        buffered = BytesIO()
-        img.save(buffered, format="PNG")
-        img_b64 = base64.b64encode(buffered.getvalue()).decode()
-        return img_b64
-    except Exception as e:
-        return None
+    img = Image.open(image_path)
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_b64 = base64.b64encode(buffered.getvalue()).decode()
+    return img_b64
 
 def render_header(active="home"):
     logo_base64 = get_base64_image("assets/logo.png")
 
-    if not logo_base64:
-        st.error("Logo image not found or failed to load.")
-        return
-
     st.markdown(f"""
     <style>
-    /* Clear default Streamlit padding */
-    .main > div:first-child {{
-        padding-top: 0rem !important;
-    }}
-
-    /* Header container */
     .top-nav-wrapper {{
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #00b894;
-        padding: 1.5rem 3rem;
-        min-height: 120px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        padding: 1.5rem 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         position: sticky;
         top: 0;
-        z-index: 1000;
+        z-index: 9999;
+        height: auto;
         flex-wrap: wrap;
-        width: 100%;
     }}
 
-    /* Logo styling */
+    .logo-container {{
+        display: flex;
+        align-items: center;
+    }}
+
     .logo-container img {{
-        height: 90px;
-        margin-right: 30px;
+        height: 70px;
+        display: block;
+        margin-right: 20px;
     }}
 
-    /* Navigation styling */
     .top-nav {{
         display: flex;
-        gap: 20px;
         flex-wrap: wrap;
-        align-items: center;
+        gap: 1rem;
     }}
 
     .top-nav a {{
@@ -62,14 +51,14 @@ def render_header(active="home"):
         text-decoration: none;
         font-weight: 600;
         font-size: 1.1rem;
-        padding: 10px 20px;
-        border-radius: 6px;
-        background-color: transparent;
+        padding: 10px 18px;
+        border-radius: 8px;
         transition: background-color 0.3s ease-in-out;
+        display: block;
     }}
 
     .top-nav a:hover {{
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: #009973;
     }}
 
     .top-nav a.active {{
@@ -84,8 +73,6 @@ def render_header(active="home"):
         }}
         .top-nav {{
             margin-top: 12px;
-            flex-direction: column;
-            gap: 12px;
         }}
     }}
     </style>
