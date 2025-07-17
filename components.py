@@ -4,25 +4,24 @@ def render_header(active="home"):
     st.markdown(f"""
     <style>
     .top-nav-wrapper {{
-        position: fixed;
-        top: 0;
-        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #00b894;
-        padding: 0.5rem 1rem;
-        z-index: 9999;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 1rem 1.5rem;
+        height: 80px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
     }}
 
-    .top-nav-wrapper img {{
-        height: 45px;
+    .logo {{
+        height: 60px;
     }}
 
     .top-nav {{
         display: flex;
-        gap: 18px;
+        gap: 20px;
         flex-wrap: wrap;
     }}
 
@@ -31,9 +30,9 @@ def render_header(active="home"):
         text-decoration: none;
         font-weight: 600;
         font-size: 1rem;
-        padding: 8px 14px;
+        padding: 8px 16px;
         border-radius: 6px;
-        transition: background-color 0.2s ease-in-out;
+        transition: background-color 0.2s;
     }}
 
     .top-nav a:hover {{
@@ -48,28 +47,30 @@ def render_header(active="home"):
     @media (max-width: 768px) {{
         .top-nav-wrapper {{
             flex-direction: column;
-            padding: 0.8rem 1rem;
+            align-items: center;
+            height: auto;
+            padding: 1rem;
         }}
+
         .top-nav {{
             justify-content: center;
-            margin-top: 0.4rem;
+            margin-top: 0.5rem;
         }}
-    }}
 
-    /* Add body padding to avoid header overlap */
-    .block-container {{
-        padding-top: 80px !important;
+        .logo {{
+            height: 50px;
+        }}
     }}
     </style>
 
     <div class="top-nav-wrapper">
-        <img src="assets/logo.png" alt="Logo">
+        <img src="assets/logo.png" class="logo" alt="Logo">
         <div class="top-nav">
             <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
-            <a href="/?page=home#services" class="{ 'active' if active == 'service' else '' }">Service</a>
+            <a href="/?page=home" class="{ 'active' if active == 'service' else '' }">Service</a>
             <a href="/?page=login" class="{ 'active' if active == 'diagnosis' else '' }">Diagnosis</a>
-            <a href="/?page=home#about" class="{ 'active' if active == 'about' else '' }">About Us</a>
-            <a href="/?page=home#contact" class="{ 'active' if active == 'contact' else '' }">Contact</a>
+            <a href="/?page=home" class="{ 'active' if active == 'about' else '' }">About Us</a>
+            <a href="/?page=home" class="{ 'active' if active == 'contact' else '' }">Contact</a>
         </div>
     </div>
     """, unsafe_allow_html=True)
