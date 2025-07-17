@@ -11,146 +11,130 @@ def detect_language():
         return "en"
 
 def landing_page():
-    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide", initial_sidebar_state="collapsed")
-
-    # Hide sidebar and default Streamlit elements
+    st.set_page_config(page_title="Wella.AI", layout="wide")
+    
+    # Custom CSS styles
     st.markdown("""
     <style>
-    [data-testid="stSidebar"], .css-1lcbmhc, .css-ng1t4o, [data-testid="collapsedControl"] {
-        display: none !important;
-    }
-    .hero-container {
+    /* Root Layout */
+    .hero-section {
         display: flex;
-        flex-direction: row;
-        gap: 2rem;
-        margin-top: 2rem;
-        padding: 2rem;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: stretch;
+        margin-top: 6rem;
+        padding: 2rem;
+        background: linear-gradient(to right, #f0f8ff, #ffffff);
     }
 
-    .hero-flag, .hero-carousel {
-        flex: 1 1 500px;
-        max-width: 700px;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    .hero-left, .hero-carousel {
+        flex: 1 1 48%;
+        min-height: 420px;
         position: relative;
-        min-height: 400px;
+        margin: 1rem;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
-    .hero-flag .hero-images {
-        display: flex;
-        width: 400%;
-        height: 100%;
-        animation: slide 20s infinite;
-    }
-
-    .hero-flag img {
-        width: 100%;
-        object-fit: cover;
-        height: 100%;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.4);
+    /* Hero Flag */
+    .hero-left {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        color: white;
-        text-align: center;
+        background: url('assets/wella.jpg');
+        background-size: cover;
+        background-position: center;
         padding: 2rem;
+        color: #fff;
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
-    .hero-overlay h1 {
+    .hero-left h1 {
         font-size: 2.5rem;
+        font-weight: bold;
         margin-bottom: 1rem;
     }
 
-    .hero-overlay p {
-        font-size: 1.25rem;
+    .hero-left p {
+        font-size: 1.2rem;
         margin-bottom: 1.5rem;
     }
 
     .launch-button {
-        background-color: #00b894;
+        background-color: #ff5722;
         border: none;
-        padding: 0.75rem 1.5rem;
-        font-size: 1.1rem;
-        font-weight: bold;
         color: white;
-        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
     .launch-button:hover {
-        background-color: #009970;
+        background-color: #e64a19;
     }
 
-    @keyframes slide {
-        0%   { transform: translateX(0%); }
-        25%  { transform: translateX(-100%); }
-        50%  { transform: translateX(-200%); }
-        75%  { transform: translateX(-300%); }
-        100% { transform: translateX(0%); }
-    }
-
+    /* Hero Carousel */
     .hero-carousel-slide {
-        position: absolute;
-        width: 100%;
+        display: none;
         height: 100%;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
         background-size: cover;
         background-position: center;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
     }
 
-    .hero-carousel-slide:nth-child(1) { animation: fade 20s infinite; animation-delay: 0s; }
-    .hero-carousel-slide:nth-child(2) { animation: fade 20s infinite; animation-delay: 5s; }
-    .hero-carousel-slide:nth-child(3) { animation: fade 20s infinite; animation-delay: 10s; }
-    .hero-carousel-slide:nth-child(4) { animation: fade 20s infinite; animation-delay: 15s; }
+    .hero-carousel-slide.active {
+        display: block;
+        animation: fadein 1s ease-in-out;
+    }
 
-    @keyframes fade {
-        0%, 100% { opacity: 1; }
-        25%, 75% { opacity: 0; }
-        50% { opacity: 1; }
+    .hero-overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        color: white;
+        width: 100%;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .hero-overlay h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     @media (max-width: 768px) {
-        .hero-container {
-            flex-direction: column;
-            padding: 1rem;
+        .hero-left, .hero-carousel {
+            flex: 1 1 100%;
         }
     }
     </style>
+    """, unsafe_allow_html=True)
 
-    <div class="hero-container">
+    # Hero Layout
+    st.markdown("""
+    <div class="hero-section">
         <!-- Left Hero Flag -->
-        <div class="hero-flag">
-            <div class="hero-images">
-                <img src="assets/wella.jpg" />
-                <img src="assets/illustration.jpg" />
-                <img src="assets/raspberry.avif" />
-                <img src="assets/wella.jpg" />
-            </div>
-            <div class="hero-overlay">
-                <h1>Wella.AI – Smart Diagnosis</h1>
-                <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
-                <a href="/?page=login" target="_self">
-                    <button class="launch-button">🚀 Launch Now</button>
-                </a>
-            </div>
+        <div class="hero-left">
+            <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
+            <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
+            <a href="/?page=login" target="_self">
+                <button class="launch-button">🚀 Launch Wella.AI</button>
+            </a>
         </div>
 
         <!-- Right Hero Carousel -->
         <div class="hero-carousel">
-            <div class="hero-carousel-slide" style="background-image: url('assets/wella.jpg');">
+            <div class="hero-carousel-slide active" style="background-image: url('assets/wella.jpg');">
                 <div class="hero-overlay">
                     <h1>Smart & Reliable</h1>
                     <p>Seamless AI diagnosis in seconds.</p>
@@ -180,6 +164,19 @@ def landing_page():
             </div>
         </div>
     </div>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("hero-carousel-slide");
+        function showNextSlide() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add("active");
+        }
+        setInterval(showNextSlide, 5000);
+    </script>
     """, unsafe_allow_html=True)
         
     # Two columns (Image | Text)
