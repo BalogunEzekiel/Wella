@@ -248,7 +248,7 @@ def landing_page():
         Wella.AI supports Admins, Doctors and Nurses, each with unique access rights and logs to ensure proper patient handling.
         """, unsafe_allow_html=True)
     with col7:
-        st.image("assets/Ezekiel.jpg", use_container_width=True)
+        st.image("assets/roles.png", use_container_width=True)
 
     # Video section
     st.subheader("🎥 See Wella.AI in Action")
