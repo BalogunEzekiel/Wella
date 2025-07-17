@@ -11,7 +11,7 @@ def get_base64_image(image_path):
     return img_b64
 
 def render_header(active="home"):
-    logo_base64 = get_base64_image("assets/logo.png")  # Confirm the path is correct
+    logo_base64 = get_base64_image("assets/logo.png")  # Confirm path is correct
 
     st.markdown(f"""
     <style>
@@ -19,13 +19,15 @@ def render_header(active="home"):
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: #00b894;
         padding: 1.5rem 2rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        position: sticky;
+        position: fixed;
         top: 0;
+        left: 0;
+        width: 100%;
         z-index: 9999;
-        height: auto;
+        background-color: transparent;  /* Removed background color */
+        backdrop-filter: blur(5px);  /* Optional subtle blur */
+        border-bottom: 1px solid #e0e0e0;  /* Optional bottom border */
         flex-wrap: wrap;
     }}
 
@@ -35,37 +37,38 @@ def render_header(active="home"):
     }}
 
     .logo-container img {{
-        height: 70px;
+        height: 60px;
         display: block;
         margin-right: 20px;
     }}
 
     .top-nav {{
         display: flex;
-        flex-wrap: wrap;
         gap: 1rem;
+        justify-content: center;
+        flex: 1;
     }}
 
     .top-nav a {{
-        color: white;
+        color: #333;
         text-decoration: none;
         font-weight: 600;
-        font-size: 1.1rem;
-        padding: 10px 18px;
+        font-size: 1.05rem;
+        padding: 10px 16px;
         border-radius: 8px;
         transition: background-color 0.3s ease-in-out;
-        display: block;
     }}
 
     .top-nav a:hover {{
-        background-color: #009973;
+        background-color: rgba(0,0,0,0.05);
     }}
 
     .top-nav a.active {{
-        background-color: #007b5e;
+        background-color: rgba(0,0,0,0.1);
         text-decoration: underline;
     }}
 
+    /* Responsive Design */
     @media (max-width: 768px) {{
         .top-nav-wrapper {{
             flex-direction: column;
@@ -73,7 +76,13 @@ def render_header(active="home"):
         }}
         .top-nav {{
             margin-top: 12px;
+            justify-content: flex-start;
+            width: 100%;
         }}
+    }}
+
+    body {{
+        padding-top: 100px;  /* Prevent content from hiding behind fixed nav */
     }}
     </style>
 
