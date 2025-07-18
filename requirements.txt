@@ -13,3 +13,4 @@ python-barcode
 datetime
 streamlit-lottie
 langdetect
+streamlit-option-menu
