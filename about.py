@@ -1,5 +1,5 @@
 import streamlit as st
-from components import render_header
+#from components import render_header
 
 def show_about():
     # Page config
