@@ -148,7 +148,7 @@ from streamlit_option_menu import option_menu
 import landing
 import service
 import about
-import contactus
+import contact
 import app  # This is assuming `app.py` contains login or another relevant function
 
 # Horizontal Navigation Menu
@@ -161,19 +161,3 @@ selected = option_menu(
     orientation="horizontal",
     key="main_menu_home"  # ✅ this must be unique
 )
-
-# Route to the selected page
-if selected == "Home":
-    landing.landing_page()
-
-elif selected == "Service":
-    service.show_service()
-
-elif selected == "Diagnosis":
-    landing.login_page()  # or app.login_page() depending on where it is
-
-elif selected == "About":
-    about.show_about()
-
-elif selected == "Contact":
-    contactus.show_contact()
