@@ -1,104 +1,99 @@
 import streamlit as st
-from PIL import Image
 import base64
-from io import BytesIO
-
-def get_base64_image(image_path):
-    img = Image.open(image_path)
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    img_b64 = base64.b64encode(buffered.getvalue()).decode()
-    return img_b64
+from PIL import Image
 
 def render_header(active="home"):
-    logo_base64 = get_base64_image("assets/logo.png")
+    # Load logo and convert to base64
+    logo_path = "assets/logo.png"
+    try:
+        with open(logo_path, "rb") as f:
+            logo_data = f.read()
+            logo_base64 = base64.b64encode(logo_data).decode()
+    except FileNotFoundError:
+        st.error("🚫 Logo file not found at: assets/logo.png")
+        return
 
+    # Inject CSS
     st.markdown(f"""
     <style>
-    .top-nav-wrapper {{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.2rem 2rem 0.6rem 2rem; /* Reduced bottom padding */
+    /* Make nav bar fixed at the top */
+    .navbar {{
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 99999;
         background-color: white;
-        border-bottom: 1px solid #e0e0e0;
+        z-index: 1000;
+        padding: 0.5rem 2rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }}
 
-    .logo-container {{
+    .nav-left {{
         display: flex;
         align-items: center;
     }}
 
-    .logo-container img {{
-        height: 110px;
-        display: block;
-        margin-right: 20px;
+    .nav-left img {{
+        height: 45px;
     }}
 
-    .top-nav {{
+    .nav-center {{
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
         justify-content: center;
-        flex: 1;
+        flex-grow: 1;
     }}
 
-    .top-nav a {{
-        color: #333;
+    .nav-button {{
+        font-weight: 600;
+        padding: 0.3rem 0.8rem;
+        border-radius: 6px;
         text-decoration: none;
-        font-weight: bold;
-        font-size: 1.05rem;
-        padding: 10px 20px;
-        border-radius: 30px;
-        background-color: #f5f5f5;
-        transition: background-color 0.3s ease;
-        border: 1px solid transparent;
+        color: black;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
     }}
 
-    .top-nav a:hover {{
-        background-color: #e0e0e0;
+    .nav-button:hover {{
+        background-color: #f0f0f0;
     }}
 
-    .top-nav a.active {{
-        background-color: #d1e3ff;
-        border-color: #90c2ff;
+    .nav-button.active {{
+        background-color: #0072ff;
+        color: white;
     }}
 
-    body, .main {{
-        padding-top: 140px !important;
-        margin-top: 0 !important;
+    /* Push page content down so it’s not hidden behind navbar */
+    .block-container {{
+        padding-top: 90px;
     }}
 
-    @media (max-width: 768px) {{
-        .top-nav-wrapper {{
-            flex-direction: column;
-            align-items: flex-start;
-        }}
-        .top-nav {{
-            margin-top: 10px;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            width: 100%;
-        }}
+    /* Hide Streamlit’s 3-dot settings menu */
+    header [data-testid="stToolbar"] {{
+        visibility: hidden;
+    }}
+
+    /* Hide Streamlit footer */
+    footer {{
+        visibility: hidden;
     }}
     </style>
 
-    <div class="top-nav-wrapper">
-        <div class="logo-container">
-            <img src="data:image/png;base64,{logo_base64}" alt="Wella.AI Logo" />
+    <div class="navbar">
+        <div class="nav-left">
+            <img src="data:image/png;base64,{logo_base64}" alt="Wella.AI Logo">
         </div>
-        <div class="top-nav">
-            <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
-            <a href="/?page=service" class="{ 'active' if active == 'service' else '' }">Service</a>
-            <a href="/?page=login" class="{ 'active' if active == 'diagnosis' else '' }">Diagnosis</a>
-            <a href="/?page=about" class="{ 'active' if active == 'about' else '' }">About</a>
-            <a href="/?page=contact" class="{ 'active' if active == 'contact' else '' }">Contact</a>
+        <div class="nav-center">
+            <button class="nav-button {'active' if active=='home' else ''}" onclick="window.location.href='/'">Home</button>
+            <button class="nav-button {'active' if active=='service' else ''}" onclick="window.location.href='/?page=service'">Service</button>
+            <button class="nav-button {'active' if active=='diagnosis' else ''}" onclick="window.location.href='/?page=diagnosis'">Diagnosis</button>
+            <button class="nav-button {'active' if active=='about' else ''}" onclick="window.location.href='/?page=about'">About</button>
+            <button class="nav-button {'active' if active=='contact' else ''}" onclick="window.location.href='/?page=contact'">Contact</button>
         </div>
     </div>
     """, unsafe_allow_html=True)
