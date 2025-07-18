@@ -110,7 +110,7 @@ def render_header(active="home"):
         <div class="top-nav">
             <a href="/?page=home" class="{ 'active' if active == 'home' else '' }">Home</a>
             <a href="/?page=service" class="{ 'active' if active == 'service' else '' }">Service</a>
-            <a href="/?page=login" class="{ 'active' if active == 'diagnosis' else '' }">Diagnosis</a>
+            <a href="/?page=login" class="{ 'active' if active == 'login' else '' }">Diagnosis</a>
             <a href="/?page=about" class="{ 'active' if active == 'about' else '' }">About</a>
             <a href="/?page=contact" class="{ 'active' if active == 'contact' else '' }">Contact</a>
         </div>
