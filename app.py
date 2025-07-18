@@ -20,9 +20,10 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-# Fixed Top Navigation Bar with Shadow
+# Fixed Top Navigation Bar
 fixed_menu_style = """
     <style>
+    /* Fix the horizontal menu at the top */
     div[data-testid="stHorizontalBlock"] > div:first-child {
         position: fixed;
         top: 0;
@@ -30,13 +31,14 @@ fixed_menu_style = """
         right: 0;
         z-index: 9999;
         background-color: #fafafa;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
     }
-    /* Push page content down to prevent overlap with fixed navbar */
+
+    /* Push content down to make space for the fixed navbar */
     .block-container {
-        padding-top: 4.5rem !important;
+        padding-top: 4.2rem !important;
     }
     </style>
 """
@@ -44,7 +46,7 @@ st.markdown(fixed_menu_style, unsafe_allow_html=True)
 
 # Menu bar
 selected = option_menu(
-    menu_title="",  # No title
+    menu_title="",
     options=["Home", "Service", "Diagnosis", "About", "Contact"],
     icons=["house", "briefcase", "activity", "info-circle", "envelope"],
     menu_icon="cast",
