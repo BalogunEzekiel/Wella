@@ -3,7 +3,7 @@ import base64
 from PIL import Image
 
 def render_header(active="home"):
-    # Load and encode the logo
+    # Load and encode logo
     logo_path = "assets/logo.png"
     try:
         with open(logo_path, "rb") as f:
@@ -13,51 +13,57 @@ def render_header(active="home"):
         st.error("🚫 Logo file not found at: assets/logo.png")
         return
 
-    # Inject CSS and navigation bar HTML
+    # Inject CSS and top bar
     st.markdown(f"""
     <style>
-    /* Permanent top navigation bar */
-    .navbar {{
+    /* Remove original Streamlit toolbar and footer */
+    header [data-testid="stToolbar"],
+    footer {{
+        visibility: hidden;
+        height: 0;
+        position: absolute;
+    }}
+
+    /* Force our own topmost navigation bar */
+    .custom-topbar {{
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        height: 70px;
+        height: 60px;
         background-color: white;
-        z-index: 1000;
+        border-bottom: 1px solid #e0e0e0;
+        z-index: 9999;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 2rem;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }}
 
-    .nav-left img {{
-        height: 45px;
+    .nav-logo img {{
+        height: 40px;
     }}
 
-    .nav-center {{
+    .nav-buttons {{
         display: flex;
         gap: 1rem;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 1;
     }}
 
     .nav-button {{
         font-weight: 600;
+        font-size: 14px;
         padding: 0.4rem 1rem;
-        border-radius: 8px;
+        border-radius: 6px;
         background-color: transparent;
-        color: #000;
-        text-decoration: none;
         border: none;
         cursor: pointer;
+        color: #333;
         transition: all 0.2s ease;
     }}
 
     .nav-button:hover {{
-        background-color: #f0f0f0;
+        background-color: #f2f2f2;
     }}
 
     .nav-button.active {{
@@ -65,30 +71,17 @@ def render_header(active="home"):
         color: white;
     }}
 
-    /* Push the page content down to avoid overlap */
+    /* Push page content down to avoid overlap */
     .block-container {{
-        padding-top: 90px !important;
-    }}
-
-    /* Completely hide Streamlit's settings menu (three dots) behind nav bar */
-    header [data-testid="stToolbar"] {{
-        visibility: hidden;
-        height: 0;
-        position: absolute;
-        top: -9999px;
-        z-index: -1;
-    }}
-
-    footer {{
-        visibility: hidden;
+        padding-top: 80px !important;
     }}
     </style>
 
-    <div class="navbar">
-        <div class="nav-left">
+    <div class="custom-topbar">
+        <div class="nav-logo">
             <img src="data:image/png;base64,{logo_base64}" alt="Logo">
         </div>
-        <div class="nav-center">
+        <div class="nav-buttons">
             <button class="nav-button {'active' if active=='home' else ''}" onclick="window.location.href='/'">Home</button>
             <button class="nav-button {'active' if active=='service' else ''}" onclick="window.location.href='/?page=service'">Service</button>
             <button class="nav-button {'active' if active=='diagnosis' else ''}" onclick="window.location.href='/?page=diagnosis'">Diagnosis</button>
