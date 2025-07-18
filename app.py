@@ -143,6 +143,17 @@ if page == "login":
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
+from streamlit_option_menu import option_menu
+
+selected = option_menu(
+    menu_title="Main Menu",  # optional
+    options=["Home", "Service", "Diagnosis", "About", "Contact"],
+    icons=["house", "info-circle", "envelope"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal"
+)
+
 # Route to the correct page
 if page == "home":
     import app
