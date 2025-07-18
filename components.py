@@ -21,7 +21,7 @@ def render_header(active="home"):
         justify-content: space-between;
         padding: 1.2rem 2rem;
         position: fixed;
-        top: 0;  /* changed from 40px to 0 */
+        top: 0;
         left: 0;
         width: 100%;
         z-index: 99999;
@@ -71,7 +71,7 @@ def render_header(active="home"):
     }}
 
     body, .main {{
-        padding-top: 160px !important;  /* adjusted to account for nav height */
+        padding-top: 140px !important;
         margin-top: 0 !important;
     }}
 
