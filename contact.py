@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 def contact_page():
@@ -81,6 +80,9 @@ def contact_page():
     """)
 
     st.image("assets/illustration_person_computer.png", use_column_width=True)
+
+def show_contact():
+    contact_page()
 
 # Call the function to render the page
 if __name__ == "__main__":
