@@ -21,11 +21,11 @@ def render_header(active="home"):
         justify-content: space-between;
         padding: 1.2rem 2rem;
         position: fixed;
-        top: 40px;
+        top: 0;  /* changed from 40px to 0 */
         left: 0;
         width: 100%;
         z-index: 99999;
-        background-color: white;  /* Solid background to prevent overlap transparency */
+        background-color: white;
         border-bottom: 1px solid #e0e0e0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         flex-wrap: wrap;
@@ -71,7 +71,7 @@ def render_header(active="home"):
     }}
 
     body, .main {{
-        padding-top: 140px !important;
+        padding-top: 160px !important;  /* adjusted to account for nav height */
         margin-top: 0 !important;
     }}
 
