@@ -158,8 +158,8 @@ else:
     st.error("404 - Page not found.")
 
 # Optional additional pages
-elif page == "service":
-    st.title("Our Services")
+elif page == "about":
+    st.title("About")
     st.write("Describe Wella.AI's services here.")
 
 elif page == "about":
