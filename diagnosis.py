@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import socket
 import time
-from utils.database import get_connection
+from utils.db import get_connection
 from utils.diagnosis_engine import run_diagnosis
 from utils.pdf_report import generate_medical_report
 from utils.sync import sync_to_supabase
