@@ -102,7 +102,7 @@ with col2:
 st.markdown("### In Pictures", unsafe_allow_html=True)
 image_cols = st.columns(4)
 for i in range(4):
-    image_cols[i].image(f"assets/gallery_{i+1}.jpg", use_container_width=True)
+    image_cols[i].image(f"assets/AI_Me.png", use_container_width=True)
 
 # --- CALL TO ACTION ---
 st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
