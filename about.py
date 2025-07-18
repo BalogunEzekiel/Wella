@@ -46,7 +46,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("### Who We Are", unsafe_allow_html=True)
 col1, col2 = st.columns([1, 2])
 with col1:
-    st.image("assets/team_photo_placeholder.jpg", caption="Our Founding Team", use_column_width=True)
+    st.image("assets/team_photo_placeholder.jpg", caption="Our Founding Team", use_container_width=True)
 with col2:
     st.write("""
     Wella.AI was founded with a clear goal – to bridge the healthcare gap in underserved communities using intelligent technology. 
@@ -80,11 +80,11 @@ for icon, desc in values.items():
 st.markdown("### Meet the Team", unsafe_allow_html=True)
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.image("assets/person1.jpg", caption="Dr. Ada Okoro – Co-Founder", use_column_width=True)
+    st.image("assets/person1.jpg", caption="Dr. Ada Okoro – Co-Founder", use_container_width=True)
 with col2:
-    st.image("assets/person2.jpg", caption="Emeka Balogun – CTO", use_column_width=True)
+    st.image("assets/person2.jpg", caption="Emeka Balogun – CTO", use_container_width=True)
 with col3:
-    st.image("assets/person3.jpg", caption="Sarah Bello – Operations Lead", use_column_width=True)
+    st.image("assets/person3.jpg", caption="Sarah Bello – Operations Lead", use_container_width=True)
 
 # --- IMPACT STORIES ---
 st.markdown("### User Impact Stories", unsafe_allow_html=True)
@@ -102,7 +102,7 @@ with col2:
 st.markdown("### In Pictures", unsafe_allow_html=True)
 image_cols = st.columns(4)
 for i in range(4):
-    image_cols[i].image(f"assets/gallery_{i+1}.jpg", use_column_width=True)
+    image_cols[i].image(f"assets/gallery_{i+1}.jpg", use_container_width=True)
 
 # --- CALL TO ACTION ---
 st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
