@@ -4,34 +4,6 @@ def show_about():
     # Page config
     st.set_page_config(page_title="About Wella.AI", layout="wide")
 
-    # Styling
-    st.markdown("""
-        <style>
-        .main { padding-top: 0rem; }
-        .block-container {
-            padding-top: 0rem;
-        }
-        .hero-section {
-            background-color: #f5f9ff;
-            padding: 4rem 2rem 3rem 2rem;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-        }
-        .section-header {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-top: 2rem;
-            color: #003366;
-        }
-        .section-subtext {
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
     # --- HERO SECTION ---
     st.markdown('<div class="hero-section">', unsafe_allow_html=True)
     st.image("assets/logo.png", width=120)
