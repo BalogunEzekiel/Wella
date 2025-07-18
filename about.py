@@ -1,9 +1,10 @@
 import streamlit as st
+from components import render_header
 
 # Page config
 st.set_page_config(page_title="About Wella.AI", layout="wide")
 
-# Call the navigation/header function at the top
+# Header/navigation bar
 render_header(active="about")
 
 # Styling
@@ -110,4 +111,3 @@ We are open to collaborations, pilots, and partnerships. Let’s make healthcare
 
 👉 [Contact Us](https://your-contact-page.com)
 """)
-
