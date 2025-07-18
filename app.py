@@ -159,7 +159,7 @@ selected = option_menu(
     menu_icon="cast",
     default_index=0,
     orientation="horizontal",
-    key="main_menu"  # ✅ this must be unique
+    key="main_menu_home"  # ✅ this must be unique
 )
 
 # Route to the selected page
