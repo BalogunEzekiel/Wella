@@ -143,60 +143,36 @@ if page == "login":
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
+import streamlit as st
 from streamlit_option_menu import option_menu
+import landing
+import service
+import about
+import contactus
+import app  # This is assuming `app.py` contains login or another relevant function
 
+# Horizontal Navigation Menu
 selected = option_menu(
-    menu_title="Main Menu",  # optional
+    menu_title="Main Menu",
     options=["Home", "Service", "Diagnosis", "About", "Contact"],
-    icons=["house", "info-circle", "envelope"],
+    icons=["house", "briefcase", "activity", "info-circle", "envelope"],
     menu_icon="cast",
     default_index=0,
     orientation="horizontal"
 )
 
-# Route to the correct page
-if page == "home":
-    import app
-elif page == "service":
-    import service
-elif page == "diagnosis":
-    import landing
-elif page == "about":
-    import about
-elif page == "contact":
-    import contact
-else:
-    st.error("404 - Page not found.")
-
+# Route to the selected page
 if selected == "Home":
     landing.landing_page()
-
-elif selected == "Diagnosis":
-    app.login_page()  # If login form is in landing.py
 
 elif selected == "Service":
     service.show_service()
 
-if selected == "Home":
-    landing.landing_page()
-
 elif selected == "Diagnosis":
-    landing.login_page()  # If login form is in landing.py
-
-elif selected == "Services":
-    services.show_services()
+    landing.login_page()  # or app.login_page() depending on where it is
 
 elif selected == "About":
     about.show_about()
 
-if selected == "Home":
-    landing.landing_page()
-
-elif selected == "Diagnosis":
-    landing.login_page()  # If login form is in landing.py
-
-elif selected == "Services":
-    services.show_services()
-
 elif selected == "Contact":
-    contactus.show_contat()
+    contactus.show_contact()
