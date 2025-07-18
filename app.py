@@ -170,8 +170,8 @@ elif selected == "Service":
     service.show_service()
 
 elif selected == "Diagnosis":
-    page = "login"
-
+    diagnosis.show_diagnosis()
+    
 elif selected == "About":
     about.show_about()
 
