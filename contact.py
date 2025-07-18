@@ -41,7 +41,7 @@ def contact_page():
     st.markdown('<div class="contact-header">Contact Us</div>', unsafe_allow_html=True)
     st.markdown('<div class="contact-subheader">Don’t hesitate to reach out, our Healthcare Team is here to help 24/7.</div>', unsafe_allow_html=True)
 
-    st.image("assets/woman_using_phone.jpg", caption="24/7 Emergency Support", use_column_width=True)
+    st.image("AI_Me.png", caption="24/7 Emergency Support", use_container_width=True)
 
     st.markdown('<div class="emergency">🚨 24/7 Emergency Support — Call Our Emergency Line: +234-800-9000-000</div>', unsafe_allow_html=True)
 
@@ -79,7 +79,7 @@ def contact_page():
     - 🔗 LinkedIn: [@HealthPointer](#)
     """)
 
-    st.image("assets/illustration_person_computer.png", use_column_width=True)
+    st.image("assets/AI_Me.png", use_container_width=True)
 
 def show_contact():
     contact_page()
