@@ -46,7 +46,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("### Who We Are", unsafe_allow_html=True)
 col1, col2 = st.columns([1, 2])
 with col1:
-    st.image("assets/team_photo_placeholder.jpg", caption="Our Founding Team", use_container_width=True)
+    st.image("assets/offline.png", caption="Our Founding Team", use_container_width=True)
 with col2:
     st.write("""
     Wella.AI was founded with a clear goal – to bridge the healthcare gap in underserved communities using intelligent technology. 
