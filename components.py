@@ -19,7 +19,7 @@ def render_header(active="home"):
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1.2rem 2rem;
+        padding: 1.2rem 2rem 0.6rem 2rem; /* Reduced bottom padding */
         position: fixed;
         top: 0;
         left: 0;
