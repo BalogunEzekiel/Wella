@@ -157,15 +157,35 @@ elif page == "contact":
 else:
     st.error("404 - Page not found.")
 
-# Optional additional pages
-elif page == "about":
-    st.title("About")
-    st.write("Describe Wella.AI's services here.")
+if selected == "Home":
+    landing.landing_page()
 
-elif page == "about":
-    st.title("About Us")
-    st.write("We are building AI health solutions for rural clinics...")
+elif selected == "Diagnosis":
+    app.login_page()  # If login form is in landing.py
 
-elif page == "contact":
-    st.title("Contact Us")
-    st.write("You can reach us at support@wella.ai")
+elif selected == "Service":
+    service.show_service()
+
+if selected == "Home":
+    landing.landing_page()
+
+elif selected == "Diagnosis":
+    landing.login_page()  # If login form is in landing.py
+
+elif selected == "Services":
+    services.show_services()
+
+elif selected == "About":
+    about.show_about()
+
+if selected == "Home":
+    landing.landing_page()
+
+elif selected == "Diagnosis":
+    landing.login_page()  # If login form is in landing.py
+
+elif selected == "Services":
+    services.show_services()
+
+elif selected == "Contact":
+    contactus.show_contat()
