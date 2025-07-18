@@ -158,7 +158,8 @@ selected = option_menu(
     icons=["house", "briefcase", "activity", "info-circle", "envelope"],
     menu_icon="cast",
     default_index=0,
-    orientation="horizontal"
+    orientation="horizontal",
+    key="main_menu"  # ✅ this must be unique
 )
 
 # Route to the selected page
