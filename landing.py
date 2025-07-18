@@ -11,185 +11,79 @@ def detect_language():
         return "en"
 
 def landing_page():
-    st.set_page_config(page_title="Wella.AI", layout="wide")
+    st.set_page_config(page_title="Wella.AI – Smart Diagnosis", layout="wide", initial_sidebar_state="collapsed")
 
+    # Force sidebar to be closed
+    hide_sidebar = """
+        <style>
+            [data-testid="stSidebar"] {
+                display: none;
+            }
+            [data-testid="collapsedControl"] {
+                display: none;
+            }
+        </style>
+    """
+    st.markdown(hide_sidebar, unsafe_allow_html=True)
+
+    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
+
+    lang = detect_language()[:2]
+    greetings = {
+        "en": "Welcome to Wella.AI",
+        "fr": "Bienvenue sur Wella.AI",
+        "sw": "Karibu Wella.AI",
+        "yo": "Kaabo si Wella.AI",
+        "ha": "Barka da zuwa Wella.AI",
+        "ig": "Nnọọ na Wella.AI",
+        "es": "Bienvenido a Wella.AI"
+    }
+    welcome = greetings.get(lang, greetings["en"])
+    st.success(welcome)
+
+    # Custom CSS
     st.markdown("""
     <style>
-    .hero-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: stretch;
-        margin-top: 6rem;
-        padding: 2rem;
-        background: linear-gradient(to right, #f0f8ff, #ffffff);
-    }
-
-    .hero-left, .hero-carousel {
-        flex: 1 1 48%;
-        min-height: 420px;
-        position: relative;
-        margin: 1rem;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
-
-    .hero-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: url('assets/wella.jpg');
-        background-size: cover;
-        background-position: center;
-        padding: 2rem;
-        color: #fff;
-        text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
-    }
-
-    .hero-left h1 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-
-    .hero-left p {
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .launch-button {
-        background-color: #ff5722;
-        border: none;
+    .hero {
+        background: linear-gradient(to right, #00b894, #00cec9);
         color: white;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .launch-button:hover {
-        background-color: #e64a19;
-    }
-
-    .hero-carousel-slide {
-        display: none;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-size: cover;
-        background-position: center;
-        z-index: 0;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-    }
-
-    .hero-carousel-slide.active {
-        display: block;
-        z-index: 1;
-        opacity: 1;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        bottom: 0;
-        background: rgba(0,0,0,0.5);
-        color: white;
-        width: 100%;
-        padding: 1.5rem;
+        padding: 4rem 2rem;
         text-align: center;
+        border-radius: 1rem;
+        margin-bottom: 3rem;
     }
-
-    .hero-overlay h1 {
-        margin-bottom: 0.5rem;
-        font-size: 1.6rem;
-    }
-
-    .hero-overlay p {
+    .launch-button {
+        background-color: white;
+        color: #00b894;
+        font-weight: bold;
         font-size: 1.1rem;
-        margin-bottom: 1rem;
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        margin-top: 2rem;
     }
-
-    @keyframes fadein {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-        .hero-left, .hero-carousel {
-            flex: 1 1 100%;
-        }
-
-        .hero-left h1 {
-            font-size: 2rem;
-        }
-
-        .hero-left p,
-        .hero-overlay p {
-            font-size: 1rem;
-        }
+    .footer {
+        text-align: center;
+        font-size: 0.9rem;
+        color: gray;
+        margin-top: 3rem;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # Layout with Hero Flag and Carousel
+    # Logo
+    st.image("assets/logo.png", width=150)
+
+    # Hero section
     st.markdown("""
-    <div class="hero-section">
-        <div class="hero-left">
-            <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
-            <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
-            <a href="/?page=login" target="_self">
-                <button class="launch-button">🚀 Launch Wella.AI</button>
-            </a>
-        </div>
-
-        <div class="hero-carousel">
-            <div class="hero-carousel-slide active" style="background-image: url('assets/wella.jpg');">
-                <div class="hero-overlay">
-                    <h1>Smart & Reliable</h1>
-                    <p>Seamless AI diagnosis in seconds.</p>
-                    <a href="/?page=login"><button class="launch-button">Get Started</button></a>
-                </div>
-            </div>
-            <div class="hero-carousel-slide" style="background-image: url('assets/illustration.jpg');">
-                <div class="hero-overlay">
-                    <h1>Rural-Ready</h1>
-                    <p>Works perfectly with no internet.</p>
-                    <a href="/?page=login"><button class="launch-button">Try Offline</button></a>
-                </div>
-            </div>
-            <div class="hero-carousel-slide" style="background-image: url('assets/logo.png');">
-                <div class="hero-overlay">
-                    <h1>Lightweight & Secure</h1>
-                    <p>Optimized for Raspberry Pi and edge devices.</p>
-                    <a href="/?page=login"><button class="launch-button">Learn More</button></a>
-                </div>
-            </div>
-            <div class="hero-carousel-slide" style="background-image: url('assets/raspberry.avif');">
-                <div class="hero-overlay">
-                    <h1>Low-Cost Innovation</h1>
-                    <p>Access care without infrastructure barriers.</p>
-                    <a href="/?page=login"><button class="launch-button">Explore Now</button></a>
-                </div>
-            </div>
-        </div>
+    <div class="hero">
+        <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
+        <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
+        <a href="/?page=login" target="_self">
+            <button class="launch-button">🚀 Launch Wella.AI</button>
+        </a>
     </div>
-
-    <script>
-        let slideIndex = 0;
-        const slides = document.getElementsByClassName("hero-carousel-slide");
-        function showNextSlide() {
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
-            slideIndex = (slideIndex + 1) % slides.length;
-            slides[slideIndex].classList.add("active");
-        }
-        setInterval(showNextSlide, 5000);
-    </script>
     """, unsafe_allow_html=True)
         
     # Two columns (Image | Text)
