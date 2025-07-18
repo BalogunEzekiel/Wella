@@ -5,7 +5,8 @@ import time
 from utils.db import get_connection
 from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
-from utils.sync import sync_to_supabase
+from utils.sync_utils import sync_to_supabase
+from migrations import 
 
 def show_diagnosis():
     page = "login"  # This page check should be handled by caller ideally
