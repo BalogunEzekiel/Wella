@@ -1,6 +1,6 @@
 import streamlit as st
 
-def contact_page():
+def show_contact():
     st.set_page_config(page_title="Contact Us", layout="centered")
 
     st.markdown("""
@@ -80,10 +80,3 @@ def contact_page():
     """)
 
     st.image("assets/AI_Me.png", use_container_width=True)
-
-def show_contact():
-    contact_page()
-
-# Call the function to render the page
-if __name__ == "__main__":
-    contact_page()
