@@ -4,9 +4,6 @@ def show_about():
     # Page config
     st.set_page_config(page_title="About Wella.AI", layout="wide")
 
-    # Header/navigation bar
-    render_header(active="about")
-
     # Styling
     st.markdown("""
         <style>
