@@ -3,7 +3,7 @@ import base64
 from PIL import Image
 
 def render_header(active="home"):
-    # Load logo and convert to base64
+    # Load and encode the logo
     logo_path = "assets/logo.png"
     try:
         with open(logo_path, "rb") as f:
@@ -13,27 +13,23 @@ def render_header(active="home"):
         st.error("🚫 Logo file not found at: assets/logo.png")
         return
 
-    # Inject custom CSS and HTML
+    # Inject CSS and navigation bar HTML
     st.markdown(f"""
     <style>
-    /* Make nav bar fixed at the top */
+    /* Permanent top navigation bar */
     .navbar {{
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        right: 0;
+        height: 70px;
         background-color: white;
-        z-index: 999;
-        padding: 0.5rem 2rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        z-index: 1000;
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }}
-
-    .nav-left {{
-        display: flex;
-        align-items: center;
+        padding: 0 2rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }}
 
     .nav-left img {{
@@ -42,21 +38,22 @@ def render_header(active="home"):
 
     .nav-center {{
         display: flex;
-        gap: 1.5rem;
+        gap: 1rem;
         justify-content: center;
+        align-items: center;
         flex-grow: 1;
     }}
 
     .nav-button {{
         font-weight: 600;
-        padding: 0.3rem 0.8rem;
-        border-radius: 6px;
-        text-decoration: none;
-        color: black;
+        padding: 0.4rem 1rem;
+        border-radius: 8px;
         background-color: transparent;
+        color: #000;
+        text-decoration: none;
         border: none;
         cursor: pointer;
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
     }}
 
     .nav-button:hover {{
@@ -68,20 +65,20 @@ def render_header(active="home"):
         color: white;
     }}
 
-    /* Push page content down to make room for fixed navbar */
+    /* Push the page content down to avoid overlap */
     .block-container {{
         padding-top: 90px !important;
     }}
 
-    /* Hide the Streamlit settings menu (three-dot menu) by pushing it behind the navbar and hiding it */
+    /* Completely hide Streamlit's settings menu (three dots) behind nav bar */
     header [data-testid="stToolbar"] {{
-        z-index: -1;
-        opacity: 0;
+        visibility: hidden;
+        height: 0;
         position: absolute;
-        top: -100px;
+        top: -9999px;
+        z-index: -1;
     }}
 
-    /* Hide footer */
     footer {{
         visibility: hidden;
     }}
@@ -89,7 +86,7 @@ def render_header(active="home"):
 
     <div class="navbar">
         <div class="nav-left">
-            <img src="data:image/png;base64,{logo_base64}" alt="Wella.AI Logo">
+            <img src="data:image/png;base64,{logo_base64}" alt="Logo">
         </div>
         <div class="nav-center">
             <button class="nav-button {'active' if active=='home' else ''}" onclick="window.location.href='/'">Home</button>
