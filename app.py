@@ -161,3 +161,19 @@ selected = option_menu(
     orientation="horizontal",
     key="main_menu_home"  # ✅ this must be unique
 )
+
+# Route to the selected page
+if selected == "Home":
+    landing.landing_page()
+
+elif selected == "Service":
+    service.show_service()
+
+elif selected == "Diagnosis":
+    page = "login"
+
+elif selected == "About":
+    about.show_about()
+
+elif selected == "Contact":
+    contact.show_contact()
