@@ -13,7 +13,7 @@ def render_header(active="home"):
         st.error("🚫 Logo file not found at: assets/logo.png")
         return
 
-    # Inject CSS
+    # Inject custom CSS and HTML
     st.markdown(f"""
     <style>
     /* Make nav bar fixed at the top */
@@ -23,7 +23,7 @@ def render_header(active="home"):
         left: 0;
         width: 100%;
         background-color: white;
-        z-index: 1000;
+        z-index: 999;
         padding: 0.5rem 2rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         display: flex;
@@ -68,17 +68,20 @@ def render_header(active="home"):
         color: white;
     }}
 
-    /* Push page content down so it’s not hidden behind navbar */
+    /* Push page content down to make room for fixed navbar */
     .block-container {{
-        padding-top: 90px;
+        padding-top: 90px !important;
     }}
 
-    /* Hide Streamlit’s 3-dot settings menu */
+    /* Hide the Streamlit settings menu (three-dot menu) by pushing it behind the navbar and hiding it */
     header [data-testid="stToolbar"] {{
-        visibility: hidden;
+        z-index: -1;
+        opacity: 0;
+        position: absolute;
+        top: -100px;
     }}
 
-    /* Hide Streamlit footer */
+    /* Hide footer */
     footer {{
         visibility: hidden;
     }}
