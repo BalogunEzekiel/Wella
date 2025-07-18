@@ -12,11 +12,9 @@ def detect_language():
 
 def landing_page():
     st.set_page_config(page_title="Wella.AI", layout="wide")
-    
-    # Custom CSS styles
+
     st.markdown("""
     <style>
-    /* Root Layout */
     .hero-section {
         display: flex;
         flex-wrap: wrap;
@@ -37,7 +35,6 @@ def landing_page():
         box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
-    /* Hero Flag */
     .hero-left {
         display: flex;
         flex-direction: column;
@@ -76,21 +73,24 @@ def landing_page():
         background-color: #e64a19;
     }
 
-    /* Hero Carousel */
     .hero-carousel-slide {
         display: none;
         height: 100%;
-        background-size: cover;
-        background-position: center;
-        position: absolute;
         width: 100%;
+        position: absolute;
         top: 0;
         left: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
     }
 
     .hero-carousel-slide.active {
         display: block;
-        animation: fadein 1s ease-in-out;
+        z-index: 1;
+        opacity: 1;
     }
 
     .hero-overlay {
@@ -105,6 +105,12 @@ def landing_page():
 
     .hero-overlay h1 {
         margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+    }
+
+    .hero-overlay p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
     }
 
     @keyframes fadein {
@@ -116,14 +122,22 @@ def landing_page():
         .hero-left, .hero-carousel {
             flex: 1 1 100%;
         }
+
+        .hero-left h1 {
+            font-size: 2rem;
+        }
+
+        .hero-left p,
+        .hero-overlay p {
+            font-size: 1rem;
+        }
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # Hero Layout
+    # Layout with Hero Flag and Carousel
     st.markdown("""
     <div class="hero-section">
-        <!-- Left Hero Flag -->
         <div class="hero-left">
             <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
             <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
@@ -132,7 +146,6 @@ def landing_page():
             </a>
         </div>
 
-        <!-- Right Hero Carousel -->
         <div class="hero-carousel">
             <div class="hero-carousel-slide active" style="background-image: url('assets/wella.jpg');">
                 <div class="hero-overlay">
