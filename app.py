@@ -54,7 +54,7 @@ with st.container():
     with col1:
         try:
             logo = Image.open("assets/logo.png")
-            st.image(logo, use_column_width=False, width=100)
+            st.image(logo, use_container_width=False, width=100)
         except:
             st.write("Logo not found")
 
