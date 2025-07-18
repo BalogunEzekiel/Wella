@@ -80,11 +80,11 @@ for icon, desc in values.items():
 st.markdown("### Meet the Team", unsafe_allow_html=True)
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.image("assets/person1.jpg", caption="Dr. Ada Okoro – Co-Founder", use_container_width=True)
+    st.image("assets/AI_Me.png", caption="Dr. Ada Okoro – Co-Founder", use_container_width=True)
 with col2:
-    st.image("assets/person2.jpg", caption="Emeka Balogun – CTO", use_container_width=True)
+    st.image("assets/AI_Me.png", caption="Emeka Balogun – CTO", use_container_width=True)
 with col3:
-    st.image("assets/person3.jpg", caption="Sarah Bello – Operations Lead", use_container_width=True)
+    st.image("assets/AI_Me.png", caption="Sarah Bello – Operations Lead", use_container_width=True)
 
 # --- IMPACT STORIES ---
 st.markdown("### User Impact Stories", unsafe_allow_html=True)
