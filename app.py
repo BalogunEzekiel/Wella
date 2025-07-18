@@ -143,6 +143,20 @@ if page == "login":
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
+# Route to the correct page
+if page == "home":
+    import app
+elif page == "service":
+    import service
+elif page == "diagnosis":
+    import landing
+elif page == "about":
+    import about
+elif page == "contact":
+    import contact
+else:
+    st.error("404 - Page not found.")
+
 # Optional additional pages
 elif page == "service":
     st.title("Our Services")
