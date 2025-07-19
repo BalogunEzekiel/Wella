@@ -24,7 +24,6 @@ def show_about():
         """)
 
     # --- MISSION AND VISION ---
-    st.markdown("### Mission & Vision", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("🎯 Our Mission")
@@ -75,7 +74,7 @@ def show_about():
     # --- CALL TO ACTION ---
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     st.markdown("""
-    We are open to collaborations, pilots, and partnerships. Let’s make healthcare smarter, together.
+    We are open to collaborations, pilots and partnerships. Let’s make healthcare smarter, together.
 
     👉 [Contact Us](https://your-contact-page.com)
     """)
