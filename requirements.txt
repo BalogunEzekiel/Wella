@@ -14,3 +14,4 @@ datetime
 streamlit-lottie
 langdetect
 streamlit-option-menu
+streamlit-card
