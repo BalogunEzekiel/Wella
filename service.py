@@ -5,9 +5,22 @@ def show_service():
     # Page config
     st.set_page_config(page_title="Our Services – Wella.AI", layout="wide")
 
-    # Responsive and readable style
+    # Hide sidebar permanently
     st.markdown("""
         <style>
+            /* Hide sidebar and hamburger */
+            [data-testid="stSidebar"], [data-testid="stSidebarNav"], .css-h5rgaw, .css-1lcbmhc, .css-6qob1r {
+                display: none !important;
+            }
+
+            /* Main padding and width */
+            .main {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                max-width: 100% !important;
+            }
+
+            /* Custom service box style */
             .service-box {
                 padding: 20px;
                 border-radius: 15px;
@@ -31,6 +44,8 @@ def show_service():
                 color: #333333;
                 line-height: 1.6;
             }
+
+            /* Responsive adjustments for mobile */
             @media only screen and (max-width: 768px) {
                 .service-title {
                     font-size: 20px !important;
