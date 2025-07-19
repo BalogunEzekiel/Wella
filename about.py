@@ -76,5 +76,7 @@ def show_about():
     st.markdown("""
     We are open to collaborations, pilots and partnerships. Let’s make healthcare smarter, together.
 
+    st.markdown("👉 [Contact Us](Contact)")
+
     👉 [Contact Us](https://your-contact-page.com)
     """)
