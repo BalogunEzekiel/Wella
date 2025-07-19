@@ -72,9 +72,6 @@ def landing_page():
     </style>
     """, unsafe_allow_html=True)
 
-    # Logo
-    st.image("assets/logo.png", width=150)
-
     # Hero section
     st.markdown("""
     <div class="hero">
