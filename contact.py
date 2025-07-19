@@ -79,28 +79,45 @@ def show_contact():
     st.markdown("### 🌐 Stay Connected")
 
     social_icons = """
-    <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+    <style>
+    .social-icons {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    .social-icons a img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .social-icons a:hover img {
+        transform: scale(1.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+    </style>
     
-        <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank" title="Facebook">
+    <div class="social-icons">
+        <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank">
             <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
         </a>
     
-        <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank" title="X / Twitter">
+        <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank">
             <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter/X"/>
         </a>
     
-        <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438" target="_blank" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
             <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
         </a>
     
-        <a href="https://github.com/BalogunEzekiel" target="_blank" title="GitHub">
+        <a href="https://github.com/BalogunEzekiel" target="_blank">
             <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
         </a>
     
-        <a href="https://datatech.hashnode.dev" target="_blank" title="Blog">
+        <a href="https://datatech.hashnode.dev" target="_blank">
             <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
         </a>
-    
     </div>
     """
     
