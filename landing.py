@@ -44,44 +44,63 @@ def landing_page():
     # Custom CSS
     st.markdown("""
     <style>
-    .hero {
-        background: linear-gradient(to right, #00b894, #00cec9);
-        color: white;
-        padding: 4rem 2rem;
-        text-align: center;
-        border-radius: 1rem;
-        margin-bottom: 3rem;
-    }
-    .launch-button {
-        background-color: white;
-        color: #00b894;
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding: 0.75rem 2rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-        margin-top: 2rem;
-    }
-    .footer {
-        text-align: center;
-        font-size: 0.9rem;
-        color: gray;
-        margin-top: 3rem;
-    }
+        .hero {
+            background: linear-gradient(to right, #00b894, #00cec9);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+        .launch-button {
+            background-color: white;
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            text-decoration: none;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: gray;
+            margin-top: 3rem;
+        }
     </style>
     """, unsafe_allow_html=True)
 
-    # Hero section
+    # ========== Hero Banner ==========
     st.markdown("""
     <div class="hero">
-        <h1>Wella.AI – Smart Diagnosis Anytime, Anywhere</h1>
-        <p>Empowering rural clinics with AI-powered medical diagnosis – even offline.</p>
-        <a href="/?page=login" target="_self">
+        <h1><b>Wella.AI – Smart Diagnosis Anytime, Anywhere</b></h1>
+        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+        <a href="/?page=diagnosis" target="_self">
             <button class="launch-button">🚀 Launch Wella.AI</button>
         </a>
     </div>
     """, unsafe_allow_html=True)
+
+    # ========== Auto-Rotating Images ==========
+    image_files = ["assets/illustrtion.jpg", "assets/wella.jpg", "assets/AI_Me.png"]
+    images = [Image.open(img) for img in image_files]
+    caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
+
+    for i in range(len(images)):
+        st.image(images[i], caption=caption[i], use_column_width=True)
+        time.sleep(1.5)
+        st.empty()
+
+    # ========== Footer ==========
+    st.markdown("""
+    <div class="footer">
+        Built with ❤️ for smarter, accessible healthcare.
+    </div>
+    """, unsafe_allow_html=True)
+    
         
     # Two columns (Image | Text)
     st.subheader("🌍 Supporting Underserved Communities")
