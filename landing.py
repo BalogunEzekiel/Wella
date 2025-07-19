@@ -151,4 +151,4 @@ def landing_page():
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. Built for rural health. All rights reserved.</div>', unsafe_allow_html=True)
 
 # Uncomment the following line to run it in Streamlit
-# landing_page()
+landing_page()
