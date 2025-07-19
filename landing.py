@@ -381,8 +381,8 @@ def landing_page():
     </script>
     """
 
-    import streamlit.components.v1 as components
-    components.html(testimonials_html, height=540)
+#    import streamlit.components.v1 as components
+#    components.html(testimonials_html, height=540)
 
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. Built for rural health. All rights reserved.</div>', unsafe_allow_html=True)
     
