@@ -2,6 +2,7 @@ import streamlit as st
 from langdetect import detect, LangDetectException
 from components import render_header
 import streamlit.components.v1 as components
+from PIL import Image
 
 def detect_language():
     try:
