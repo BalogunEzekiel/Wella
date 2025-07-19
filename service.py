@@ -7,7 +7,7 @@ def show_service():
 
     # Title Section
     st.markdown("<h2 style='text-align: center; color: #0E4A86;'>Our Smart Healthcare Services</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; font-size: 18px;'>Empowering health with intelligent solutions – Because Every Diagnosis Matters.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; font-size: 18px;'>Empowering healthcare with intelligent solutions – Because Every Diagnosis Matters.</p>", unsafe_allow_html=True)
     st.markdown("---")
 
     # Services Section
