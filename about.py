@@ -4,6 +4,43 @@ def show_about():
     # Page config
     st.set_page_config(page_title="About Wella.AI", layout="wide")
 
+    # Inject responsive styling
+    st.markdown("""
+        <style>
+        /* Remove sidebar space */
+        [data-testid="stSidebar"] {
+            display: none;
+        }
+
+        /* Full width content for mobile */
+        [data-testid="stAppViewContainer"] > .main {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .element-container:has(img), .element-container:has(video) {
+                text-align: center !important;
+            }
+            .block-container {
+                padding: 1rem 0.5rem !important;
+            }
+            h1, h2, h3, h4 {
+                font-size: 1.2rem !important;
+            }
+            p, li {
+                font-size: 0.95rem !important;
+                line-height: 1.5;
+            }
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     # --- HERO SECTION ---
     st.markdown('<div class="hero-section">', unsafe_allow_html=True)
     st.markdown("## Welcome to Wella.AI")
@@ -76,4 +113,3 @@ def show_about():
     st.markdown("""
     We are open to collaborations, pilots and partnerships. Let’s make healthcare smarter, together.
     """)
-
