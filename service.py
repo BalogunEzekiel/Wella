@@ -57,7 +57,7 @@ def show_service():
     st.markdown("### 💡 Ready to transform healthcare in your community?")
     st.markdown("<p style='font-size: 18px;'>Partner with us or integrate Wella.AI into your clinic today. Let’s make intelligent healthcare accessible to all.</p>", unsafe_allow_html=True)
     if st.button("📞 Contact Us Now"):
-        selected == "Contact"
+        selected = "Contact"
 
 #        elif st.session_state.page == "contact":
 #    elif selected == "Contact":
