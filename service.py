@@ -5,7 +5,7 @@ def show_service():
     # Page config
     st.set_page_config(page_title="Our Services – Wella.AI", layout="wide")
 
-    # Page style
+    # Responsive and readable style
     st.markdown("""
         <style>
             .service-box {
@@ -29,6 +29,18 @@ def show_service():
             .service-desc {
                 font-size: 17px;
                 color: #333333;
+                line-height: 1.6;
+            }
+            @media only screen and (max-width: 768px) {
+                .service-title {
+                    font-size: 20px !important;
+                }
+                .service-desc {
+                    font-size: 15px !important;
+                }
+                .element-container > div > div {
+                    flex-direction: column !important;
+                }
             }
         </style>
     """, unsafe_allow_html=True)
