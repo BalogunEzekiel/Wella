@@ -79,7 +79,7 @@ def show_contact():
     st.markdown("### 🌐 Stay Connected")
 
     social_icons = """
-    <div style="display: flex; justify-content: center; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+    <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
     
         <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank" title="Facebook">
             <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
