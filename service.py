@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+import contact
 
 def show_service():
     # Page config
@@ -58,8 +59,6 @@ def show_service():
     st.markdown("<p style='font-size: 18px;'>Partner with us or integrate Wella.AI into your clinic today. Let’s make intelligent healthcare accessible to all.</p>", unsafe_allow_html=True)
 #    if st.button("📞 Contact Us Now"):
 #        selected = "Contact"
-
-import contact  # or: from contact import show_contact
 
     if st.button("📞 Contact Us Now"):
         contact.show_contact()
