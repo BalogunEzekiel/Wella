@@ -43,7 +43,7 @@ def show_contact():
 
     st.image("./assets/AI_Me.png", caption="24/7 Emergency Support", use_container_width=True)
 
-    st.markdown('<div class="emergency">🚨 24/7 Emergency Support — Call Our Emergency Line: +234-800-9000-000</div>', unsafe_allow_html=True)
+    st.markdown('<div class="emergency">🚨 24/7 Emergency Support — Call Our Emergency Line: +234-806-2529-172</div>', unsafe_allow_html=True)
 
     with st.container():
         st.markdown("### Get In Touch With Us")
@@ -70,7 +70,7 @@ def show_contact():
     
     st.write("- 📱 **Phone:** [+234 806 252 9172](tel:+2348062529172)")
     st.write("- 📧 **Email:** [helpline@wella.ai](mailto:helpline@wella.ai)")
-    st.write("- 💬 **Chat with Support:** [WhatsApp Support](https://wa.me/2348062529172)")
+    st.write("- 💬 **Chat with Support Team:** [WhatsApp](https://wa.me/2348062529172)")
 
     st.markdown("---")
 
