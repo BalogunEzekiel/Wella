@@ -19,7 +19,15 @@ def landing_page():
 
     st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
 
-    lang = (detect_language() or "en")[:2]
+    # ✅ Safe language detection with fallback
+    try:
+        detected = detect_language()
+        lang = detected[:2] if detected else "en"
+    except Exception as e:
+        print(f"Language detection failed: {e}")
+        lang = "en"
+    
+    # 🌍 Multilingual greetings
     greetings = {
         "en": "Welcome to Wella.AI",
         "fr": "Bienvenue sur Wella.AI",
@@ -29,6 +37,7 @@ def landing_page():
         "ig": "Nnọọ na Wella.AI",
         "es": "Bienvenido a Wella.AI"
     }
+
     welcome = greetings.get(lang, greetings["en"])
     st.success(welcome)
 
