@@ -76,6 +76,8 @@ def show_contact():
 
     st.image("assets/AI_Me.png", use_container_width=True)
 
+    st.markdown("---")
+
     st.markdown("### 🌐 Stay Connected", unsafe_allow_html=True)
 
     html_code = """
