@@ -74,34 +74,45 @@ def show_contact():
 
     st.markdown("---")
 
-    st.markdown("### 📲 Stay Connected")
-    
+    st.image("assets/AI_Me.png", use_container_width=True)
+
+    st.markdown("### 🌐 Stay Connected")
+
     social_icons = """
-    <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap;">
+    <style>
+    .icon-wrapper a img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 8px;
+    }
+    .icon-wrapper a img:hover {
+        transform: scale(1.2);
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    }
+    </style>
     
-    <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank">
-        <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
-    </a>
+    <div class="icon-wrapper" style="display: flex; justify-content: center; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
     
-    <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank">
-        <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter/X"/>
-    </a>
+        <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank" title="Facebook">
+            <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
+        </a>
     
-    <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
-        <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
-    </a>
+        <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank" title="X / Twitter">
+            <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter/X"/>
+        </a>
     
-    <a href="https://github.com/BalogunEzekiel" target="_blank">
-        <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
-    </a>
+        <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438" target="_blank" title="LinkedIn">
+            <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
+        </a>
     
-    <a href="https://www.datatech.hashnode.dev" target="_blank">
-        <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
-    </a>
+        <a href="https://github.com/BalogunEzekiel" target="_blank" title="GitHub">
+            <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
+        </a>
+    
+        <a href="https://datatech.hashnode.dev" target="_blank" title="Blog">
+            <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
+        </a>
     
     </div>
     """
     
     st.markdown(social_icons, unsafe_allow_html=True)
-
-    st.image("assets/AI_Me.png", use_container_width=True)
