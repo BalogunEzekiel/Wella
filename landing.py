@@ -99,29 +99,47 @@ def landing_page():
     """, unsafe_allow_html=True)
 
     # Content Blocks
-    st.header("🌍 Supporting Underserved Communities")
-    st.image("assets/robot.png", use_container_width=True)
-    st.markdown("""
-    **Rural clinics often lack access to specialists.**<br><br>
-    Wella.AI empowers frontline healthcare workers with intelligent diagnostic tools to ensure no patient is left behind.
-    """, unsafe_allow_html=True)
+    st.markdown("<style> .stColumn {padding: 1rem 0;} </style>", unsafe_allow_html=True)
 
-    st.header("⚙️ Seamless Workflow Integration")
-    st.image("assets/cloud.png", use_container_width=True)
-    st.markdown("""
-    - Works **online and offline**.
-    - Syncs to the cloud when connected.
-    - Runs diagnoses offline.
-    - Designed with doctors and nurses in mind.
-    """, unsafe_allow_html=True)
-
-    st.header("🔐 Secure and Role-Based Access")
-    st.image("assets/roles.png", use_container_width=True)
-    st.markdown("""
-    Wella.AI supports **Admins**, **Doctors**, and **Nurses**, each with their own access level.
-    Role-based logs ensure patient data integrity and security.
-    """, unsafe_allow_html=True)
-
+    # --- Section 1 ---
+    st.markdown("## 🌍 Supporting Underserved Communities")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image("assets/robot.png", use_container_width=True)
+    with col2:
+        st.markdown("""
+        **Rural clinics often lack access to specialists.**  
+        Wella.AI empowers frontline healthcare workers with intelligent diagnostic tools to ensure no patient is left behind.
+        """)
+    
+    st.markdown("---")
+    
+    # --- Section 2 ---
+    st.markdown("## ⚙️ Seamless Workflow Integration")
+    col3, col4 = st.columns(2)
+    with col3:
+        st.image("assets/cloud.png", use_container_width=True)
+    with col4:
+        st.markdown("""
+        - Works **online and offline**  
+        - Syncs to the cloud when connected  
+        - Runs diagnoses offline  
+        - Designed with doctors and nurses in mind
+        """)
+    
+    st.markdown("---")
+    
+    # --- Section 3 ---
+    st.markdown("## 🔐 Secure and Role-Based Access")
+    col5, col6 = st.columns(2)
+    with col5:
+        st.image("assets/roles.png", use_container_width=True)
+    with col6:
+        st.markdown("""
+        Wella.AI supports **Admins**, **Doctors**, and **Nurses**, each with their own access level.  
+        Role-based logs ensure patient data integrity and security.
+        """)
+    
     # New Content Section
     st.header("📈 Why Choose Wella.AI")
     st.markdown("""
