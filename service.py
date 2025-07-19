@@ -15,27 +15,27 @@ def show_service():
         {
             "title": "🧠 AI Diagnostic Engine",
             "description": "Instantly analyze symptoms and medical data using advanced AI to provide likely diagnosis suggestions, helping medical professionals make informed decisions even offline.",
-            "image": "assets/ai_diagnosis.png"
+            "image": "assets/AI.jpg"
         },
-        {
-            "title": "🩺 Virtual Health Assistant",
-            "description": "Patients can engage with our smart assistant for quick symptom checks, health advice, and connecting with a doctor for more personalized care.",
-            "image": "assets/virtual_assistant.png"
-        },
+#        {
+#            "title": "🩺 Virtual Health Assistant",
+#            "description": "Patients can engage with our smart assistant for quick symptom checks, health advice, and connecting with a doctor for more personalized care.",
+#            "image": "assets/virtual_assistant.png"
+#        },
         {
             "title": "📊 Health Analytics Dashboard",
-            "description": "Powerful visualizations and health trend analytics to monitor patient records, clinic activity, and more—all from one intuitive dashboard.",
-            "image": "assets/analytics_dashboard.png"
+            "description": "Powerful visualizations and health trend analytics to monitor clinic activity and more—all from one intuitive dashboard.",
+            "image": "assets/analytics.jpg"
         },
         {
             "title": "📁 Offline Patient Management",
-            "description": "Rural clinics and hospitals can register, manage, and retrieve patient records without needing constant internet access.",
-            "image": "assets/offline_records.png"
+            "description": "Rural clinics and hospitals can register, manage and retrieve patient records without needing constant internet access.",
+            "image": "assets/offline.png"
         },
         {
             "title": "👨‍⚕️ Smart Doctor Support",
-            "description": "Doctors receive real-time suggestions, automated reports, and alerts for possible health risks, powered by machine learning algorithms.",
-            "image": "assets/doctor_support.png"
+            "description": "Doctors receive real-time diagnostics, automated recommendation reports and potential health risk alerts, powered by machine learning algorithms.",
+            "image": "assets/diagnotics.jpg"
         }
     ]
 
