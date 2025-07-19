@@ -19,7 +19,7 @@ def landing_page():
 
     st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
 
-    lang = detect_language()[:2]
+    lang = (detect_language() or "en")[:2]
     greetings = {
         "en": "Welcome to Wella.AI",
         "fr": "Bienvenue sur Wella.AI",
