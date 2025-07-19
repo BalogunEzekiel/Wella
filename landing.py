@@ -17,7 +17,7 @@ def landing_page():
     """
     st.markdown(hide_sidebar, unsafe_allow_html=True)
 
-    st.session_state["text_input"] = st.text_input("✍️ Say something:", "")
+    st.session_state["text_input"] = st.text_input("✍️ Say something:", "", key="input_home")
 
     # ✅ Safe language detection with fallback
     try:
