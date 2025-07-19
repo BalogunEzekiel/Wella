@@ -45,7 +45,7 @@ def show_service():
         with cols[0 if idx % 2 == 0 else 1]:
             try:
                 img = Image.open(service["image"])
-                st.image(img, use_column_width=True)
+                st.image(img, use_container_width=True)
             except:
                 st.warning(f"Image not found: {service['image']}")
         with cols[1 if idx % 2 == 0 else 0]:
