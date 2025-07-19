@@ -75,3 +75,5 @@ def show_about():
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     st.markdown("""
     We are open to collaborations, pilots and partnerships. Let’s make healthcare smarter, together.
+    """)
+
