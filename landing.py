@@ -99,46 +99,87 @@ def landing_page():
     """, unsafe_allow_html=True)
 
     # Content Blocks
-    st.markdown("<style> .stColumn {padding: 1rem 0;} </style>", unsafe_allow_html=True)
-
-    # --- Section 1 ---
-    st.markdown("## 🌍 Supporting Underserved Communities")
+    st.markdown("""
+        <style>
+        .section-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1f77b4;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-text {
+            font-size: 18px;
+            color: #444;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .bullet-points {
+            font-size: 17px;
+            color: #333;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+        .stColumn {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background: #ddd;
+            margin: 2rem 0;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # ---------- Section 1 ----------
+    st.markdown('<div class="section-title">🌍 Supporting Underserved Communities</div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         st.image("assets/robot.png", use_container_width=True)
     with col2:
         st.markdown("""
-        **Rural clinics often lack access to specialists.**  
-        Wella.AI empowers frontline healthcare workers with intelligent diagnostic tools to ensure no patient is left behind.
-        """)
+        <div class="highlight-text">
+            Many rural clinics lack access to <strong>medical specialists</strong>.<br><br>
+            <span style='color:#1f77b4;'>Wella.AI</span> equips frontline healthcare workers with smart diagnostic tools, 
+            ensuring that <strong>no patient is left behind</strong>.
+        </div>
+        """, unsafe_allow_html=True)
     
-    st.markdown("---")
+    st.markdown("<hr>", unsafe_allow_html=True)
     
-    # --- Section 2 ---
-    st.markdown("## ⚙️ Seamless Workflow Integration")
+    # ---------- Section 2 ----------
+    st.markdown('<div class="section-title">⚙️ Seamless Workflow Integration</div>', unsafe_allow_html=True)
     col3, col4 = st.columns(2)
     with col3:
         st.image("assets/cloud.png", use_container_width=True)
     with col4:
         st.markdown("""
-        - Works **online and offline**  
-        - Syncs to the cloud when connected  
-        - Runs diagnoses offline  
-        - Designed with doctors and nurses in mind
-        """)
+        <div class="bullet-points">
+            ✅ <strong>Works both online and offline</strong><br>
+            🔄 <strong>Syncs to the cloud</strong> automatically when connected<br>
+            ⚡ <strong>Runs diagnoses instantly</strong> — even without internet<br>
+            👨‍⚕️ <strong>Intuitively designed</strong> for doctors and nurses
+        </div>
+        """, unsafe_allow_html=True)
     
-    st.markdown("---")
+    st.markdown("<hr>", unsafe_allow_html=True)
     
-    # --- Section 3 ---
-    st.markdown("## 🔐 Secure and Role-Based Access")
+    # ---------- Section 3 ----------
+    st.markdown('<div class="section-title">🔐 Secure and Role-Based Access</div>', unsafe_allow_html=True)
     col5, col6 = st.columns(2)
     with col5:
         st.image("assets/roles.png", use_container_width=True)
     with col6:
         st.markdown("""
-        Wella.AI supports **Admins**, **Doctors**, and **Nurses**, each with their own access level.  
-        Role-based logs ensure patient data integrity and security.
-        """)
+        <div class="highlight-text">
+            <span style='color:#1f77b4;'>Wella.AI</span> supports <strong>Admins</strong>, <strong>Doctors</strong>, and <strong>Nurses</strong> — each with secure, role-specific access.<br><br>
+            Activity logs ensure <strong>data privacy</strong> and <strong>integrity</strong> across the system.
+        </div>
+        """, unsafe_allow_html=True)
+
+st.markdown("<hr>", unsafe_allow_html=True)
     
     # New Content Section
     st.header("📈 Why Choose Wella.AI")
