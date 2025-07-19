@@ -47,36 +47,61 @@ def show_contact():
 
     with st.container():
         st.markdown("### Get In Touch With Us")
-        st.write("We’re here to assist with your healthcare inquiries, appointment bookings, or general support needs. Fill out the contact form below, and we’ll get back to you ASAP.")
+        st.write("We’re here to assist with your inquiries or general support needs. Fill out the contact form below, and we’ll get back to you ASAP.")
 
         with st.form("contact_form"):
             full_name = st.text_input("Full Name *", placeholder="Enter your full name")
             email = st.text_input("Email *", placeholder="Enter your Email address")
-            phone = st.text_input("Phone Number", placeholder="+234...")
+            phone = st.text_input("Phone Number", placeholder="+234 801 234 5678")
             subject = st.text_input("Subject *", placeholder="Enter your subject matter")
             message = st.text_area("Message", placeholder="Enter your message")
 
             submitted = st.form_submit_button("Submit")
-
+            
             if submitted:
                 if full_name and email and subject and message:
                     st.success("✅ Your message has been received. We’ll respond shortly!")
                 else:
                     st.warning("⚠️ Please fill all required fields.")
+                    st.rerun()
 
     st.markdown("### 📞 Contact Info")
-    st.write("- **Phone:** (+234) 8060593391")
-    st.write("- **Email:** Healthpointer@gmail.com")
-    st.markdown("Need quick answers? [Visit our FAQ Section](#)")
+    st.write("#### We're here to help. Reach out to us via any of the following channels:")
+    
+    st.write("- 📱 **Phone:** [+234 806 252 9172](tel:+2348062529172)")
+    st.write("- 📧 **Email:** [helpline@wella.ai](mailto:helpline@wella.ai)")
+    st.write("- 💬 **Chat with Support:** [WhatsApp Support](https://wa.me/2348062529172)")
 
     st.markdown("---")
 
     st.markdown("### 📲 Stay Connected")
-    st.markdown("""
-    - 📘 Facebook: [@HealthPointer](#)
-    - 📷 Instagram: [@HealthPointer](#)
-    - 🐦 Twitter/X: [@HealthPointer](#)
-    - 🔗 LinkedIn: [@HealthPointer](#)
-    """)
+    
+    social_icons = """
+    <div style="display: flex; gap: 25px; align-items: center; flex-wrap: wrap;">
+    
+    <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank">
+        <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
+    </a>
+    
+    <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank">
+        <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter/X"/>
+    </a>
+    
+    <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+        <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
+    </a>
+    
+    <a href="https://github.com/BalogunEzekiel" target="_blank">
+        <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
+    </a>
+    
+    <a href="https://www.datatech.hashnode.dev" target="_blank">
+        <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
+    </a>
+    
+    </div>
+    """
+    
+    st.markdown(social_icons, unsafe_allow_html=True)
 
     st.image("assets/AI_Me.png", use_container_width=True)
