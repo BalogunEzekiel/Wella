@@ -79,18 +79,7 @@ def show_contact():
     st.markdown("### 🌐 Stay Connected")
 
     social_icons = """
-    <style>
-    .icon-wrapper a img {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 8px;
-    }
-    .icon-wrapper a img:hover {
-        transform: scale(1.2);
-        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-    }
-    </style>
-    
-    <div class="icon-wrapper" style="display: flex; justify-content: center; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+    <div style="display: flex; justify-content: center; gap: 25px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
     
         <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank" title="Facebook">
             <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
