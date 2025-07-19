@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-import contact
 
 def show_service():
     # Page config
