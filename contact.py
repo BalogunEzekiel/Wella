@@ -47,7 +47,7 @@ def show_contact():
 
     with st.container():
         st.markdown("### Get In Touch With Us")
-        st.write("We’re here to assist with your inquiries or general support needs. Fill out the contact form below, and we’ll get back to you ASAP.")
+        st.write("We’re here to assist with your inquiries or general support needs. Fill out the contact form below and we’ll get back to you ASAP.")
 
         with st.form("contact_form"):
             full_name = st.text_input("Full Name *", placeholder="Enter your full name")
@@ -66,7 +66,7 @@ def show_contact():
                     st.rerun()
 
     st.markdown("### 📞 Contact Info")
-    st.write("#### We're here to help. Reach out to us via any of the following channels:")
+    st.write("##### We're here to help. Reach out to us via any of the following channels:")
     
     st.write("- 📱 **Phone:** [+234 806 252 9172](tel:+2348062529172)")
     st.write("- 📧 **Email:** [helpline@wella.ai](mailto:helpline@wella.ai)")
