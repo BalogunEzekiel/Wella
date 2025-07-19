@@ -66,7 +66,7 @@ def show_contact():
                     st.rerun()
 
     st.markdown("### 📞 Contact Info")
-    st.write("##### We're here to help. Reach out to us via any of the following channels:")
+    st.write("###### We're here to help. Reach out to us via any of the following channels:")
     
     st.write("- 📱 **Phone:** [+234 806 252 9172](tel:+2348062529172)")
     st.write("- 📧 **Email:** [helpline@wella.ai](mailto:helpline@wella.ai)")
