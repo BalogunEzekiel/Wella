@@ -6,7 +6,6 @@ def show_about():
 
     # --- HERO SECTION ---
     st.markdown('<div class="hero-section">', unsafe_allow_html=True)
-    st.image("assets/logo.png", width=120)
     st.markdown("## Welcome to Wella.AI")
     st.write("At Wella.AI, we believe in revolutionizing rural healthcare using the power of AI, data, and offline technology.")
     st.markdown('</div>', unsafe_allow_html=True)
