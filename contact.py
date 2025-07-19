@@ -4,8 +4,20 @@ import time
 def show_contact():
     st.set_page_config(page_title="Contact Us", layout="centered")
 
+    # Responsive and sidebar removal styling
     st.markdown("""
         <style>
+        /* Hide sidebar permanently */
+        [data-testid="stSidebar"] {
+            display: none;
+        }
+
+        /* Make layout mobile-friendly */
+        [data-testid="stAppViewContainer"] > .main {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
         .contact-header {
             font-size: 2.5rem;
             font-weight: bold;
@@ -36,6 +48,19 @@ def show_contact():
             padding: 8px;
             font-size: 1rem;
         }
+
+        @media screen and (max-width: 768px) {
+            h1, h2, h3, h4 {
+                font-size: 1.2rem !important;
+            }
+            p, li, .contact-subheader, .emergency, .stTextInput>div>input, .stTextArea>div>textarea {
+                font-size: 0.95rem !important;
+                line-height: 1.5;
+            }
+            .block-container {
+                padding: 1rem 0.5rem !important;
+            }
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -46,40 +71,38 @@ def show_contact():
 
     st.markdown('<div class="emergency">🚨 24/7 Emergency Support — Call Our Emergency Line: +234-806-2529-172</div>', unsafe_allow_html=True)
 
-    # Initialize submission state
     if "submitted" not in st.session_state:
         st.session_state.submitted = False
-    
+
     with st.container():
         st.markdown("### Get In Touch With Us")
         st.write("We’re here to assist with your inquiries or general support needs. Fill out the contact form below and we’ll get back to you ASAP.")
-    
+
         with st.form("contact_form", clear_on_submit=True):
             full_name = st.text_input("Full Name *", placeholder="Enter your full name")
             email = st.text_input("Email *", placeholder="Enter your Email address")
             phone = st.text_input("Phone Number", placeholder="+234 801 234 5678")
             subject = st.text_input("Subject *", placeholder="Enter your subject matter")
             message = st.text_area("Message", placeholder="Enter your message")
-    
+
             submitted = st.form_submit_button("Submit")
-            
+
             if submitted:
                 if full_name and email and subject and message:
                     st.session_state.submitted = True
                 else:
                     st.warning("⚠️ Please fill all required fields.")
                     st.stop()
-    
-    # Show success message after form submission
+
     if st.session_state.submitted:
         st.success("✅ Your message has been received. We’ll respond shortly!")
         time.sleep(1.5)
         st.session_state.submitted = False
         st.rerun()
-    
+
     st.markdown("### 📞 Contact Info")
     st.write("###### We're here to help. Reach out to us via any of the following channels:")
-    
+
     st.write("- 📱 **Phone:** [+234 806 252 9172](tel:+2348062529172)")
     st.write("- 📧 **Email:** [helpline@wella.ai](mailto:helpline@wella.ai)")
     st.write("- 💬 **Chat with Support Team:** [WhatsApp](https://wa.me/2348062529172)")
@@ -110,7 +133,7 @@ def show_contact():
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
     </style>
-    
+
     <div class="social-icons">
         <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank">
             <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
@@ -129,5 +152,5 @@ def show_contact():
         </a>
     </div>
     """
-    
+
     st.markdown(html_code, unsafe_allow_html=True)
