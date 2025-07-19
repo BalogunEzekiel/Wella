@@ -76,48 +76,44 @@ def show_contact():
 
     st.image("assets/AI_Me.png", use_container_width=True)
 
-    st.markdown("### 🌐 Stay Connected")
+    st.markdown("### 🌐 Stay Connected", unsafe_allow_html=True)
 
-    social_icons = """
+    html_code = """
     <style>
-        .social-container {
+        .social-icons {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
+            gap: 20px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
-        .social-container a img {
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-radius: 10px;
+        .social-icons a img {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 8px;
         }
-        .social-container a:hover img {
-            transform: scale(1.15);
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+        .social-icons a:hover img {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
     </style>
     
-    <div class="social-container">
+    <div class="social-icons">
         <a href="https://www.facebook.com/share/16pgExaeBr/" target="_blank">
             <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook"/>
         </a>
-        
         <a href="https://x.com/EzekielOBalogun?t=nmlZqljflqWtdyR0B1MuaA&s=09" target="_blank">
             <img src="https://img.icons8.com/color/48/twitter--v1.png" alt="Twitter/X"/>
         </a>
-        
         <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438" target="_blank">
             <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
         </a>
-        
         <a href="https://github.com/BalogunEzekiel" target="_blank">
             <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
         </a>
-        
         <a href="https://datatech.hashnode.dev" target="_blank">
             <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
         </a>
     </div>
     """
     
-    st.markdown(social_icons, unsafe_allow_html=True)
+    st.markdown(html_code, unsafe_allow_html=True)
