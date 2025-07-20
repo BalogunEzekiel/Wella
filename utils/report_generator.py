@@ -10,6 +10,7 @@ from barcode.writer import ImageWriter
 
 def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
+    pdf.set_margins(left=20, top=15, right=20)  # Doubled margins
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
     line_spacing = 12
@@ -17,23 +18,22 @@ def generate_medical_report(name, age, gender, symptoms, result):
     # === Header: Logo + Title Centered ===
     logo_path = "assets/logo.png"
     logo_width = 30
-    logo_height = 10
+    logo_height = 20  # Increased from 10 to 20
     spacing = 5
     title = "Wella.AI Diagnosis Report"
 
     pdf.set_font("Arial", "B", 16)
     title_width = pdf.get_string_width(title) + 2
-    page_width = pdf.w
+    page_width = pdf.w - pdf.l_margin - pdf.r_margin  # Effective width after margins
     total_width = logo_width + spacing + title_width
-    start_x = (page_width - total_width) / 2
+    start_x = pdf.l_margin + (page_width - total_width) / 2
     y_pos = 10
 
-    # Add logo and title
     pdf.image(logo_path, x=start_x, y=y_pos, w=logo_width, h=logo_height)
-    pdf.set_xy(start_x + logo_width + spacing, y_pos)
+    pdf.set_xy(start_x + logo_width + spacing, y_pos + 5)  # Vertically center text w.r.t logo
     pdf.set_text_color(0, 51, 102)
     pdf.cell(title_width, logo_height, title, align="L")
-    pdf.ln(20)
+    pdf.ln(30)  # Add more space below due to taller header
 
     # === Date ===
     pdf.set_font("Arial", "", 12)
