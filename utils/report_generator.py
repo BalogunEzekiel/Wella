@@ -88,10 +88,10 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_auto_page_break(auto=False)
         footer_y = 270
 
-        pdf.set_xy(10, footer_y)
-        pdf.set_font("Arial", "I", 10)
-        pdf.set_text_color(100, 100, 100)
-        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.ai", align="L")
+#        pdf.set_xy(10, footer_y)
+#        pdf.set_font("Arial", "I", 10)
+#        pdf.set_text_color(100, 100, 100)
+#        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.ai", align="L")
 
         pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
         os.unlink(temp_barcode.name)
