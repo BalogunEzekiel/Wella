@@ -69,8 +69,8 @@ def show_diagnosis():
                         conn.commit()
                         conn.close()
                         st.info("✅ Patient record and vitals saved locally.")
-                        time.sleep(7)
-                        st.rerun()
+#                        time.sleep(7)
+#                        st.rerun()
                     except Exception as db_err:
                         st.error(f"Database Error: {db_err}")
 
