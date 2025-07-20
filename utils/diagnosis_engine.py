@@ -44,8 +44,11 @@ DISEASE_RULES = [
     }
 ]
 
-
 def run_diagnosis(symptoms_text):
+    print("DEBUG: symptoms_text received =>", symptoms_text, type(symptoms_text))
+
+
+#def run_diagnosis(symptoms_text):
     """
     Processes a comma-separated symptom string and returns a diagnosis dictionary.
     """
