@@ -7,6 +7,7 @@ import os
 import tempfile
 import barcode
 from barcode.writer import ImageWriter
+from pytz import timezone
 
 def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
@@ -14,29 +15,12 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf.set_auto_page_break(auto=True, margin=15)
     line_spacing = 12
 
-    # === Header: Logo + Title Centered ===
+    # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
     logo_width = 30
-    logo_height = 30  # Increased from 10 to 25
+    logo_height = 30  # Increased from 10 to 30
     spacing = 1
     title = "Diagnosis Report"
-    
-    # Display logo with spacing
-    cols = st.columns([logo_width, spacing, 1])
-    with cols[0]:
-        st.image(logo_path, width=logo_width)
-    
-    # Title with color matching logo
-    with cols[2]:
-        st.markdown(f"""
-            <h1 style='color: #00BFFF; margin-top: 0;'>{title}</h1>
-        """, unsafe_allow_html=True)
-    
-#    logo_path = "assets/logo.png"
-#    logo_width = 30
-#    logo_height = 25  # Increased from 10 to 30
-#    spacing = 1
-#    title = "Diagnosis Report"
 
     pdf.set_font("Arial", "B", 16)
     title_width = pdf.get_string_width(title) + 2
@@ -55,7 +39,11 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf.set_font("Arial", "", 12)
     pdf.set_text_color(0, 0, 0)
     pdf.ln(5)
-    pdf.cell(0, line_spacing, f"Date: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True)
+    user_tz = timezone("Africa/Lagos")  # Replace with dynamic tz as needed
+    local_time = datetime.now(user_tz)
+    pdf.cell(0, line_spacing, f"Date: {local_time.strftime('%d %B %Y, %I:%M %p')}", ln=True)
+    
+#    pdf.cell(0, line_spacing, f"Date: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True)
 
     # === Patient Info ===
     pdf.ln(5)
