@@ -92,8 +92,9 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_text_color(255, 0, 0)
         pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
 
-    # Return the PDF binary data
+    # ✅ Correct way to get PDF as BytesIO
     output = BytesIO()
-    pdf.output(output)
+    pdf_bytes = pdf.output(dest='S').encode('latin1')  # 'S' returns as string
+    output.write(pdf_bytes)
     output.seek(0)
     return output
