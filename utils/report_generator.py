@@ -17,9 +17,26 @@ def generate_medical_report(name, age, gender, symptoms, result):
     # === Header: Logo + Title Centered ===
     logo_path = "assets/logo.png"
     logo_width = 30
-    logo_height = 25  # Increased from 10 to 30
+    logo_height = 30  # Increased from 10 to 25
     spacing = 1
     title = "Diagnosis Report"
+    
+    # Display logo with spacing
+    cols = st.columns([logo_width, spacing, 1])
+    with cols[0]:
+        st.image(logo_path, width=logo_width)
+    
+    # Title with color matching logo
+    with cols[2]:
+        st.markdown(f"""
+            <h1 style='color: #00BFFF; margin-top: 0;'>{title}</h1>
+        """, unsafe_allow_html=True)
+    
+#    logo_path = "assets/logo.png"
+#    logo_width = 30
+#    logo_height = 25  # Increased from 10 to 30
+#    spacing = 1
+#    title = "Diagnosis Report"
 
     pdf.set_font("Arial", "B", 16)
     title_width = pdf.get_string_width(title) + 2
