@@ -8,42 +8,32 @@ import tempfile
 import barcode
 from barcode.writer import ImageWriter
 
-
 def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
     line_spacing = 12
 
-    # === Title ===
-    # Define dimensions and content
+    # === Header: Logo + Title Centered ===
     logo_path = "assets/logo.png"
     logo_width = 30
     logo_height = 10
     spacing = 5
     title = "Wella.AI Diagnosis Report"
-    
-    # Set font for measuring and rendering
+
     pdf.set_font("Arial", "B", 16)
-    title_width = pdf.get_string_width(title) + 2  # text width + padding
+    title_width = pdf.get_string_width(title) + 2
     page_width = pdf.w
-    
-    # Calculate total width and X start
     total_width = logo_width + spacing + title_width
     start_x = (page_width - total_width) / 2
     y_pos = 10
-    
-    # Add logo
+
+    # Add logo and title
     pdf.image(logo_path, x=start_x, y=y_pos, w=logo_width, h=logo_height)
-    
-    # Add title next to logo
     pdf.set_xy(start_x + logo_width + spacing, y_pos)
     pdf.set_text_color(0, 51, 102)
     pdf.cell(title_width, logo_height, title, align="L")
-    
-    # Add vertical space after header
     pdf.ln(20)
-    st.markdown(---)
 
     # === Date ===
     pdf.set_font("Arial", "", 12)
@@ -69,7 +59,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.cell(40, line_spacing, f"{label}:", border=1, fill=True)
         pdf.multi_cell(150, line_spacing, str(value), border=1)
 
-    # === Diagnosis ===
+    # === Diagnosis Summary ===
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
     pdf.cell(0, line_spacing, "Diagnosis Summary", ln=True)
@@ -95,21 +85,15 @@ def generate_medical_report(name, age, gender, symptoms, result):
         barcode_obj.write(temp_barcode)
         temp_barcode.close()
 
-        # Prevent auto-splitting
         pdf.set_auto_page_break(auto=False)
-
-        # Footer Y position
         footer_y = 270
 
-        # Left-aligned text
         pdf.set_xy(10, footer_y)
         pdf.set_font("Arial", "I", 10)
         pdf.set_text_color(100, 100, 100)
         pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.ai", align="L")
 
-        # Right-aligned barcode
         pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
-
         os.unlink(temp_barcode.name)
 
     except Exception as e:
@@ -117,9 +101,9 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_text_color(255, 0, 0)
         pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
 
-    # ✅ Correct way to get PDF as BytesIO
+    # Export as BytesIO
     output = BytesIO()
-    pdf_bytes = pdf.output(dest='S').encode('latin1')  # 'S' returns as string
+    pdf_bytes = pdf.output(dest='S').encode('latin1')
     output.write(pdf_bytes)
     output.seek(0)
     return output
