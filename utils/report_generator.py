@@ -89,7 +89,14 @@ def generate_medical_report(name, age, gender, symptoms, result):
         # Clean up temp file
         os.unlink(temp_barcode.name)
 
-    except Exception as e:
-        pdf.set_y(-40)
-        pdf.set_text_color(255, 0, 0)
-        pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
+        except Exception as e:
+            pdf.set_y(-40)
+            pdf.set_text_color(255, 0, 0)
+            pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
+    
+        # === Always return the PDF binary data ===
+        output = BytesIO()
+        pdf.output(output)
+        output.seek(0)
+        return output
+
