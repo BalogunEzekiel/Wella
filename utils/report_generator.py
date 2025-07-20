@@ -17,7 +17,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
     # === Header: Logo + Title Centered ===
     logo_path = "assets/logo.png"
     logo_width = 30
-    logo_height = 30  # Increased from 10 to 30
+    logo_height = 25  # Increased from 10 to 30
     spacing = 1
     title = "Diagnosis Report"
 
