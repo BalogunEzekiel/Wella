@@ -1,43 +1,43 @@
-# report_generator.py
-
 from fpdf import FPDF
-from io import BytesIO
 from datetime import datetime
-import os
+from io import BytesIO
 import tempfile
+import os
 import barcode
 from barcode.writer import ImageWriter
-
 
 def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 12
 
-    # === Title ===
+    line_spacing = 12  # For readability
+
+    # === Logo and Title ===
+    pdf.image("assets/logo.png", x=10, y=8, w=30)
     pdf.set_font("Arial", "B", 16)
     pdf.set_text_color(0, 51, 102)
-    pdf.cell(0, 10, "WellaAI Diagnosis Report", ln=True, align="C")
+    pdf.cell(0, 10, "Wella.AI Diagnosis Report", ln=True, align="C")
+    pdf.ln(10)
 
     # === Date ===
     pdf.set_font("Arial", "", 12)
     pdf.set_text_color(0, 0, 0)
-    pdf.ln(5)
     pdf.cell(0, line_spacing, f"Date: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True)
 
     # === Patient Info ===
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
     pdf.cell(0, line_spacing, "Patient Information", ln=True)
+
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(245, 245, 245)
 
     patient_data = [
-        ("Name", name or "N/A"),
-        ("Age", age if age is not None else "N/A"),
-        ("Gender", gender or "N/A"),
-        ("Symptoms", symptoms or "N/A")
+        ("Name", name),
+        ("Age", age),
+        ("Gender", gender),
+        ("Symptoms", symptoms)
     ]
 
     for label, value in patient_data:
@@ -48,6 +48,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
     pdf.cell(0, line_spacing, "Diagnosis Summary", ln=True)
+
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(230, 240, 255)
 
@@ -59,10 +60,10 @@ def generate_medical_report(name, age, gender, symptoms, result):
 
     for label, value in diagnosis_data:
         pdf.cell(40, line_spacing, label, 1, 0, 'C', True)
-        pdf.multi_cell(150, line_spacing, str(value), 1)
+        pdf.multi_cell(150, line_spacing, value, 1)
 
     # === Footer with Barcode ===
-    report_id = f"WELLAREPORT-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    report_id = f"WELLA.AIREPORT-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
     try:
         barcode_obj = barcode.get('code128', report_id, writer=ImageWriter())
@@ -80,7 +81,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_xy(10, footer_y)
         pdf.set_font("Arial", "I", 10)
         pdf.set_text_color(100, 100, 100)
-        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.health", align="L")
+        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.ai", align="L")
 
         # Right-aligned barcode
         pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
@@ -92,9 +93,8 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_text_color(255, 0, 0)
         pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
 
-    # ✅ Correct way to get PDF as BytesIO
+    # === Return the PDF binary data ===
     output = BytesIO()
-    pdf_bytes = pdf.output(dest='S').encode('latin1')  # 'S' returns as string
-    output.write(pdf_bytes)
+    pdf.output(output)
     output.seek(0)
     return output
