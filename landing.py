@@ -86,7 +86,7 @@ def landing_page():
     """, unsafe_allow_html=True)
 
     # ========== Auto-Rotating Images ==========
-    image_files = ["assets/illustrtion.jpg", "assets/wella.jpg", "assets/AI_Me.png"]
+    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
     images = [Image.open(img) for img in image_files]
     caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
 
