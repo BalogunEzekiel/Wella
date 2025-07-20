@@ -129,7 +129,7 @@ def landing_page():
         Designed with input from actual field nurses and doctors.
         """, unsafe_allow_html=True)
     with col5:
-        st.image("assets/image_2.png", use_container_width=True)
+        st.image("assets/Image_2.png", use_container_width=True)
 
     # Two columns (Text | Image)
     st.subheader("🔐 Secure and Role-Based Access")
