@@ -49,25 +49,38 @@ def run_diagnosis(symptoms_text):
     """
     Processes a comma-separated symptom string and returns a diagnosis dictionary.
     """
+    # === Input validation ===
+    if not isinstance(symptoms_text, str) or not symptoms_text.strip():
+        return {
+            "Diagnosis": "Invalid Input",
+            "Confidence": "None",
+            "Recommendation": "Please provide symptoms as a comma-separated string.",
+            "Matched Symptoms": "None",
+            "Considered Symptoms": "N/A"
+        }
+
+    # === Preprocess and tokenize symptoms ===
     cleaned_input = re.sub(r"[^a-zA-Z0-9, ]", "", symptoms_text).lower()
     input_symptoms = {sym.strip() for sym in cleaned_input.split(",") if sym.strip()}
 
     best_match = None
     max_overlap = 0
 
+    # === Match against disease rules ===
     for rule in DISEASE_RULES:
         overlap = input_symptoms.intersection(rule["symptoms"])
         if len(overlap) >= rule["min_match"] and len(overlap) > max_overlap:
             best_match = rule
             max_overlap = len(overlap)
 
+    # === Return result ===
     if best_match:
         return {
             "Diagnosis": best_match["name"],
             "Confidence": best_match["confidence"],
             "Recommendation": best_match["recommendation"],
-            "Matched Symptoms": ", ".join(input_symptoms.intersection(best_match["symptoms"])),
-            "Considered Symptoms": ", ".join(best_match["symptoms"])
+            "Matched Symptoms": ", ".join(sorted(input_symptoms.intersection(best_match["symptoms"]))),
+            "Considered Symptoms": ", ".join(sorted(best_match["symptoms"]))
         }
     else:
         return {
