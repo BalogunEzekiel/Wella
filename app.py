@@ -3,11 +3,11 @@ from streamlit_option_menu import option_menu
 from PIL import Image
 
 # Import pages
-import landing
-import service
-import about
-import contact
-import diagnosis
+from pages import landing
+from pages import service
+from pages import about
+from pages import contact
+from pages import diagnosis
 
 # Page config
 st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="auto")
