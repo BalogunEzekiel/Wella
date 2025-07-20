@@ -1,17 +1,19 @@
+# report_generator.py
+
 from fpdf import FPDF
-from datetime import datetime
 from io import BytesIO
+from datetime import datetime
+import os
+import tempfile
 import barcode
 from barcode.writer import ImageWriter
-import tempfile
-import os
+
 
 def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-
-    line_spacing = 12  # Double line spacing for readability
+    line_spacing = 12
 
     # === Title ===
     pdf.set_font("Arial", "B", 16)
@@ -28,15 +30,14 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
     pdf.cell(0, line_spacing, "Patient Information", ln=True)
-
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(245, 245, 245)
 
     patient_data = [
-        ("Name", name),
-        ("Age", age),
-        ("Gender", gender),
-        ("Symptoms", symptoms)
+        ("Name", name or "N/A"),
+        ("Age", age if age is not None else "N/A"),
+        ("Gender", gender or "N/A"),
+        ("Symptoms", symptoms or "N/A")
     ]
 
     for label, value in patient_data:
@@ -47,7 +48,6 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
     pdf.cell(0, line_spacing, "Diagnosis Summary", ln=True)
-
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(230, 240, 255)
 
@@ -59,13 +59,12 @@ def generate_medical_report(name, age, gender, symptoms, result):
 
     for label, value in diagnosis_data:
         pdf.cell(40, line_spacing, label, 1, 0, 'C', True)
-        pdf.multi_cell(150, line_spacing, value, 1)
+        pdf.multi_cell(150, line_spacing, str(value), 1)
 
     # === Footer with Barcode ===
     report_id = f"WELLAREPORT-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
     try:
-        # Generate barcode image
         barcode_obj = barcode.get('code128', report_id, writer=ImageWriter())
         temp_barcode = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
         barcode_obj.write(temp_barcode)
@@ -75,7 +74,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
         pdf.set_auto_page_break(auto=False)
 
         # Footer Y position
-        footer_y = 270  # Position close to bottom without overflow
+        footer_y = 270
 
         # Left-aligned text
         pdf.set_xy(10, footer_y)
@@ -86,17 +85,15 @@ def generate_medical_report(name, age, gender, symptoms, result):
         # Right-aligned barcode
         pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
 
-        # Clean up temp file
         os.unlink(temp_barcode.name)
 
-        except Exception as e:
-            pdf.set_y(-40)
-            pdf.set_text_color(255, 0, 0)
-            pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
-    
-        # === Always return the PDF binary data ===
-        output = BytesIO()
-        pdf.output(output)
-        output.seek(0)
-        return output
+    except Exception as e:
+        pdf.set_y(-40)
+        pdf.set_text_color(255, 0, 0)
+        pdf.cell(0, 10, f"[Error generating barcode: {e}]", ln=True, align="C")
 
+    # Return the PDF binary data
+    output = BytesIO()
+    pdf.output(output)
+    output.seek(0)
+    return output
