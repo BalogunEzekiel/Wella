@@ -91,7 +91,7 @@ def landing_page():
     caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
 
     for i in range(len(images)):
-        st.image(images[i], caption=caption[i], use_column_width=True)
+        st.image(images[i], caption=caption[i], use_container_width=True)
         time.sleep(1.5)
         st.empty()
 
