@@ -14,7 +14,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
     line_spacing = 12  # Double line spacing for readability
 
     # === Logo and Title ===
-    pdf.image("logo.png", x=10, y=10, w=30)  # Ensure 'logo.png' is in same folder
+    pdf.image("assets/logo.png", x=10, y=10, w=30)  # Ensure 'logo.png' is in same folder
     pdf.set_xy(50, 10)
     pdf.set_font("Arial", "B", 16)
     pdf.set_text_color(0, 51, 102)
