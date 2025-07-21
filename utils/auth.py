@@ -1,4 +1,15 @@
 import streamlit as st
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+ADMINS = os.getenv("ADMINS", "").lower().split(",")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+DEFAULT_PASSWORDS = {
+    "Doctor": os.getenv("DEFAULT_PASSWORD_DOCTOR"),
+    "Nurse": os.getenv("DEFAULT_PASSWORD_NURSE")
+}
 
 def require_login():
     if not st.session_state.get("authenticated", False):
