@@ -18,5 +18,5 @@ def require_login():
     if not st.session_state.get("authenticated"):
         st.warning("🔒 Please login to access the diagnosis page.")
         if st.button("🔑 Login"):
-            st.switch_page("login.py")
+            st.switch_page("diagnosis.py")
         st.stop()
