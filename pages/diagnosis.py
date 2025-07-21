@@ -6,12 +6,16 @@ from utils.db import get_connection
 from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
 from utils.sync_utils import sync_to_supabase
+import sys
+import os
+
+# Ensure Python can find utils
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from utils.auth import require_login, check_authentication, enforce_role
 
-# ✅ Force login before anything else
+# Require login first
 require_login()
-
-# ✅ Now get the user info and check roles
 user = check_authentication()
 role = user['role']
 enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
