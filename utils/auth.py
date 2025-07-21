@@ -8,14 +8,13 @@ def require_login():
             username = st.text_input("Username")
             password = st.text_input("Password", type="password")
             submit = st.form_submit_button("Login")
-            
-            if submit:
-                # Replace with your real login logic
-                if username == "admin" and password == "1234":
-                    st.session_state.authenticated = True
-                    st.success("✅ Login successful")
-                    st.rerun()
-                else:
-                    st.error("❌ Invalid credentials")
         
-        st.stop()  # Stop page rendering if not logged in
+        if submit:
+            if username == "admin" and password == "1234":
+                st.session_state.authenticated = True
+                st.success("✅ Login successful. Redirecting...")
+                st.rerun()  # Use new rerun
+            else:
+                st.error("❌ Invalid credentials")
+
+        st.stop()  # Prevent page content from rendering if not authenticated
