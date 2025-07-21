@@ -6,7 +6,7 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
-def show_nurse_form(user):
+def show_nurse_dashboard(user):
     st.subheader("📋 Patient Symptom Entry")
 
     with st.form("diagnosis_form", clear_on_submit=True):
