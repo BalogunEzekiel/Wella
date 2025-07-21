@@ -17,3 +17,4 @@ streamlit-option-menu
 streamlit-card
 streamlit
 python-dotenv
+bcrypt
