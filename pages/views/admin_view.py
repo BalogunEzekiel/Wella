@@ -92,12 +92,12 @@ def show_admin_dashboard():
         st.success(status)
         st.rerun()
 
-    if is_connected():
-        st.sidebar.success("🌐 Online – Auto Sync Enabled")
-        sync_msg = sync_to_supabase()
-        st.sidebar.info(sync_msg)
-    else:
-        st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
+#    if is_connected():
+#        st.sidebar.success("🌐 Online – Auto Sync Enabled")
+#        sync_msg = sync_to_supabase()
+#        st.sidebar.info(sync_msg)
+#    else:
+#        st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
-    if st.sidebar.button("🚪 Logout", key="logout_button"):
-            logout()
+#    if st.sidebar.button("🚪 Logout", key="logout_button"):
+#            logout()
