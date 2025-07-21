@@ -3,8 +3,6 @@ import sqlite3
 def get_connection():
     return sqlite3.connect("wella.db")
 
-import sqlite3
-
 def drop_users_table():
     conn = sqlite3.connect("wella.db")
     cur = conn.cursor()
