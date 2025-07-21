@@ -12,7 +12,9 @@ import os
 # Ensure Python can find utils
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from utils.auth import require_login, check_authentication, enforce_role
+from utils.auth import require_login
+from utils.auth import check_authentication
+from utils.auth import enforce_role
 
 # Require login first
 require_login()
