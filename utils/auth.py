@@ -1,50 +1,50 @@
 import streamlit as st
 import os
+import bcrypt
 from dotenv import load_dotenv
+from database.db_connection import get_connection  # Ensure this points to your DB connector
 
-# Load environment variables from .env file
+# Load environment variables from .env
 load_dotenv()
 
 ADMINS = os.getenv("ADMINS", "").lower().split(",")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
-DEFAULT_PASSWORDS = {
-    "Doctor": os.getenv("DEFAULT_PASSWORD_DOCTOR"),
-    "Nurse": os.getenv("DEFAULT_PASSWORD_NURSE")
-}
 
 def require_login():
     if not st.session_state.get("authenticated", False):
         st.warning("🔒 Please login to access the diagnosis page.")
 
-        # Declare placeholders outside the form
-        login_placeholder = st.empty()
-
-        with login_placeholder.form("login_form"):
-            username = st.text_input("Email", key="login_email").strip().lower()
-            password = st.text_input("Password", type="password", key="login_password")
+        with st.form("login_form"):
+            username = st.text_input("Email").strip().lower()
+            password = st.text_input("Password", type="password")
             submit = st.form_submit_button("Login")
 
             if submit:
-                # Admin login
-                if username in ADMINS and password == ADMIN_PASSWORD:
+                # Check DB for user
+                conn = get_connection()
+                cur = conn.cursor()
+                cur.execute("SELECT email, role, password FROM users WHERE email = %s", (username,))
+                result = cur.fetchone()
+                cur.close()
+                conn.close()
+
+                if result and bcrypt.checkpw(password.encode(), result[2].encode()):
                     st.session_state.authenticated = True
-                    st.session_state.user = {"email": username, "role": "Admin"}
-                    st.success("✅ Login successful. Redirecting...")
+                    st.session_state.user = {"email": result[0], "role": result[1]}
+                    st.success(f"✅ Login successful as {result[1]}. Redirecting...")
                     st.rerun()
 
-                # Doctor/Nurse login
-                elif password in DEFAULT_PASSWORDS.values():
-                    role = [k for k, v in DEFAULT_PASSWORDS.items() if v == password][0]
+                # Optional fallback for .env Admins
+                elif username in ADMINS and password == ADMIN_PASSWORD:
                     st.session_state.authenticated = True
-                    st.session_state.user = {"email": username, "role": role}
-                    st.success(f"✅ {role} login successful. Redirecting...")
+                    st.session_state.user = {"email": username, "role": "Admin"}
+                    st.success("✅ Admin login successful. Redirecting...")
                     st.rerun()
 
                 else:
                     st.error("❌ Invalid credentials")
 
-        # Block rendering anything after this
-        st.stop()
+        st.stop()  # Prevent further page rendering if not logged in
 
 def check_authentication():
     return st.session_state.get("user")
