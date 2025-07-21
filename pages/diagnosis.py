@@ -4,7 +4,9 @@ import sys, os
 from dotenv import load_dotenv
 from utils.auth import logout, require_login, check_authentication, enforce_role
 from utils.sync_utils import sync_to_supabase
-from .views import nurse_view, doctor_view, admin_view
+from pages.views.admin_view import show_admin_dashboard
+from pages.views.doctor_view import show_doctor_dashboard
+from pages.views.nurse_view import show_nurse_dashboard
 
 # Load environment variables
 load_dotenv()
@@ -30,12 +32,20 @@ def show_diagnosis():
     st.markdown("### \U0001FA7ADiagnostic Assistant for Primary Healthcare")
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
-    if role == "Nurse":
-        nurse_view.render(user)
-    elif role == "Doctor":
-        doctor_view.render()
+    # ...
     elif role == "Admin":
-        admin_view.render()
+    show_admin_dashboard()
+    elif role == "Doctor":
+    show_doctor_dashboard()
+    elif role == "Nurse":
+    show_nurse_dashboard()
+
+#    if role == "Nurse":
+#        nurse_view.render(user)
+#    elif role == "Doctor":
+#        doctor_view.render()
+#    elif role == "Admin":
+#        admin_view.render()
 
     if is_connected():
         st.sidebar.success("\U0001F310 Online – Auto Sync Enabled")
