@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 
 ADMINS = os.getenv("ADMINS", "").lower().split(",")
@@ -16,22 +17,31 @@ def require_login():
         st.warning("🔒 Please login to access the diagnosis page.")
         
         with st.form("login_form"):
-            username = st.text_input("Username")
+            username = st.text_input("Email").strip().lower()
             password = st.text_input("Password", type="password")
             submit = st.form_submit_button("Login")
 
         if submit:
-            if username == "admin" and password == "1234":
+            # Admin login
+            if username in ADMINS and password == ADMIN_PASSWORD:
                 st.session_state.authenticated = True
+                st.session_state.user = {"email": username, "role": "Admin"}
                 st.success("✅ Login successful. Redirecting...")
-                st.rerun()  # This replaces deprecated `st.experimental_rerun()`
+                st.rerun()
+            # Doctor/Nurse login
+            elif password in DEFAULT_PASSWORDS.values():
+                role = [k for k, v in DEFAULT_PASSWORDS.items() if v == password][0]
+                st.session_state.authenticated = True
+                st.session_state.user = {"email": username, "role": role}
+                st.success(f"✅ {role} login successful. Redirecting...")
+                st.rerun()
             else:
                 st.error("❌ Invalid credentials")
 
         st.stop()  # Stop rendering anything else if not logged in
 
 def check_authentication():
-    return {"role": "Admin"} if st.session_state.get("authenticated") else None
+    return st.session_state.get("user")
 
 def enforce_role(role, allowed_roles):
     if role not in allowed_roles:
