@@ -1,6 +1,6 @@
 import streamlit as st
-from utils.run_diagnosis import run_diagnosis
-from utils.medical_report import generate_medical_report
+from utils.diagnosis_engine import run_diagnosis
+from utils.report_generator import generate_medical_report
 from utils.db import get_connection
 import sys, os
 
