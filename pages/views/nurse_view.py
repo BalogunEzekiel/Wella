@@ -1,5 +1,10 @@
 import streamlit as st
-from utils import run_diagnosis, generate_medical_report, get_connection  # Ensure these are defined/imported appropriately
+from utils.run_diagnosis import run_diagnosis
+from utils.medical_report import generate_medical_report
+from utils.db import get_connection
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
 def show_nurse_form(user):
     st.subheader("📋 Patient Symptom Entry")
