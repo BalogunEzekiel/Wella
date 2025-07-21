@@ -10,11 +10,12 @@ def init_db():
     # Drop the old users table if it exists
     cur.execute("DROP TABLE IF EXISTS users")
 
-    # Create the new users table with the force_password_change column
+    # Create the new users table with id and force_password_change columns
     cur.execute("""
         CREATE TABLE users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             fullname TEXT NOT NULL,
-            email TEXT PRIMARY KEY,
+            email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             role TEXT NOT NULL,
             force_password_change BOOLEAN DEFAULT 0
