@@ -3,12 +3,21 @@ import sqlite3
 def get_connection():
     return sqlite3.connect("wella.db")
 
-def drop_users_table():
+def init_db():
     conn = sqlite3.connect("wella.db")
     cur = conn.cursor()
 
-    # ❌ Drop the users table if it exists
-    cur.execute("DROP TABLE IF EXISTS users")
+    # ✅ Create users table if it doesn't already exist
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fullname TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            role TEXT NOT NULL,
+            force_password_change INTEGER DEFAULT 0
+        )
+    """)
 
     conn.commit()
     conn.close()
