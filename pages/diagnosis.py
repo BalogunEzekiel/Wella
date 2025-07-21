@@ -52,7 +52,7 @@ def show_diagnosis():
     if st.sidebar.button("🚪 Logout"):
         logout()
         st.session_state["page"] = "Home"
-        st.session_state["Menu"] = "Home"
+        st.session_state["selected_option"] = "Home"
         st.rerun()
 
 def is_connected():
