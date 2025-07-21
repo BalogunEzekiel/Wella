@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
+from utils.db import init_db
 
 # Import pages
 from pages import landing
@@ -11,6 +12,9 @@ from pages import diagnosis
 
 # Page config
 st.set_page_config(page_title="Wella.AI", layout="wide", initial_sidebar_state="auto")
+
+# Initialize users table
+init_db()
 
 # Hide Streamlit's default menu and footer
 hide_streamlit_style = """
