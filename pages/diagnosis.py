@@ -7,7 +7,9 @@ from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
 from utils.sync_utils import sync_to_supabase
 from utils.auth import check_authentication, get_current_user, enforce_role
+from utils.auth import require_login
 
+require_login()
 
 def show_diagnosis():
     # Authenticate User
