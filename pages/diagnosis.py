@@ -7,6 +7,7 @@ from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
 import sys
 import os
+from utils.auth import logout
 
 # Append parent directory to path to access `utils`
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -165,3 +166,7 @@ def show_diagnosis():
         st.sidebar.info(sync_msg)
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
+
+    # Logout button
+    if st.sidebar.button("🚪 Logout"):
+        logout()
