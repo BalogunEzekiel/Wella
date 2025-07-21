@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import bcrypt
 from dotenv import load_dotenv
-from database.db_connection import get_connection  # Ensure this points to your DB connector
+from db import get_connection  # Ensure this points to your DB connector
 
 # Load environment variables from .env
 load_dotenv()
