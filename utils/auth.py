@@ -53,3 +53,9 @@ def enforce_role(role, allowed_roles):
     if role not in allowed_roles:
         st.error("🚫 Access denied: Insufficient role.")
         st.stop()
+
+def logout():
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]
+    st.success("🔒 Logged out successfully.")
+    st.rerun()
