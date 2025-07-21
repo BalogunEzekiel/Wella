@@ -22,13 +22,19 @@ def show_diagnosis():
     role = user.get("role")
     enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
 
+    # Top layout with logo and logout
+    top_col1, top_col2 = st.columns([6, 1])
+    with top_col1:
+        st.image("assets/logo.png", width=120)
+        st.markdown(f"👤 Logged in as: `{user['email']}` ({role})")
+    with top_col2:
+        if st.button("🚪 Logout"):
+            logout()
+            st.session_state["page"] = "Home"
+            st.session_state["Menu"] = "Home"
+            st.rerun()
+
     st.title("🩺 Wella.AI Diagnosis Page")
-    st.markdown(f"Welcome, **{user.get('email', 'User')}**")
-
-    st.sidebar.image("assets/logo.png", width=120)
-    st.sidebar.markdown("Your Offline Health Companion")
-    st.sidebar.markdown(f"👤 Logged in as: `{user['email']}` ({role})")
-
     st.markdown("### 🧬 Diagnostic Assistant for Primary Healthcare")
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
@@ -42,18 +48,11 @@ def show_diagnosis():
 
     # Sync Status
     if is_connected():
-        st.sidebar.success("🌐 Online – Auto Sync Enabled")
+        st.success("🌐 Online – Auto Sync Enabled")
         sync_msg = sync_to_supabase()
-        st.sidebar.info(sync_msg)
+        st.info(sync_msg)
     else:
-        st.sidebar.warning("⛔ Offline Mode – Sync will resume when online")
-
-    # Logout Button
-    if st.sidebar.button("🚪 Logout"):
-        logout()
-        st.session_state["page"] = "Home"
-        st.session_state["Menu"] = "Home"
-        st.rerun()
+        st.warning("⛔ Offline Mode – Sync will resume when online")
 
 def is_connected():
     import socket
