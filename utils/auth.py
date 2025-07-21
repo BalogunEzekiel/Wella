@@ -23,7 +23,7 @@ def require_login():
                 # Check DB for user
                 conn = get_connection()
                 cur = conn.cursor()
-                cur.execute("SELECT email, role, password FROM users WHERE email = %s", (username,))
+                cur.execute("SELECT email, role, password FROM users WHERE email = ?", (username,))
                 result = cur.fetchone()
                 cur.close()
                 conn.close()
