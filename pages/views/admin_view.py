@@ -99,5 +99,5 @@ def show_admin_dashboard():
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
-    if st.sidebar.button("🚪 Logout"):
-        logout()
+    if st.sidebar.button("🚪 Logout", key="logout_button"):
+            logout()
