@@ -30,7 +30,7 @@ def require_login():
                     st.session_state.authenticated = True
                     st.session_state.user = {"email": username, "role": "Admin"}
                     st.success("✅ Login successful. Redirecting...")
-                    st.experimental_rerun()
+                    st.rerun()
 
                 # Doctor/Nurse login
                 elif password in DEFAULT_PASSWORDS.values():
@@ -38,7 +38,7 @@ def require_login():
                     st.session_state.authenticated = True
                     st.session_state.user = {"email": username, "role": role}
                     st.success(f"✅ {role} login successful. Redirecting...")
-                    st.experimental_rerun()
+                    st.rerun()
 
                 else:
                     st.error("❌ Invalid credentials")
