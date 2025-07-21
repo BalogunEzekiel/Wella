@@ -156,8 +156,8 @@ def show_diagnosis():
                 if submit:
                     default_password = os.getenv("DEFAULT_USER_PASSWORD", "password123")
                     cur.execute(
-                        "INSERT INTO users (email, password, role, fullname) VALUES (?, ?, ?, ?)",
-                        (email, default_password, role, fullname)
+                        "INSERT INTO users (fullname, email, password, role) VALUES (?, ?, ?, ?)",
+                        (fullname, email, default_password, role)
                     )
                     conn.commit()
                     st.success(f"✅ User **{fullname}** created successfully.")
