@@ -5,22 +5,25 @@ import time
 from utils.db import get_connection
 from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
-from utils.sync_utils import sync_to_supabase
 import sys
 import os
 
-# Ensure Python can find utils
+# Append parent directory to path to access `utils`
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from utils.auth import require_login
-from utils.auth import check_authentication
-from utils.auth import enforce_role
+# These must work if directory structure is correct
+from utils.auth import require_login, check_authentication, enforce_role
+from utils.sync_utils import sync_to_supabase
 
-# Require login first
+# Require login before accessing the page
 require_login()
 user = check_authentication()
 role = user['role']
 enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
+
+# Now display diagnosis page content here...
+st.title("🩺 Wella.AI Diagnosis Page")
+# your diagnosis logic continues...
 
 def show_diagnosis():
     # Authenticate User
