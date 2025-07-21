@@ -8,13 +8,21 @@ def require_login():
             username = st.text_input("Username")
             password = st.text_input("Password", type="password")
             submit = st.form_submit_button("Login")
-        
+
         if submit:
             if username == "admin" and password == "1234":
                 st.session_state.authenticated = True
                 st.success("✅ Login successful. Redirecting...")
-                st.rerun()  # Use new rerun
+                st.rerun()  # This replaces deprecated `st.experimental_rerun()`
             else:
                 st.error("❌ Invalid credentials")
 
-        st.stop()  # Prevent page content from rendering if not authenticated
+        st.stop()  # Stop rendering anything else if not logged in
+
+def check_authentication():
+    return {"role": "Admin"} if st.session_state.get("authenticated") else None
+
+def enforce_role(role, allowed_roles):
+    if role not in allowed_roles:
+        st.error("🚫 Access denied: Insufficient role.")
+        st.stop()
