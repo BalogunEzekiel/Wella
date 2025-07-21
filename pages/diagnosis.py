@@ -51,7 +51,7 @@ def show_diagnosis():
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
         logout()
-        st.session_state["page"] = "landing"
+        st.session_state["page"] = "Home"
         st.rerun()
 
 def is_connected():
