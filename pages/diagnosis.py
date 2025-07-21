@@ -11,26 +11,27 @@ import os
 # Append parent directory to path to access `utils`
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-# These must work if directory structure is correct
 from utils.auth import require_login, check_authentication, enforce_role
 from utils.sync_utils import sync_to_supabase
 
-# Require login before accessing the page
-require_login()
-user = check_authentication()
-role = user['role']
-enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
-
-# Now display diagnosis page content here...
-st.title("🩺 Wella.AI Diagnosis Page")
-# your diagnosis logic continues...
-
 def show_diagnosis():
-    # Authenticate User
+    # Step 1: Require login
+    require_login()
+
+    # Step 2: Get user and role
     user = check_authentication()
     if not user:
         st.warning("🔒 Please login to access the diagnosis page.")
         return
+
+    role = user.get("role")
+    enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
+
+    # Step 3: Display diagnosis content
+    st.title("🩺 Wella.AI Diagnosis Page")
+    st.markdown("Welcome, **{}**".format(user.get("email", "User")))
+
+    # Continue diagnosis logic here...
 
     # Sidebar
     st.sidebar.image("assets/logo.png", width=120)
