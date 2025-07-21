@@ -8,6 +8,10 @@ from utils.report_generator import generate_medical_report
 import sys
 import os
 from utils.auth import logout
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Append parent directory to path to access `utils`
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -16,10 +20,7 @@ from utils.auth import require_login, check_authentication, enforce_role
 from utils.sync_utils import sync_to_supabase
 
 def show_diagnosis():
-    # Step 1: Require login
     require_login()
-
-    # Step 2: Get user and role
     user = check_authentication()
     if not user:
         st.warning("🔒 Please login to access the diagnosis page.")
@@ -28,13 +29,9 @@ def show_diagnosis():
     role = user.get("role")
     enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
 
-    # Step 3: Display diagnosis content
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown("Welcome, **{}**".format(user.get("email", "User")))
 
-    # Continue diagnosis logic here...
-
-    # Sidebar
     st.sidebar.image("assets/logo.png", width=120)
     st.sidebar.markdown("Your Offline Health Companion")
     st.sidebar.markdown(f"👤 Logged in as: `{user['email']}` ({role})")
@@ -42,7 +39,6 @@ def show_diagnosis():
     st.markdown("### 🩺Diagnostic Assistant for Primary Healthcare")
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
-    # Nurse Dashboard: Create Diagnosis
     if role == "Nurse":
         with st.form("diagnosis_form", clear_on_submit=True):
             st.subheader("📋 Patient Symptom Entry")
@@ -95,7 +91,6 @@ def show_diagnosis():
             except Exception as diag_err:
                 st.error(f"Diagnosis Engine Error: {diag_err}")
 
-    # Doctor Dashboard: View and Treat
     elif role == "Doctor":
         st.subheader("🧾 Doctor View – Patient Diagnoses")
         try:
@@ -125,7 +120,6 @@ def show_diagnosis():
         except Exception as e:
             st.error(f"Could not load records: {e}")
 
-    # Admin Dashboard: Manage Users and Sync
     elif role == "Admin":
         st.subheader("📊 Admin Dashboard – Patient Records")
         try:
@@ -147,12 +141,35 @@ def show_diagnosis():
         except Exception as e:
             st.error(f"Could not load records: {e}")
 
+        # --- Create Users (Admins only) ---
+        st.subheader("👤 Create New User")
+        try:
+            conn = get_connection()
+            cur = conn.cursor()
+
+            with st.form("add_user"):
+                fullname = st.text_input("Full Name")
+                email = st.text_input("Email")
+                role = st.selectbox("Role", ["Doctor", "Nurse"])  # Admin not included
+                submit = st.form_submit_button("Create User")
+
+                if submit:
+                    default_password = os.getenv("DEFAULT_USER_PASSWORD", "password123")
+                    cur.execute(
+                        "INSERT INTO users (email, password, role, fullname) VALUES (?, ?, ?, ?)",
+                        (email, default_password, role, fullname)
+                    )
+                    conn.commit()
+                    st.success(f"✅ User **{fullname}** created successfully.")
+
+        except Exception as err:
+            st.error(f"❌ Failed to create user: {err}")
+
         if st.button("🔄 Sync to Supabase"):
             status = sync_to_supabase()
             st.success(status)
             st.rerun()
 
-    # Connectivity
     def is_connected():
         try:
             socket.create_connection(("1.1.1.1", 53))
@@ -167,6 +184,5 @@ def show_diagnosis():
     else:
         st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
 
-    # Logout button
     if st.sidebar.button("🚪 Logout"):
         logout()
