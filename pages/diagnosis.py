@@ -16,45 +16,40 @@ def show_diagnosis():
     require_login()
     user = check_authentication()
     if not user:
-        st.warning("\U0001F512 Please login to access the diagnosis page.")
+        st.warning("🔒 Please login to access the diagnosis page.")
         return
 
     role = user.get("role")
     enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
 
-    st.title("\U0001FA7A Wella.AI Diagnosis Page")
-    st.markdown("Welcome, **{}**".format(user.get("email", "User")))
+    st.title("🩺 Wella.AI Diagnosis Page")
+    st.markdown(f"Welcome, **{user.get('email', 'User')}**")
 
     st.sidebar.image("assets/logo.png", width=120)
     st.sidebar.markdown("Your Offline Health Companion")
-    st.sidebar.markdown(f"\U0001F464 Logged in as: `{user['email']}` ({role})")
+    st.sidebar.markdown(f"👤 Logged in as: `{user['email']}` ({role})")
 
-    st.markdown("### \U0001FA7ADiagnostic Assistant for Primary Healthcare")
+    st.markdown("### 🧬 Diagnostic Assistant for Primary Healthcare")
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
-    # ...
-    elif role == "Admin":
-    show_admin_dashboard()
+    # Role-based view
+    if role == "Admin":
+        show_admin_dashboard()
     elif role == "Doctor":
-    show_doctor_dashboard()
+        show_doctor_dashboard()
     elif role == "Nurse":
-    show_nurse_dashboard()
+        show_nurse_dashboard()
 
-#    if role == "Nurse":
-#        nurse_view.render(user)
-#    elif role == "Doctor":
-#        doctor_view.render()
-#    elif role == "Admin":
-#        admin_view.render()
-
+    # Sync Status
     if is_connected():
-        st.sidebar.success("\U0001F310 Online – Auto Sync Enabled")
+        st.sidebar.success("🌐 Online – Auto Sync Enabled")
         sync_msg = sync_to_supabase()
         st.sidebar.info(sync_msg)
     else:
-        st.sidebar.warning("\u26D4 Offline Mode – Sync will resume when online")
+        st.sidebar.warning("⛔ Offline Mode – Sync will resume when online")
 
-    if st.sidebar.button("\U0001F6AA Logout"):
+    # Logout Button
+    if st.sidebar.button("🚪 Logout"):
         logout()
 
 def is_connected():
