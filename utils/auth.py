@@ -14,7 +14,7 @@ def require_login():
                 if username == "admin" and password == "1234":
                     st.session_state.authenticated = True
                     st.success("✅ Login successful")
-                    st.experimental_rerun()
+                    st.stop()
                 else:
                     st.error("❌ Invalid credentials")
         
