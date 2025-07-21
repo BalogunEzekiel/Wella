@@ -33,12 +33,12 @@ def show_diagnosis():
     st.markdown("***Helping rural clinics make informed medical decisions — even offline.***")
 
     # Role-based view
-    if role == "Admin":
-        show_admin_dashboard()
+    if role == "Nurse":
+        show_nurse_dashboard()
     elif role == "Doctor":
         show_doctor_dashboard()
-    elif role == "Nurse":
-        show_nurse_dashboard()
+    elif role == "Admin":
+        show_admin_dashboard()
 
     # Sync Status
     if is_connected():
