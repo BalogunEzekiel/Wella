@@ -8,7 +8,7 @@ def init_db():
     cur = conn.cursor()
     cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            fullname TEXT NOT NULL
+            fullname TEXT NOT NULL,
             email TEXT PRIMARY KEY,
             password TEXT NOT NULL,
             role TEXT NOT NULL
