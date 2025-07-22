@@ -41,8 +41,8 @@ def show_nurse_dashboard(user):
                         result.get("Diagnosis", "N/A"),
                         result.get("Confidence", "N/A"),
                         result.get("Recommendation", "N/A"),
-                        temperature, blood_pressure, weight,
-                        user["id"]
+                        temperature, blood_pressure, weight
+#                        user["id"]
                     ))
                     conn.commit()
                     conn.close()
