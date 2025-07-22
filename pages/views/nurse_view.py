@@ -7,7 +7,7 @@ import sys, os
 # Ensure parent directory is in the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
-def show_nurse_dashboard():
+def show_nurse_dashboard(user):
     st.subheader("📋 Patient Symptom Entry")
 
     user = check_authentication()  # added
@@ -43,8 +43,8 @@ def show_nurse_dashboard():
                         result.get("Diagnosis", "N/A"),
                         result.get("Confidence", "N/A"),
                         result.get("Recommendation", "N/A"),
-                        temperature, blood_pressure, weight
-#                        user["id"]
+                        temperature, blood_pressure, weight,
+                        user["id"]
                     ))
                     conn.commit()
                     conn.close()
