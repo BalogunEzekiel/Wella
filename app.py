@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
 from utils.db import init_db
+from pytz import timezone
 
 # Import pages
 from pages import landing
