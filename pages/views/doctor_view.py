@@ -28,9 +28,9 @@ def show_doctor_dashboard():
 
             # Display patient record as styled table
             st.write("### Latest Diagnosis")
-            display_df = pd.DataFrame(patient_record).transpose()
+            display_df = pd.DataFrame(patient_record).transpose().head(2)
             st.dataframe(display_df, use_container_width=True, height=400)
-
+            
             # Doctor's notes and appointment input
             treatment = st.text_area("🩹 Doctor's Treatment / Notes", value=patient_record.get('doctor_notes', ''), placeholder="Enter treatment notes or observations...")
             appointment_date = st.date_input("📅 Next Appointment Date", value=patient_record.get('appointment_date', datetime.date.today()))
