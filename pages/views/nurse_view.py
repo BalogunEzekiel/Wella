@@ -55,7 +55,7 @@ def show_nurse_dashboard(user):
                     st.download_button(
                         label="📄 Download Medical Report (PDF)",
                         data=pdf_file,
-                        file_name=f"{name.replace(' ', '_')}_Wella_Report.pdf",
+                        file_name=f"{name.replace(' ', '_')}_Wella.AI_Report.pdf",
                         mime="application/pdf"
                     )
                 except Exception as pdf_err:
