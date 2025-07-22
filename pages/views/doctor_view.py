@@ -5,6 +5,7 @@ import pandas as pd
 from utils.db import get_connection
 from utils.report_generator import generate_treatment_report
 import datetime
+from pytz import timezone
 
 def show_doctor_dashboard():
     st.subheader("🧾 Doctor View – Patient Diagnoses")
