@@ -3,6 +3,7 @@ from utils.diagnosis_engine import run_diagnosis
 from utils.report_generator import generate_medical_report
 from utils.db import get_connection
 import sys, os
+from pytz import timezone
 
 # Ensure parent directory is in the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
