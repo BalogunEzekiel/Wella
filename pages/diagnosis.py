@@ -34,7 +34,7 @@ def show_diagnosis():
 
     # Role-based view
     if role == "Nurse":
-        show_nurse_dashboard()
+        show_nurse_dashboard(user)
     elif role == "Doctor":
         show_doctor_dashboard()
     elif role == "Admin":
