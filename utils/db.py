@@ -24,7 +24,7 @@ def init_db():
 
 import sqlite3
 
-conn = sqlite3.connect("your_database_name.db")  # update with your DB name
+conn = sqlite3.connect("wella.db")
 cursor = conn.cursor()
 
 # Add columns if not exist
