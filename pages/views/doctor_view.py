@@ -17,9 +17,10 @@ def show_doctor_dashboard():
         patient_name = st.selectbox("Select Patient", df['name'].unique(), placeholder="Choose a patient")
         patient_record = df[df['name'] == patient_name].iloc[0]
 
+        # Display patient record in table format
         st.write("### Latest Diagnosis")
-        st.json(patient_record.to_dict())
-
+        st.table(pd.DataFrame(patient_record).transpose())
+        
         treatment = st.text_area("🩹 Doctor's Treatment / Notes", placeholder="Enter treatment notes or observations...")
         appointment_date = st.date_input("📅 Next Appointment Date")
 
@@ -29,7 +30,7 @@ def show_doctor_dashboard():
             cursor.execute("""
                 UPDATE patients SET doctor_notes = ?, appointment_date = ?
                 WHERE patient_id = ?
-            """, (treatment, appointment_date.strftime("%Y-%m-%d"), patient_record['id']))
+            """, (treatment, appointment_date.strftime("%Y-%m-%d"), patient_record['patient_id']))
             conn.commit()
             conn.close()
             st.success("✅ Doctor's notes updated successfully.")
