@@ -42,6 +42,7 @@ def show_doctor_dashboard():
                 conn.commit()
                 conn.close()
                 st.success("✅ Doctor's notes updated successfully.")
+                st.rerun()
 
     except Exception as e:
         st.error(f"❌ Could not load records: {e}")
