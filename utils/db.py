@@ -21,3 +21,22 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+import sqlite3
+
+conn = sqlite3.connect("your_database_name.db")  # update with your DB name
+cursor = conn.cursor()
+
+# Add columns if not exist
+try:
+    cursor.execute("ALTER TABLE patients ADD COLUMN doctor_notes TEXT")
+except sqlite3.OperationalError:
+    print("Column doctor_notes already exists")
+
+try:
+    cursor.execute("ALTER TABLE patients ADD COLUMN appointment_date TEXT")
+except sqlite3.OperationalError:
+    print("Column appointment_date already exists")
+
+conn.commit()
+conn.close()
