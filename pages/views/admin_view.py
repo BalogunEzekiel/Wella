@@ -18,7 +18,6 @@ def is_connected():
     except:
         return False
 
-
 def show_user_creation_form():
     st.markdown("### 👤 Create New User")
     conn = get_connection()
@@ -32,9 +31,24 @@ def show_user_creation_form():
 
         if submit:
             try:
-                default_password = os.getenv("DEFAULT_USER_PASSWORD", "Doctor@123")
+                # Check if user already exists
+                cur.execute("SELECT COUNT(*) FROM users WHERE email = ?", (email,))
+                if cur.fetchone()[0] > 0:
+                    st.warning("⚠️ A user with this email already exists.")
+                    return
+
+                # Assign role-specific default passwords
+                if role == "Doctor":
+                    default_password = os.getenv("DEFAULT_PASSWORD_DOCTOR", "Doctor@123")
+                elif role == "Nurse":
+                    default_password = os.getenv("DEFAULT_PASSWORD_NURSE", "Nurse@123")
+                else:
+                    default_password = os.getenv("DEFAULT_USER_PASSWORD", "User@123")
+
+                # Hash the default password
                 hashed_pw = bcrypt.hashpw(default_password.encode(), bcrypt.gensalt()).decode()
 
+                # Insert new user into database
                 cur.execute("""
                     INSERT INTO users (fullname, email, password, role, force_password_change)
                     VALUES (?, ?, ?, ?, 1)
@@ -42,10 +56,11 @@ def show_user_creation_form():
 
                 conn.commit()
                 st.success(f"✅ User **{fullname}** created successfully with default password.")
+
             except Exception as err:
                 st.error(f"❌ Failed to create user: {err}")
-    conn.close()
 
+    conn.close()
 
 def show_users_table():
     st.markdown("### 📋 All Users")
