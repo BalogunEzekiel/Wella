@@ -56,10 +56,11 @@ def show_doctor_dashboard():
                     gender = patient_record['gender']
                     symptoms = patient_record['symptoms']
                     diagnosis_data = {
-                        'diagnosis': patient_record['diagnosis'],
-                        'recommendation': patient_record.get('recommendation', '')
+                        'diagnosis': patient_record.get('diagnosis', 'N/A'),
+                        'confidence': patient_record.get('confidence', 'N/A'),
+                        'recommendation': patient_record.get('recommendation', 'N/A')
                     }
-
+                    
                     # Generate PDF report
                     pdf_data = generate_treatment_report(
                         name=name,
@@ -79,7 +80,7 @@ def show_doctor_dashboard():
                         mime="application/pdf"
                     )
 
-                    st.rerun()
+                        st.rerun()
 
                 except Exception as e:
                     st.error(f"❌ Could not load records: {e}")
