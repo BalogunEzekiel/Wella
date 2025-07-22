@@ -10,8 +10,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 def show_nurse_dashboard(user):
     st.subheader("📋 Patient Symptom Entry")
 
-    user = check_authentication()  # added
-
     with st.form("diagnosis_form", clear_on_submit=True):
         name = st.text_input("Patient Name", placeholder="Enter full name")
         age = st.number_input("Age", min_value=0, max_value=120)
