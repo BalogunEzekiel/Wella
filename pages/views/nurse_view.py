@@ -33,9 +33,9 @@ def show_nurse_dashboard(user):
                         INSERT INTO patients (
                             name, age, gender, symptoms,
                             diagnosis, confidence, recommendation,
-                            temperature, blood_pressure, weight, created_by
+                            temperature, blood_pressure, weight
                         )
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """, (
                         name, age, gender, symptoms,
                         result.get("Diagnosis", "N/A"),
