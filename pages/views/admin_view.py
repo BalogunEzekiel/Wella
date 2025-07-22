@@ -7,6 +7,7 @@ from utils.db import get_connection
 from utils.auth import logout
 from utils.sync_utils import sync_to_supabase
 import bcrypt
+from pytz import timezone
 
 load_dotenv()
 
