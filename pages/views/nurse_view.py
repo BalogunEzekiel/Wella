@@ -7,7 +7,7 @@ import sys, os
 # Ensure parent directory is in the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
-def show_nurse_dashboard():
+def show_nurse_dashboard(user):
     st.subheader("📋 Patient Symptom Entry")
 
     user = check_authentication()  # added
