@@ -28,7 +28,7 @@ def show_doctor_dashboard():
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE patients SET doctor_notes = ?, appointment_date = ?
-                WHERE id = ?
+                WHERE patient_id = ?
             """, (treatment, appointment_date.strftime("%Y-%m-%d"), patient_record['id']))
             conn.commit()
             conn.close()
