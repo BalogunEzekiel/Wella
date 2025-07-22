@@ -82,3 +82,4 @@ def show_doctor_dashboard():
             
                 except Exception as e:
                     st.error(f"❌ Could not load records: {e}")
+                        
