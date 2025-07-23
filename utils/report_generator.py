@@ -165,10 +165,16 @@ def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, docto
     pdf.set_fill_color(230, 240, 255)
 
     summary_data = [
-        ("Diagnosis", patient_data("Diagnosis", "N/A")),
-        ("Confidence", f"{patient_data('Confidence', 'N/A')}%"),
-        ("Recommendation", patient_data("Recommendation", "N/A"))
+        ("Diagnosis", diagnosis_data.get("diagnosis", "N/A")),
+        ("Confidence", f"{diagnosis_data.get('confidence', 'N/A')}%"),
+        ("Recommendation", diagnosis_data.get("recommendation", "N/A"))
     ]
+
+#    summary_data = [
+#        ("Diagnosis", patient_data("Diagnosis", "N/A")),
+#        ("Confidence", f"{patient_data('Confidence', 'N/A')}%"),
+#        ("Recommendation", patient_data("Recommendation", "N/A"))
+#    ]
 
     for label, value in summary_data:
         pdf.cell(40, line_spacing, label, 1, 0, 'C', True)
