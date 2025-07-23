@@ -14,13 +14,13 @@ def require_login():
     if not st.session_state.get("authenticated", False):
         st.warning("🔒 Please login to access the diagnosis page.")
 
-        with st.form("login_form"):
-            username = st.text_input("Email").strip().lower()
-            password = st.text_input("Password", type="password")
+        with st.form("login_form", clear_on_submit=True):
+            username = st.text_input("Email", placeholder="e.g. johndoe@example.com").strip().lower()
+            password = st.text_input("Password", type="password", placeholder="Enter your password")
             submit = st.form_submit_button("Login")
 
             if submit:
-                # Check DB for user
+                # Connect and check DB for user
                 conn = get_connection()
                 cur = conn.cursor()
                 cur.execute("SELECT email, role, password FROM users WHERE email = ?", (username,))
@@ -28,23 +28,24 @@ def require_login():
                 cur.close()
                 conn.close()
 
-                if result and bcrypt.checkpw(password.encode(), result[2].encode()):
-                    st.session_state.authenticated = True
-                    st.session_state.user = {"email": result[0], "role": result[1]}
-                    st.success(f"✅ Login successful as {result[1]}. Redirecting...")
-                    st.rerun()
-
-                # Optional fallback for .env Admins
+                if result:
+                    stored_email, stored_role, stored_password_hash = result
+                    if bcrypt.checkpw(password.encode(), stored_password_hash.encode()):
+                        st.session_state.authenticated = True
+                        st.session_state.user = {"email": stored_email, "role": stored_role}
+                        st.success(f"✅ Login successful as {stored_role}. Redirecting...")
+                        st.rerun()
+                    else:
+                        st.warning("⚠️ Incorrect password. Please try again.")
                 elif username in ADMINS and password == ADMIN_PASSWORD:
                     st.session_state.authenticated = True
                     st.session_state.user = {"email": username, "role": "Admin"}
                     st.success("✅ Admin login successful. Redirecting...")
                     st.rerun()
-
                 else:
-                    st.error("❌ Invalid credentials")
+                    st.warning("⚠️ This email has not been registered. Contact Admin to register.")
 
-        st.stop()  # Prevent further page rendering if not logged in
+        st.stop()
 
 def check_authentication():
     return st.session_state.get("user")
