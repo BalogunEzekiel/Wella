@@ -18,7 +18,12 @@ def show_doctor_dashboard():
             return
 
         # Selectbox for patient name
-        patient_name = st.selectbox("Select Patient", df['name'].unique(), index=None, placeholder="Choose a patient")
+        patient_name = st.selectbox(
+            "Select Patient",
+            df['name'].unique(),
+            index=None,
+            placeholder="Choose a patient"
+        )
 
         if patient_name:
             # Get patient record (force Series)
@@ -37,52 +42,60 @@ def show_doctor_dashboard():
                 else datetime.date.today()
             )
 
-            # Doctor input
-            treatment = st.text_area("🩹 Doctor's Treatment / Notes", value=doctor_notes, placeholder="Enter treatment notes or observations...")
-            appointment_date = st.date_input("📅 Next Appointment Date", value=appointment_date_value)
+            with st.form("doctor_treatment_form", clear_on_submit=True):
+                treatment = st.text_area(
+                    "🩹 Doctor's Treatment / Notes",
+                    value=doctor_notes,
+                    placeholder="Enter treatment notes or prescriptions..."
+                )
+                appointment_date = st.date_input(
+                    "📅 Next Appointment Date",
+                    value=appointment_date_value
+                )
 
-            if st.button("Update Record and Generate Report"):
-                try:
-                    # Update DB
-                    conn = get_connection()
-                    cursor = conn.cursor()
-                    cursor.execute("""
-                        UPDATE patients 
-                        SET doctor_notes = ?, appointment_date = ?
-                        WHERE patient_id = ?
-                    """, (treatment, appointment_date.strftime("%Y-%m-%d"), patient_record['patient_id']))
-                    conn.commit()
-                    conn.close()
+                submitted = st.form_submit_button("Update Record and Generate Report")
+                if submitted:
+                    try:
+                        # Update DB
+                        conn = get_connection()
+                        cursor = conn.cursor()
+                        cursor.execute("""
+                            UPDATE patients 
+                            SET doctor_notes = ?, appointment_date = ?
+                            WHERE patient_id = ?
+                        """, (treatment, appointment_date.strftime("%Y-%m-%d"), patient_record['patient_id']))
+                        conn.commit()
+                        conn.close()
 
-                    st.success("✅ Doctor's notes updated successfully.")
+                        st.success("✅ Doctor's notes updated successfully.")
 
-                    # Generate report
-                    diagnosis_data = {
-                        'diagnosis': patient_record['diagnosis'],
-                        'confidence': patient_record['confidence'],
-                        'recommendation': patient_record['recommendation']
-                    }
+                        # Generate report
+                        diagnosis_data = {
+                            'diagnosis': patient_record['diagnosis'],
+                            'confidence': patient_record['confidence'],
+                            'recommendation': patient_record['recommendation']
+                        }
 
-                    pdf_data = generate_treatment_report(
-                        name=patient_record['name'],
-                        age=patient_record['age'],
-                        gender=patient_record['gender'],
-                        symptoms=patient_record['symptoms'],
-                        diagnosis_data=diagnosis_data,
-                        doctor_notes=treatment,
-                        appointment_date=appointment_date.strftime("%Y-%m-%d")
-                    )
+                        pdf_data = generate_treatment_report(
+                            name=patient_record['name'],
+                            age=patient_record['age'],
+                            gender=patient_record['gender'],
+                            symptoms=patient_record['symptoms'],
+                            diagnosis_data=diagnosis_data,
+                            doctor_notes=treatment,
+                            appointment_date=appointment_date.strftime("%Y-%m-%d")
+                        )
 
-                    st.download_button(
-                        label="📄 Download Treatment Report",
-                        data=pdf_data,
-                        file_name=f"{patient_record['name'].replace(' ', '_')}_treatment_report.pdf",
-                        mime="application/pdf",
-                        on_click=st.rerun
-                    )
+                        st.download_button(
+                            label="📄 Download Treatment Report",
+                            data=pdf_data,
+                            file_name=f"{patient_record['name'].replace(' ', '_')}_treatment_report.pdf",
+                            mime="application/pdf",
+                            on_click=st.rerun
+                        )
 
-                except Exception as e:
-                    st.error(f"❌ Could not update or generate report: {e}")
+                    except Exception as e:
+                        st.error(f"❌ Could not update or generate report: {e}")
 
     except Exception as e:
         st.error(f"❌ Error loading patient records: {e}")
