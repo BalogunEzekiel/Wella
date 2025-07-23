@@ -25,6 +25,13 @@ def show_diagnosis():
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
 
+    # Logout Button
+    if st.sidebar.button("🚪 Logout"):
+        logout()
+        st.session_state["page"] = "Home"
+        st.session_state["selected_option"] = "Home"
+        st.rerun()
+
     st.sidebar.image("assets/logo.png", width=120)
     st.sidebar.markdown("Your Offline Health Companion")
     st.sidebar.markdown(f"👤 Logged in as: {user['email']} ({role})")
@@ -47,14 +54,7 @@ def show_diagnosis():
         st.sidebar.info(sync_msg)
     else:
         st.sidebar.warning("⛔ Offline Mode – Sync will resume when online")
-
-    # Logout Button
-    if st.sidebar.button("🚪 Logout"):
-        logout()
-        st.session_state["page"] = "Home"
-        st.session_state["selected_option"] = "Home"
-        st.rerun()
-
+    
 def is_connected():
     import socket
     try:
