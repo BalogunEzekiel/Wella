@@ -343,7 +343,8 @@ def landing_page():
         <!-- Slide 2 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/offline.png">
+            <img src="assets/offline.png" style="width: 100%; border-radius: 10px;">
+#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/offline.png">
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -364,7 +365,7 @@ def landing_page():
         <!-- Slide 3 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <st.image("assets/commission.png", use_container_width=True)>
+            <img src="assets/commission.png" style="width: 100%; border-radius: 10px;">
 #            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
