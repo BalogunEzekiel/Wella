@@ -351,7 +351,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <st.image("assets/ngo.png", use_container_width=True)>
+            <img src="assets/ngo.png" style="width: 100%; border-radius: 10px;">
 #            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
