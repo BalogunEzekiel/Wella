@@ -25,26 +25,30 @@ def show_user_creation_form():
     cur = conn.cursor()
 
     with st.form("add_user", clear_on_submit=True):
-        fullname = st.text_input("Full Name", placeholder="e.g., Janet Grace")
-        email = st.text_input("Email", placeholder="e.g., janet.grace@wella.ai")
-        role = st.selectbox("Role", ["Doctor", "Nurse"])  # Admins created only via backend logic
+        fullname = st.text_input("Full Name", placeholder="e.g Joe John")
+        email = st.text_input("Email", placeholder="e.g., j_john@example.com")
+        role = st.selectbox("Role", ["Select Role", "Doctor", "Nurse"])
         submit = st.form_submit_button("Create User")
-
+    
         if submit:
-            try:
-                default_password = os.getenv("DEFAULT_USER_PASSWORD", "DEFAULT_USER_PASSWORD")
-                hashed_pw = bcrypt.hashpw(default_password.encode(), bcrypt.gensalt()).decode()
-
-                cur.execute("""
-                    INSERT INTO users (fullname, email, password, role, force_password_change)
-                    VALUES (?, ?, ?, ?, 1)
-                """, (fullname, email, hashed_pw, role))
-
-                conn.commit()
-                st.success(f"✅ User **{fullname}** created successfully with default password.")
-            except Exception as err:
-                st.error(f"❌ Failed to create user: {err}")
+            if role == "Select Role":
+                st.warning("⚠️ Please select a valid role before submitting.")
+            else:
+                try:
+                    default_password = os.getenv("DEFAULT_USER_PASSWORD", "DEFAULT_USER_PASSWORD")
+                    hashed_pw = bcrypt.hashpw(default_password.encode(), bcrypt.gensalt()).decode()
+    
+                    cur.execute("""
+                        INSERT INTO users (fullname, email, password, role, force_password_change)
+                        VALUES (?, ?, ?, ?, 1)
+                    """, (fullname, email, hashed_pw, role))
+    
+                    conn.commit()
+                    st.success(f"✅ User **{fullname}** created successfully with default password.")
+                except Exception as err:
+                    st.error(f"❌ Failed to create user: {err}")
     conn.close()
+
     
 def show_users_table():
     st.markdown("### 📋 All Users")
@@ -90,13 +94,3 @@ def show_admin_dashboard():
         status = sync_to_supabase()
         st.success(status)
         st.rerun()
-
-#    if is_connected():
-#        st.sidebar.success("🌐 Online – Auto Sync Enabled")
-#        sync_msg = sync_to_supabase()
-#        st.sidebar.info(sync_msg)
-#    else:
-#        st.sidebar.warning("🚫 Offline Mode – Sync will resume when online")
-
-#    if st.sidebar.button("🚪 Logout", key="logout_button"):
-#            logout()
