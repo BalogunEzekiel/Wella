@@ -4,6 +4,7 @@ from components import render_header
 import streamlit.components.v1 as components
 from PIL import Image
 import time
+import random
 
 def detect_language():
     try:
@@ -106,12 +107,12 @@ def landing_page():
         "assets/raspberry.avif",
         "assets/wella.jpg"
     ]
-
+    
     # ✅ Pick a random image at each page load (refresh)
     selected_image = random.choice(hero_images)
-
+    
     # ✅ Render hero and full story + CTA section
-    st.markdown(f"""
+    hero_html = f"""
     <style>
     .hero-container {{
         position: relative;
@@ -172,8 +173,16 @@ def landing_page():
         margin-left: auto;
         margin-right: auto;
     }}
+    .footer {{
+        text-align: center;
+        font-size: 0.9rem;
+        margin-top: 4rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ddd;
+        color: #888;
+    }}
     </style>
-
+    
     <div class="hero-container">
       <div class="hero-overlay">
         <h1>Mentorship that Moves Mountains</h1>
@@ -185,10 +194,10 @@ def landing_page():
       </div>
     </div>
     """
+    
     st.markdown(hero_html, unsafe_allow_html=True)
     
     # ========== Footer ==========
-    # Footer
     st.markdown("""
     <div class="footer">
         Built with ❤️ for smarter, accessible healthcare.
