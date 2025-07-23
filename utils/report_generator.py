@@ -43,8 +43,6 @@ def generate_medical_report(name, age, gender, symptoms, result):
     local_time = datetime.now(user_tz)
     pdf.cell(0, line_spacing, f"Date: {local_time.strftime('%d %B %Y, %I:%M %p')}", ln=True)
     
-#    pdf.cell(0, line_spacing, f"Date: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True)
-
     # === Patient Info ===
     pdf.ln(5)
     pdf.set_font("Arial", "B", 13)
@@ -91,11 +89,6 @@ def generate_medical_report(name, age, gender, symptoms, result):
 
         pdf.set_auto_page_break(auto=False)
         footer_y = 270
-
-#        pdf.set_xy(10, footer_y)
-#        pdf.set_font("Arial", "I", 10)
-#        pdf.set_text_color(100, 100, 100)
-#        pdf.multi_cell(0, 5, f"Report ID: {report_id}\nVerify at: https://www.wella.ai", align="L")
 
         pdf.image(temp_barcode.name, x=150, y=footer_y, w=45, h=15)
         os.unlink(temp_barcode.name)
@@ -171,16 +164,10 @@ def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, docto
     pdf.set_font("Arial", "", 12)
     pdf.set_fill_color(230, 240, 255)
 
-#    diagnosis_data = [
-#        ("Diagnosis", result.get("Diagnosis", "N/A")),
-#        ("Confidence", f"{result.get('Confidence', 'N/A')}%"),
-#        ("Recommendation", result.get("Recommendation", "N/A"))
-#    ]
-
     summary_data = [
-        ("Diagnosis", patient_data.get("Diagnosis", "N/A")),
-        ("Confidence", f"{patient_data.get('Confidence', 'N/A')}%"),
-        ("Recommendation", patient_data.get("Recommendation", "N/A"))
+        ("Diagnosis", patient_data("Diagnosis", "N/A")),
+        ("Confidence", f"{patient_data('Confidence', 'N/A')}%"),
+        ("Recommendation", patient_data("Recommendation", "N/A"))
     ]
 
     for label, value in summary_data:
