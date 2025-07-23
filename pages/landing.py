@@ -188,11 +188,13 @@ def landing_page():
     st.markdown(hero_html, unsafe_allow_html=True)
     
     # ========== Footer ==========
+    # Footer
     st.markdown("""
     <div class="footer">
         Built with ❤️ for smarter, accessible healthcare.
     </div>
     """, unsafe_allow_html=True)
+
     
         
     # Two columns (Image | Text)
