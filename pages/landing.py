@@ -356,7 +356,7 @@ def landing_page():
         <!-- Slide 2 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="assets/offline.png" style="width: 100%; border-radius: 10px;">
+            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
 #            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/offline.png">
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
@@ -365,7 +365,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="assets/ngo.png" style="width: 100%; border-radius: 10px;">
+            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
 #            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
@@ -378,7 +378,7 @@ def landing_page():
         <!-- Slide 3 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="assets/commission.png" style="width: 100%; border-radius: 10px;">
+            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
 #            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
