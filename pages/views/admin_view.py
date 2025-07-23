@@ -8,6 +8,7 @@ from utils.auth import logout
 from utils.sync_utils import sync_to_supabase
 import bcrypt
 from pytz import timezone
+import time
 
 load_dotenv()
 
@@ -44,8 +45,8 @@ def show_user_creation_form():
 
                     conn.commit()
                     st.success(f"✅ User **{fullname}** created as **{role}** successfully.")
-                    time.sleep(2)  # Pause for user to see success message
-                    st.experimental_rerun()  # Clears form + message
+                    time.sleep(1)
+                    st.rerun()
                 except Exception as err:
                     st.error(f"❌ Failed to create user: {err}")
     conn.close()
