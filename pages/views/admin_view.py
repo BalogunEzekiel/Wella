@@ -61,7 +61,6 @@ def show_users_table():
     except Exception as e:
         st.error(f"❌ Could not fetch users: {e}")
 
-
 def show_patient_records():
     st.subheader("📊 Patient Records")
     try:
@@ -69,19 +68,23 @@ def show_patient_records():
         df = pd.read_sql_query("SELECT * FROM patients ORDER BY created_at DESC", conn)
         conn.close()
 
-        name_filter = st.text_input("🔍 Search by Patient Name")
-        date_filter = st.date_input("📅 Filter by Date", [])
+        with st.form("filter_form", clear_on_submit=True):
+            name_filter = st.text_input("🔍 Search by Patient Name", placeholder="Enter patient name")
+            date_filter = st.date_input("📅 Filter by Date", [])
+            submit_filter = st.form_submit_button("Apply Filter")
 
-        if name_filter:
-            df = df[df['name'].str.contains(name_filter, case=False)]
-        if date_filter:
-            df['created_at'] = pd.to_datetime(df['created_at'])
-            df = df[df['created_at'].dt.date == date_filter]
+        if submit_filter:
+            if name_filter:
+                df = df[df['name'].str.contains(name_filter, case=False)]
+            if date_filter:
+                df['created_at'] = pd.to_datetime(df['created_at'])
+                df = df[df['created_at'].dt.date == date_filter]
 
         st.dataframe(df)
 
     except Exception as e:
         st.error(f"❌ Could not load patient records: {e}")
+
 
 
 def show_admin_dashboard():
