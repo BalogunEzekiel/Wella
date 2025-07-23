@@ -72,7 +72,7 @@ def show_doctor_dashboard():
                 symptoms=symptoms,
                 diagnosis_data=diagnosis_data,
                 doctor_notes=treatment,
-                appointment_date=appointment_date.strftime("%Y-%m-%d")
+                appointment_date=appointment_date.strftime("%Y-%m-%d") if appointment_date else "N/A"
             )
 
             if st.download_button(
