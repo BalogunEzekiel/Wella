@@ -184,6 +184,8 @@ def landing_page():
         </div>
       </div>
     </div>
+    """
+    st.markdown(hero_html, unsafe_allow_html=True)
     
     # ========== Footer ==========
     st.markdown("""
