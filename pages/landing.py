@@ -96,6 +96,95 @@ def landing_page():
         time.sleep(1.5)
         st.empty()
 
+    # ===================== Hero Flag ========================
+    # ✅ Hero images list
+    hero_images = [
+        "assets/Image_2.png",
+        "assets/AI_Me.png",
+        "assets/analytics.jpg",
+        "assets/logo.png",
+        "assets/raspberry.avif",
+        "assets/wella.jpg"
+    ]
+
+    # ✅ Pick a random image at each page load (refresh)
+    selected_image = random.choice(hero_images)
+
+    # ✅ Render hero and full story + CTA section
+    st.markdown(f"""
+    <style>
+    .hero-container {{
+        position: relative;
+        width: 100%;
+        height: 420px;
+        background-image: url('{selected_image}');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }}
+    .hero-overlay {{
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 40px;
+        color: white;
+        text-align: center;
+        border-radius: 10px;
+        max-width: 80%;
+    }}
+    .hero-buttons a {{
+        margin: 5px 10px;
+        padding: 10px 20px;
+        background-color: #4B8BBE;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }}
+    .hero-buttons a:hover {{
+        background-color: #366fa1;
+    }}
+    .story-container {{
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }}
+    .story-box {{
+        flex: 1;
+        min-width: 300px;
+        background-color: #f5f9ff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }}
+    .cta-box {{
+        background-color: #e0f7ea;
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 3rem;
+        text-align: center;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }}
+    </style>
+
+    <div class="hero-container">
+      <div class="hero-overlay">
+        <h1>Mentorship that Moves Mountains</h1>
+        <p>From non-tech to tech. From doubt to destiny. MentorLink is where stories begin.</p>
+        <div class="hero-buttons">
+            <a href="https://mentorlink.streamlit.app/" target="_blank">🚀 Join as a Fellow</a>
+            <a href="https://mentorlink.streamlit.app/" target="_blank">✨ Become a Mentor</a>
+        </div>
+      </div>
+    </div>
+    
     # ========== Footer ==========
     st.markdown("""
     <div class="footer">
@@ -262,7 +351,8 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
+            <st.image("assets/ngo.png", use_container_width=True)>
+#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -274,7 +364,8 @@ def landing_page():
         <!-- Slide 3 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
+            <st.image("assets/commission.png", use_container_width=True)>
+#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
