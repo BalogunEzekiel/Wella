@@ -35,7 +35,7 @@ def show_doctor_dashboard():
             treatment = st.text_area("🩹 Doctor's Treatment / Notes", value=patient_record.get('doctor_notes', ''), placeholder="Enter treatment notes or observations...")
             appointment_date = st.date_input("📅 Next Appointment Date", value=patient_record.get('appointment_date', datetime.date.today()))
 
-            if st.button("Update Record and Generate Report"):
+            if st.button("Update Record"):
                 try:
                     # Update DB with doctor's notes
                     conn = get_connection()
@@ -50,40 +50,38 @@ def show_doctor_dashboard():
 
                     st.success("✅ Doctor's notes updated successfully.")
 
-                    # Extract patient data for report
-                    name = patient_record['name']
-                    age = patient_record['age']
-                    gender = patient_record['gender']
-                    symptoms = patient_record['symptoms']
-                    diagnosis_data = {
-                        'diagnosis': patient_record.get('diagnosis', 'N/A'),
-                        'confidence': patient_record.get('confidence', 'N/A'),
-                        'recommendation': patient_record.get('recommendation', 'N/A')
-                    }
-                    
-                    # Generate PDF report
-                    pdf_data = generate_treatment_report(
-                        name=name,
-                        age=age,
-                        gender=gender,
-                        symptoms=symptoms,
-                        diagnosis_data=diagnosis_data,
-                        doctor_notes=treatment,
-                        appointment_date=appointment_date.strftime("%Y-%m-%d")
-                    )
-
-                    # Download button
-                    st.download_button(
-                        label="📄 Download Treatment Report",
-                        data=pdf_data,
-                        file_name=f"{name.replace(' ', '_')}_treatment_report.pdf",
-                        mime="application/pdf"
-                    )
-
-                        st.rerun()
-
                 except Exception as e:
-                    st.error(f"❌ Could not load records: {e}")
+                    st.error(f"❌ Could not update record: {e}")
+                    return
+
+            # Generate PDF report
+            name = patient_record['name']
+            age = patient_record['age']
+            gender = patient_record['gender']
+            symptoms = patient_record['symptoms']
+            diagnosis_data = {
+                'diagnosis': patient_record.get('diagnosis', 'N/A'),
+                'confidence': patient_record.get('confidence', 'N/A'),
+                'recommendation': patient_record.get('recommendation', 'N/A')
+            }
+
+            pdf_data = generate_treatment_report(
+                name=name,
+                age=age,
+                gender=gender,
+                symptoms=symptoms,
+                diagnosis_data=diagnosis_data,
+                doctor_notes=treatment,
+                appointment_date=appointment_date.strftime("%Y-%m-%d")
+            )
+
+            if st.download_button(
+                label="📄 Download Treatment Report",
+                data=pdf_data,
+                file_name=f"{name.replace(' ', '_')}_treatment_report.pdf",
+                mime="application/pdf"
+            ):
+                st.rerun()
 
     except Exception as e:
         st.error(f"❌ Error loading patient records: {e}")
