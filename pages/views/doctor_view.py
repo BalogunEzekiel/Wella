@@ -35,10 +35,9 @@ def show_doctor_dashboard():
             appointment_date_value = (
                 pd.to_datetime(patient_record['appointment_date']).date()
                 if pd.notnull(patient_record['appointment_date'])
-                else datetime.date.today()
+                else None
             )
 
-            # Initialize pdf_data
             pdf_data = None
 
             with st.form("doctor_treatment_form", clear_on_submit=True):
@@ -47,10 +46,13 @@ def show_doctor_dashboard():
                     value=doctor_notes,
                     placeholder="Enter treatment notes or prescriptions..."
                 )
-                appointment_date = st.date_input(
-                    "📅 Next Appointment Date",
-                    value=appointment_date_value
-                )
+
+                if appointment_date_value:
+                    appointment_date = st.date_input(
+                        "📅 Next Appointment Date", value=appointment_date_value
+                    )
+                else:
+                    appointment_date = st.date_input("📅 Next Appointment Date")
 
                 submitted = st.form_submit_button("Update Record and Generate Report")
                 if submitted:
@@ -83,14 +85,13 @@ def show_doctor_dashboard():
                             appointment_date=appointment_date.strftime("%Y-%m-%d")
                         )
 
-                        # Store in session state to access outside form
                         st.session_state['pdf_data'] = pdf_data
                         st.session_state['file_name'] = f"{patient_record['name'].replace(' ', '_')}_treatment_report.pdf"
 
                     except Exception as e:
                         st.error(f"❌ Could not update or generate report: {e}")
 
-            # ⬇️ Moved OUTSIDE the form
+            # Outside form
             if 'pdf_data' in st.session_state:
                 st.download_button(
                     label="📄 Download Treatment Report",
