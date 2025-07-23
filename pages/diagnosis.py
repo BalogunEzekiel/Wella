@@ -32,7 +32,7 @@ def show_diagnosis():
         st.session_state["selected_option"] = "Home"
         st.rerun()
 
-    st.sidebar.image("assets/logo.png", width=120)
+    st.sidebar.image("assets/logo.png", width=100)
     st.sidebar.markdown("Your Offline Health Companion")
     st.sidebar.markdown(f"👤 Logged in as: {user['email']} ({role})")
 
