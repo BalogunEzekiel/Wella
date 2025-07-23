@@ -11,7 +11,6 @@ from pytz import timezone
 
 load_dotenv()
 
-
 def is_connected():
     try:
         socket.create_connection(("1.1.1.1", 53))
@@ -29,7 +28,7 @@ def show_user_creation_form():
         email = st.text_input("Email", placeholder="e.g., j_john@example.com")
         role = st.selectbox("Role", ["Select Role", "Doctor", "Nurse"])
         submit = st.form_submit_button("Create User")
-    
+
         if submit:
             if role == "Select Role":
                 st.warning("⚠️ Please select a valid role before submitting.")
@@ -37,18 +36,19 @@ def show_user_creation_form():
                 try:
                     default_password = os.getenv("DEFAULT_USER_PASSWORD", "DEFAULT_USER_PASSWORD")
                     hashed_pw = bcrypt.hashpw(default_password.encode(), bcrypt.gensalt()).decode()
-    
+
                     cur.execute("""
                         INSERT INTO users (fullname, email, password, role, force_password_change)
                         VALUES (?, ?, ?, ?, 1)
                     """, (fullname, email, hashed_pw, role))
-    
+
                     conn.commit()
-                    st.success(f"✅ User **{fullname}** created successfully with default password.")
+                    st.success(f"✅ User **{fullname}** created as **{role}** successfully.")
+                    time.sleep(2)  # Pause for user to see success message
+                    st.experimental_rerun()  # Clears form + message
                 except Exception as err:
                     st.error(f"❌ Failed to create user: {err}")
     conn.close()
-
     
 def show_users_table():
     st.markdown("### 📋 All Users")
