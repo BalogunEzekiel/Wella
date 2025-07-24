@@ -257,14 +257,12 @@ def landing_page():
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
     
-    ai_me_img = image_to_base64("assets/AI_Me.png")
     testimonial1_img = image_to_base64("assets/image.jpg")
     testimonial2_img = image_to_base64("assets/nurse.png")
     testimonial3_img = image_to_base64("assets/commissioner.jpg")
     testimonial4_img = image_to_base64("assets/john.jpg")
     testimonial5_img = image_to_base64("assets/commission.png")
     testimonial6_img = image_to_base64("assets/commissioner.jpg")
-
     
     testimonials_html = f"""
     <style>
@@ -362,7 +360,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“We no longer panic during network outages—Wella.AI is always ready.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
-              <div class="testimonial-name">Nurse Michael Yusuf</div>
+              <div class="testimonial-name">Nurse Michael Todo</div>
             </div>
           </div>
         </div>
