@@ -5,6 +5,7 @@ import streamlit.components.v1 as components
 from PIL import Image
 import time
 import random
+import base64
 
 def detect_language():
     try:
@@ -185,11 +186,11 @@ def landing_page():
     
     <div class="hero-container">
       <div class="hero-overlay">
-        <h1>Mentorship that Moves Mountains</h1>
-        <p>From non-tech to tech. From doubt to destiny. MentorLink is where stories begin.</p>
+        <h1>Wella.AI Diagnostic Assistant</h1>
+        <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
         <div class="hero-buttons">
-            <a href="https://mentorlink.streamlit.app/" target="_blank">🚀 Join as a Fellow</a>
-            <a href="https://mentorlink.streamlit.app/" target="_blank">✨ Become a Mentor</a>
+            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
+            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
         </div>
       </div>
     </div>
@@ -252,23 +253,29 @@ def landing_page():
     # Testimonials    
     st.subheader("🗣️ What People Are Saying")
 
-    testimonials_html = """
+    def image_to_base64(image_path):
+        with open(image_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    
+    ai_me_img = image_to_base64("assets/AI_Me.PNG")
+    
+    testimonials_html = f"""
     <style>
-    .testimonial-carousel {
+    .testimonial-carousel {{
         max-width: 100%;
         margin: auto;
         overflow: hidden;
         position: relative;
         padding: 10px;
-    }
-    .testimonial-grid {
+    }}
+    .testimonial-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 20px;
         align-items: stretch;
         transition: transform 0.5s ease-in-out;
-    }
-    .testimonial-card {
+    }}
+    .testimonial-card {{
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -277,8 +284,8 @@ def landing_page():
         background: linear-gradient(135deg, #e0f7fa, #fce4ec);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         min-height: 260px;
-    }
-    .testimonial-card img {
+    }}
+    .testimonial-card img {{
         width: 120px;
         height: 120px;
         object-fit: cover;
@@ -286,28 +293,28 @@ def landing_page():
         margin-right: 20px;
         border: 4px solid #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    .testimonial-text {
+    }}
+    .testimonial-text {{
         font-size: 1rem;
         font-style: italic;
         color: #333;
-    }
-    .testimonial-name {
+    }}
+    .testimonial-name {{
         margin-top: 10px;
         font-weight: bold;
         font-size: 1.1rem;
         color: #0077b6;
-    }
-    .stars {
+    }}
+    .stars {{
         color: #ffa500;
         margin-bottom: 6px;
         font-size: 1.05rem;
-    }
-    .dot-container {
+    }}
+    .dot-container {{
         text-align: center;
         margin-top: 10px;
-    }
-    .dot {
+    }}
+    .dot {{
         height: 12px;
         width: 12px;
         margin: 4px 6px;
@@ -315,20 +322,20 @@ def landing_page():
         border-radius: 50%;
         display: inline-block;
         transition: background-color 0.3s ease;
-    }
-    .active-dot {
+    }}
+    .active-dot {{
         background-color: #0077b6;
-    }
-    @media (max-width: 768px) {
-        .testimonial-card {
+    }}
+    @media (max-width: 768px) {{
+        .testimonial-card {{
             flex-direction: column;
             text-align: center;
-        }
-        .testimonial-card img {
+        }}
+        .testimonial-card img {{
             margin-right: 0;
             margin-bottom: 12px;
-        }
-    }
+        }}
+    }}
     </style>
     
     <div class="testimonial-carousel">
@@ -356,8 +363,7 @@ def landing_page():
         <!-- Slide 2 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
-#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/offline.png">
+            <img src="data:image/png;base64,{ai_me_img}">
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -365,8 +371,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
-#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/ngo.png">
+            <img src="data:image/png;base64,{ai_me_img}">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -378,8 +383,7 @@ def landing_page():
         <!-- Slide 3 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="assets/AI_Me.png" style="width: 100%; border-radius: 10px;">
-#            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/commission.png">
+            <img src="data:image/png;base64,{ai_me_img}">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -409,30 +413,30 @@ def landing_page():
     const slides = document.querySelectorAll('.testimonial-grid');
     const dots = document.querySelectorAll('.dot');
     
-    function showSlide(index) {
+    function showSlide(index) {{
         slides.forEach((s, i) => s.style.display = i === index ? 'grid' : 'none');
         dots.forEach((d, i) => d.className = i === index ? 'dot active-dot' : 'dot');
-    }
+    }}
     
-    function nextSlide() {
+    function nextSlide() {{
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
-    }
+    }}
     
-    dots.forEach((dot, index) => {
-        dot.onclick = () => {
+    dots.forEach((dot, index) => {{
+        dot.onclick = () => {{
             currentSlide = index;
             showSlide(index);
-        };
-    });
+        }};
+    }});
     
     showSlide(currentSlide);
     setInterval(nextSlide, 6000);
     </script>
     """
     
-    import streamlit.components.v1 as components
     components.html(testimonials_html, height=540)
+################################################################################################
     
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
