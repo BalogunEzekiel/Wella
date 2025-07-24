@@ -257,7 +257,7 @@ def landing_page():
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
     
-    ai_me_img = image_to_base64("assets/AI_Me.PNG")
+    ai_me_img = image_to_base64("assets/AI_Me.png")
     
     testimonials_html = f"""
     <style>
