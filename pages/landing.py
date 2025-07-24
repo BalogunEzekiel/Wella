@@ -343,7 +343,7 @@ def landing_page():
         <!-- Slide 1 -->
         <div class="testimonial-grid" style="display: grid;">
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/image.jpg">
+            <img src="https://github.com/BalogunEzekiel/Wella/blob/main/assets/image.jpg">
             <div>
               <div class="testimonial-text">“Wella.AI is a game-changer for rural healthcare. We diagnose faster and more accurately, even offline.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -351,7 +351,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/nurse.png">
+            <img src="https://github.com/BalogunEzekiel/Wella/blob/main/assets/nurse.png">
             <div>
               <div class="testimonial-text">“We no longer panic during network outages—Wella.AI is always ready.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
