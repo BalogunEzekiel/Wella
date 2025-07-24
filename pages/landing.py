@@ -258,6 +258,13 @@ def landing_page():
             return base64.b64encode(f.read()).decode()
     
     ai_me_img = image_to_base64("assets/AI_Me.png")
+    testimonial1_img = image_to_base64("assets/image.jpg")
+    testimonial2_img = image_to_base64("assets/nurse.png")
+    testimonial3_img = image_to_base64("assets/commissioner.jpg")
+    testimonial4_img = image_to_base64("assets/john.jpg")
+    testimonial5_img = image_to_base64("assets/commission.png")
+    testimonial6_img = image_to_base64("assets/commissioner.jpg")
+
     
     testimonials_html = f"""
     <style>
@@ -343,7 +350,7 @@ def landing_page():
         <!-- Slide 1 -->
         <div class="testimonial-grid" style="display: grid;">
           <div class="testimonial-card">
-            <img src="https://github.com/BalogunEzekiel/Wella/blob/main/assets/image.jpg">
+            <img src="data:image/png;base64,{testimonial1_img}">
             <div>
               <div class="testimonial-text">“Wella.AI is a game-changer for rural healthcare. We diagnose faster and more accurately, even offline.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -351,7 +358,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="https://github.com/BalogunEzekiel/Wella/blob/main/assets/nurse.png">
+            <img src="data:image/png;base64,{testimonial2_img}">
             <div>
               <div class="testimonial-text">“We no longer panic during network outages—Wella.AI is always ready.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -363,7 +370,7 @@ def landing_page():
         <!-- Slide 2 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="data:image/png;base64,{ai_me_img}">
+            <img src="data:image/png;base64,{testimonial3_img}">
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -371,7 +378,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="data:image/png;base64,{ai_me_img}">
+            <img src="data:image/png;base64,{testimonial4_img}">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -383,7 +390,7 @@ def landing_page():
         <!-- Slide 3 -->
         <div class="testimonial-grid" style="display: none;">
           <div class="testimonial-card">
-            <img src="data:image/png;base64,{ai_me_img}">
+            <img src="data:image/png;base64,{testimonial5_img}">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
@@ -391,7 +398,7 @@ def landing_page():
             </div>
           </div>
           <div class="testimonial-card">
-            <img src="https://raw.githubusercontent.com/yourusername/wellaai-assets/main/assets/image.jpg">
+            <img src="data:image/png;base64,{testimonial6_img}">
             <div>
               <div class="testimonial-text">“Wella.AI has revolutionized how we handle patients in our village clinic.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
