@@ -105,16 +105,18 @@ def landing_page():
     </div>
     """
     st.markdown(hero_html, unsafe_allow_html=True)
-    
+
+    st.markdown("---")
+
     # ========== Hero Banner ==========
-#    st.markdown("""
-#    <div class="hero">
-#        <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
-#        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
-#        <a href="/?page=diagnosis" target="_self">
-#        </a>
-#    </div>
-#    """, unsafe_allow_html=True)
+    st.markdown("""
+    <div class="hero">
+        <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
+        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+        <a href="/?page=diagnosis" target="_self">
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
 
     # ========== Auto-Rotating Images ==========
 #    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
@@ -126,10 +128,10 @@ def landing_page():
 #        time.sleep(1.5)
 #        st.empty()
 
-    st.markdown("""
-    <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
-    <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
-    """, unsafe_allow_html=True)
+#    st.markdown("""
+#    <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
+#    <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+#    """, unsafe_allow_html=True)
     
     # ========== Footer ==========
     st.markdown("""
