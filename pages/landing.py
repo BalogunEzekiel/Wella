@@ -90,7 +90,7 @@ def landing_page():
         with open(path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
     
-    encoded_img = image_to_base64("assets/image.jpg", "assets/nurse.png", "assets/commissioner.jpg")
+    encoded_img = image_to_base64("assets/Image_2.png")
     
     hero_html = f"""
     <div class="hero-container" style="
