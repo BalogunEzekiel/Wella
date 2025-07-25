@@ -76,16 +76,7 @@ def landing_page():
         }
     </style>
     """, unsafe_allow_html=True)
-    #===================================================
-    
-#    def image_to_base64(image_path):
-#        with open(image_path, "rb") as f:
-#            return base64.b64encode(f.read()).decode()
-    
-#    testimonial1_img = image_to_base64("assets/image.jpg")
-#    testimonial2_img = image_to_base64("assets/nurse.png")
-#    testimonial3_img = image_to_base64("assets/commissioner.jpg")
-
+    # ===================== Hero Flag ========================
     def image_to_base64(path):
         with open(path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
@@ -107,122 +98,22 @@ def landing_page():
         <h1>Wella.AI Diagnostic Assistant</h1>
         <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
         <div class="hero-buttons">
-            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
-            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
+            <button onclick="window.location.href='?page=diagnosis'">🚀 Launch Wella.AI</button>
+            <button onclick="window.location.href='?page=contact'">✨ Partner With Us</button>
+##            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
+##            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
         </div>
       </div>
     </div>
     """
-    st.markdown(hero_html, unsafe_allow_html=True)
-
-    # ===================== Hero Flag ========================
-    # ✅ Hero images list
-    hero_images = [
-        "assets/Image_2.png",
-        "assets/AI_Me.png",
-        "assets/analytics.jpg",
-        "assets/logo.png",
-        "assets/raspberry.avif",
-        "assets/wella.jpg"
-    ]
-    
-    # ✅ Pick a random image at each page load (refresh)
-    selected_image = random.choice(hero_images)
-    
-    # ✅ Render hero and full story + CTA section
-    hero_html = f"""
-    <style>
-    .hero-container {{
-        position: relative;
-        width: 100%;
-        height: 420px;
-        background-image: url('{selected_image}');
-        background-size: cover;
-        background-position: center;
-        border-radius: 10px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 3rem;
-    }}
-    .hero-overlay {{
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 40px;
-        color: white;
-        text-align: center;
-        border-radius: 10px;
-        max-width: 80%;
-    }}
-    .hero-buttons a {{
-        margin: 5px 10px;
-        padding: 10px 20px;
-        background-color: #4B8BBE;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-    }}
-    .hero-buttons a:hover {{
-        background-color: #366fa1;
-    }}
-    .story-container {{
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-top: 2rem;
-    }}
-    .story-box {{
-        flex: 1;
-        min-width: 300px;
-        background-color: #f5f9ff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }}
-    .cta-box {{
-        background-color: #e0f7ea;
-        border-radius: 10px;
-        padding: 30px;
-        margin-top: 3rem;
-        text-align: center;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }}
-    .footer {{
-        text-align: center;
-        font-size: 0.9rem;
-        margin-top: 4rem;
-        padding-top: 1rem;
-        border-top: 1px solid #ddd;
-        color: #888;
-    }}
-    </style>
-    
-    <div class="hero-container">
-      <div class="hero-overlay">
-        <h1>Wella.AI Diagnostic Assistant</h1>
-        <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
-        <div class="hero-buttons">
-            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
-            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
-        </div>
-      </div>
-    </div>
-    """
-    
     st.markdown(hero_html, unsafe_allow_html=True)
     
     # ========== Hero Banner ==========
     st.markdown("""
     <div class="hero">
-#        <h1><b>Wella.AI – Smart Diagnosis Anytime, Anywhere</b></h1>
         <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
         <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
         <a href="/?page=diagnosis" target="_self">
-#            <button class="launch-button">🚀 Launch Wella.AI</button>
         </a>
     </div>
     """, unsafe_allow_html=True)
