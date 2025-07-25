@@ -9,7 +9,7 @@ import barcode
 from barcode.writer import ImageWriter
 from pytz import timezone
 
-def generate_medical_report(name, age, gender, temperature, blood_pressure, weight, symptoms, result):
+def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -54,9 +54,6 @@ def generate_medical_report(name, age, gender, temperature, blood_pressure, weig
         ("Name", name or "N/A"),
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
-        ("Temperature (°C)", temperature or "N/A"),
-        ("Blood Pressure (mmHg)", blood_pressure or "N/A"),
-        ("Weight (kg)", weight or "N/A"),
         ("Symptoms", symptoms or "N/A")
     ]
 
@@ -108,11 +105,11 @@ def generate_medical_report(name, age, gender, temperature, blood_pressure, weig
     output.seek(0)
     return output
 
-def generate_treatment_report(name, age, gender, temperature, blood_pressure, weight, symptoms, diagnosis_data, doctor_notes, appointment_date):
+def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, doctor_notes, appointment_date):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 6
+    line_spacing = 10
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
@@ -153,9 +150,6 @@ def generate_treatment_report(name, age, gender, temperature, blood_pressure, we
         ("Name", name or "N/A"),
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
-        ("Temperature (°C)", temperature or "N/A"),
-        ("Blood Pressure (mmHg)", blood_pressure or "N/A"),
-        ("Weight (kg)", weight or "N/A"),
         ("Symptoms", symptoms or "N/A")
     ]
 
@@ -175,12 +169,6 @@ def generate_treatment_report(name, age, gender, temperature, blood_pressure, we
         ("Confidence", f"{diagnosis_data.get('confidence', 'N/A')}%"),
         ("Recommendation", diagnosis_data.get("recommendation", "N/A"))
     ]
-
-#    summary_data = [
-#        ("Diagnosis", patient_data("Diagnosis", "N/A")),
-#        ("Confidence", f"{patient_data('Confidence', 'N/A')}%"),
-#        ("Recommendation", patient_data("Recommendation", "N/A"))
-#    ]
 
     for label, value in summary_data:
         pdf.cell(40, line_spacing, label, 1, 0, 'C', True)
