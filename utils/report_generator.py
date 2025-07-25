@@ -9,7 +9,7 @@ import barcode
 from barcode.writer import ImageWriter
 from pytz import timezone
 
-def generate_medical_report(name, age, gender, symptoms, result):
+def generate_medical_report(name, age, gender, symptoms, temperatur, blood_pressure, Weight, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -54,7 +54,10 @@ def generate_medical_report(name, age, gender, symptoms, result):
         ("Name", name or "N/A"),
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
-        ("Symptoms", symptoms or "N/A")
+        ("Symptoms", symptoms or "N/A"),
+        ("Temperature (°C)", temperature or "N/A")
+        ("Blood Pressure (mmHg)", blood pressure or "N/A")
+        ("Weight (kg)", weight or "N/A")
     ]
 
     for label, value in patient_data:
