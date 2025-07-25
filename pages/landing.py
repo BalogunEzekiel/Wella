@@ -98,10 +98,8 @@ def landing_page():
         <h1>Wella.AI Diagnostic Assistant</h1>
         <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
         <div class="hero-buttons">
-            <button onclick="window.location.href='?page=diagnosis'">🚀 Launch Wella.AI</button>
-            <button onclick="window.location.href='?page=contact'">✨ Partner With Us</button>
-##            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
-##            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
+            st.page_link("pages/diagnosis.py", label="🚀 Launch Wella.AI", icon="🚀")
+            st.page_link("pages/contact.py", label="✨ Partner With Us", icon="✨")
         </div>
       </div>
     </div>
@@ -109,14 +107,14 @@ def landing_page():
     st.markdown(hero_html, unsafe_allow_html=True)
     
     # ========== Hero Banner ==========
-    st.markdown("""
-    <div class="hero">
-        <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
-        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
-        <a href="/?page=diagnosis" target="_self">
-        </a>
-    </div>
-    """, unsafe_allow_html=True)
+#    st.markdown("""
+#    <div class="hero">
+#        <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
+#        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+#        <a href="/?page=diagnosis" target="_self">
+#        </a>
+#    </div>
+#    """, unsafe_allow_html=True)
 
     # ========== Auto-Rotating Images ==========
 #    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
@@ -127,6 +125,11 @@ def landing_page():
 #        st.image(images[i], caption=caption[i], use_container_width=True)
 #        time.sleep(1.5)
 #        st.empty()
+
+    st.markdown("""
+    <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
+    <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+    """, unsafe_allow_html=True)
     
     # ========== Footer ==========
     st.markdown("""
@@ -135,7 +138,7 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
 
-    
+    #=====================================================
         
     # Two columns (Image | Text)
     st.subheader("🌍 Supporting Underserved Communities")
