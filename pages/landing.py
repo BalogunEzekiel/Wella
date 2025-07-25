@@ -84,7 +84,7 @@ def landing_page():
     # Convert image
     encoded_img = image_to_base64("assets/Image_2.png")
     
-    # Build hero section with image background
+    # Hero section with red-colored text
     hero_html = f"""
     <div style="
         background-image: url('data:image/png;base64,{encoded_img}');
@@ -97,20 +97,24 @@ def landing_page():
         align-items: center;
         border-radius: 10px;
         text-align: center;
-        color: white;
+        color: red;
         padding: 20px;
         ">
         <h1><b>Wella.AI Diagnostic Assistant</b></h1>
         <p><b>Revolutionizing healthtech with an AI-Powered solution.</b></p>
     </div>
     """
-    # Show the hero banner
     st.markdown(hero_html, unsafe_allow_html=True)
     
-    # 💡 Now display the buttons below the hero image
-    st.page_link("pages/diagnosis.py", label="🚀 Launch Wella.AI", icon="🚀")
-    st.page_link("pages/contact.py", label="✨ Partner With Us", icon="✨")
-    
+    # Action buttons below
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("🚀 Launch Wella.AI"):
+            switch_page("diagnosis")
+    with col2:
+        if st.button("✨ Partner With Us"):
+            switch_page("contact")
+                
     st.markdown("---")
 
     # ========== Hero Banner ==========
