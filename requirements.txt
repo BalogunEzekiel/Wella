@@ -18,3 +18,4 @@ streamlit-card
 streamlit
 python-dotenv
 bcrypt
+streamlit-extras
