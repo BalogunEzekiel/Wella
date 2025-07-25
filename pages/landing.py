@@ -76,27 +76,44 @@ def landing_page():
         }
     </style>
     """, unsafe_allow_html=True)
+    #===================================================
+    
+#    def image_to_base64(image_path):
+#        with open(image_path, "rb") as f:
+#            return base64.b64encode(f.read()).decode()
+    
+#    testimonial1_img = image_to_base64("assets/image.jpg")
+#    testimonial2_img = image_to_base64("assets/nurse.png")
+#    testimonial3_img = image_to_base64("assets/commissioner.jpg")
 
-    # ========== Hero Banner ==========
-    st.markdown("""
-    <div class="hero">
-        <h1><b>Wella.AI – Smart Diagnosis Anytime, Anywhere</b></h1>
-        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
-        <a href="/?page=diagnosis" target="_self">
-            <button class="launch-button">🚀 Launch Wella.AI</button>
-        </a>
+    def image_to_base64(path):
+        with open(path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    
+    encoded_img = image_to_base64("assets/image.jpg", "assets/nurse.png", "assets/commissioner.jpg")
+    
+    hero_html = f"""
+    <div class="hero-container" style="
+        background-image: url('data:image/png;base64,{encoded_img}');
+        background-size: cover;
+        background-position: center;
+        height: 420px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+    ">
+      <div class="hero-overlay">
+        <h1>Wella.AI Diagnostic Assistant</h1>
+        <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
+        <div class="hero-buttons">
+            <a href="https://wellahealth.streamlit.app/" target="_blank">🚀 Launch Wella.AI</a>
+            <a href="https://wellahealth.streamlit.app/" target="_blank">✨ Partner With Us</a>
+        </div>
+      </div>
     </div>
-    """, unsafe_allow_html=True)
-
-    # ========== Auto-Rotating Images ==========
-    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
-    images = [Image.open(img) for img in image_files]
-    caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
-
-    for i in range(len(images)):
-        st.image(images[i], caption=caption[i], use_container_width=True)
-        time.sleep(1.5)
-        st.empty()
+    """
+    st.markdown(hero_html, unsafe_allow_html=True)
 
     # ===================== Hero Flag ========================
     # ✅ Hero images list
@@ -197,6 +214,28 @@ def landing_page():
     """
     
     st.markdown(hero_html, unsafe_allow_html=True)
+    
+    # ========== Hero Banner ==========
+    st.markdown("""
+    <div class="hero">
+#        <h1><b>Wella.AI – Smart Diagnosis Anytime, Anywhere</b></h1>
+        <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
+        <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
+        <a href="/?page=diagnosis" target="_self">
+#            <button class="launch-button">🚀 Launch Wella.AI</button>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ========== Auto-Rotating Images ==========
+#    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
+#    images = [Image.open(img) for img in image_files]
+#    caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
+
+#    for i in range(len(images)):
+#        st.image(images[i], caption=caption[i], use_container_width=True)
+#        time.sleep(1.5)
+#        st.empty()
     
     # ========== Footer ==========
     st.markdown("""
