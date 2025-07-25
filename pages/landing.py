@@ -6,6 +6,7 @@ from PIL import Image
 import time
 import random
 import base64
+from streamlit_extras.switch_page_button import switch_page
 
 def detect_language():
     try:
