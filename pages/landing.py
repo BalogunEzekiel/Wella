@@ -81,31 +81,36 @@ def landing_page():
         with open(path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode()
     
+    # Convert image
     encoded_img = image_to_base64("assets/Image_2.png")
     
+    # Build hero section with image background
     hero_html = f"""
-    <div class="hero-container" style="
+    <div style="
         background-image: url('data:image/png;base64,{encoded_img}');
         background-size: cover;
         background-position: center;
         height: 420px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         border-radius: 10px;
-    ">
-      <div class="hero-overlay">
-        <h1>Wella.AI Diagnostic Assistant</h1>
-        <p>Revolutionalizing the healthtech with AI-Powered solution.</p>
-        <div class="hero-buttons">
-            st.page_link("pages/diagnosis.py", label="🚀 Launch Wella.AI", icon="🚀")
-            st.page_link("pages/contact.py", label="✨ Partner With Us", icon="✨")
-        </div>
-      </div>
+        text-align: center;
+        color: white;
+        padding: 20px;
+        ">
+        <h1><b>Wella.AI Diagnostic Assistant</b></h1>
+        <p><b>Revolutionizing healthtech with an AI-Powered solution.</b></p>
     </div>
     """
+    # Show the hero banner
     st.markdown(hero_html, unsafe_allow_html=True)
-
+    
+    # 💡 Now display the buttons below the hero image
+    st.page_link("pages/diagnosis.py", label="🚀 Launch Wella.AI", icon="🚀")
+    st.page_link("pages/contact.py", label="✨ Partner With Us", icon="✨")
+    
     st.markdown("---")
 
     # ========== Hero Banner ==========
@@ -139,6 +144,8 @@ def landing_page():
         Built with ❤️ for smarter, accessible healthcare.
     </div>
     """, unsafe_allow_html=True)
+    
+    st.markdown("---")
 
     #=====================================================
         
