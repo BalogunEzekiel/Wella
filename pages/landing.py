@@ -194,7 +194,7 @@ def landing_page():
 
     # Video section
     st.subheader("🎥 See Wella.AI in Action")
-    video_path = "assets/video/video01.mp4"
+    video_path = "assets/video/toedit.mp4"
     st.video(video_path)
 
     # Testimonials    
