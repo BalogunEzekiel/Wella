@@ -37,7 +37,7 @@ def require_login():
                         st.rerun()
                     else:
                         st.warning("⚠️ Incorrect password. Please try again.")
-                elif username in ADMINS and password == ADMIN_PASSWORD:
+                elif username in admins and password == ADMIN_PASSWORD:
                     st.session_state.authenticated = True
                     st.session_state.user = {"email": username, "role": "Admin"}
                     st.success("✅ Admin login successful. Redirecting...")
