@@ -145,9 +145,6 @@ def show_contact():
         </a>
         <a href="https://www.linkedin.com/in/ezekiel-balogun-39a14438" target="_blank">
             <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn"/>
-#        </a>
-#        <a href="https://github.com/BalogunEzekiel" target="_blank">
-#            <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"/>
         </a>
         <a href="https://datatech.hashnode.dev" target="_blank">
             <img src="https://img.icons8.com/nolan/48/domain.png" alt="Blog"/>
