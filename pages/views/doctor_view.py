@@ -29,7 +29,7 @@ def show_doctor_dashboard():
 
             st.write("### Latest Diagnosis")
             display_df = pd.DataFrame(patient_record).transpose().head(2)
-            st.dataframe(display_df, use_container_width=True, height=400)
+            st.dataframe(display_df, use_container_width=True, height=80)
 
             doctor_notes = patient_record['doctor_notes'] if pd.notnull(patient_record['doctor_notes']) else ''
             appointment_date_value = (
