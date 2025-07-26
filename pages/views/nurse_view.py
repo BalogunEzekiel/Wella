@@ -56,7 +56,7 @@ def show_nurse_dashboard(user):
                         st.error(f"💾 Database Error: {db_err}")
 
                     try:
-                        pdf_file = generate_medical_report(name, age, gender, symptoms, result)
+                        pdf_file = generate_medical_report(name, age, gender, temperature, blood_pressure, weight, symptoms, result)
                         st.download_button(
                             label="📄 Download Medical Report (PDF)",
                             data=pdf_file,
