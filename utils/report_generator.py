@@ -13,7 +13,7 @@ def generate_medical_report(name, age, gender, temperature, blood_pressure, weig
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 10
+    line_spacing = 12
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
@@ -55,7 +55,7 @@ def generate_medical_report(name, age, gender, temperature, blood_pressure, weig
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
         ("Temperature (°C)", temperature or "N/A"),
-        ("Blood Pressure (mmHg)", blood_pressure or "N/A"),
+        ("Blood Pressure", blood_pressure or "N/A"),
         ("Weight (kg)", weight or "N/A"),
         ("Symptoms", symptoms or "N/A")
     ]
@@ -112,7 +112,7 @@ def generate_treatment_report(name, age, gender, temperature, blood_pressure, we
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 6
+    line_spacing = 7
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
@@ -154,7 +154,7 @@ def generate_treatment_report(name, age, gender, temperature, blood_pressure, we
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
         ("Temperature (°C)", temperature or "N/A"),
-        ("Blood Pressure (mmHg)", blood_pressure or "N/A"),
+        ("Blood Pressure", blood_pressure or "N/A"),
         ("Weight (kg)", weight or "N/A"),
         ("Symptoms", symptoms or "N/A")
     ]
