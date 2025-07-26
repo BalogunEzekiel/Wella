@@ -7,8 +7,8 @@ from utils.db import get_connection
 # Load environment variables from .env
 load_dotenv()
 
-admins = os.getenv("ADMINS", "").lower().split(",")
-admin_password = os.getenv("ADMIN_PASSWORD")
+ADMINS = os.getenv("ADMINS", "").lower().split(",")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
 def require_login():
     if not st.session_state.get("authenticated", False):
@@ -37,7 +37,7 @@ def require_login():
                         st.rerun()
                     else:
                         st.warning("⚠️ Incorrect password. Please try again.")
-                elif username in admins and password == ADMIN_PASSWORD:
+                elif username in ADMINS and password == ADMIN_PASSWORD:
                     st.session_state.authenticated = True
                     st.session_state.user = {"email": username, "role": "Admin"}
                     st.success("✅ Admin login successful. Redirecting...")
