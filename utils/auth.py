@@ -7,7 +7,7 @@ from utils.db import get_connection
 # Load environment variables from .env
 load_dotenv()
 
-admins = os.getenv("ADMINS").lower().split(",")
+admins = os.getenv("ADMINS", "").lower().split(",")
 admin_password = os.getenv("ADMIN_PASSWORD")
 
 def require_login():
