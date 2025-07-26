@@ -13,7 +13,7 @@ def generate_medical_report(name, age, gender, symptoms, result):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 12
+    line_spacing = 10
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
@@ -109,7 +109,7 @@ def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, docto
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 12
+    line_spacing = 8
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
