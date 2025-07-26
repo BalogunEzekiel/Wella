@@ -108,11 +108,11 @@ def generate_medical_report(name, age, gender, temperature, blood_pressure, weig
     output.seek(0)
     return output
 
-def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, doctor_notes, appointment_date):
+def generate_treatment_report(name, age, gender, temperature, blood_pressure, weight, symptoms, diagnosis_data, doctor_notes, appointment_date):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    line_spacing = 8
+    line_spacing = 6
 
     # === Header: Logo + Title Centered ===    
     logo_path = "assets/logo.png"
@@ -153,6 +153,9 @@ def generate_treatment_report(name, age, gender, symptoms, diagnosis_data, docto
         ("Name", name or "N/A"),
         ("Age", age if age is not None else "N/A"),
         ("Gender", gender or "N/A"),
+        ("Temperature (°C)", temperature or "N/A"),
+        ("Blood Pressure (mmHg)", blood_pressure or "N/A"),
+        ("Weight (kg)", weight or "N/A"),
         ("Symptoms", symptoms or "N/A")
     ]
 
