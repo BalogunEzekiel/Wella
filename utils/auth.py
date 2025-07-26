@@ -7,8 +7,8 @@ from utils.db import get_connection
 # Load environment variables from .env
 load_dotenv()
 
-ADMINS = os.getenv("ADMINS", "").lower().split(",")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+admins = os.getenv("ADMINS").lower().split(",")
+admin_password = os.getenv("ADMIN_PASSWORD")
 
 def require_login():
     if not st.session_state.get("authenticated", False):
