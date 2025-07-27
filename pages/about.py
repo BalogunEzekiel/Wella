@@ -98,7 +98,7 @@ def show_about():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.video("assets/video/video00.mp4")  # Local video file
+        st.video("assets/video/video01.mp4")  # Local video file
     
     with col2:
         st.write("""
