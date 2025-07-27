@@ -94,9 +94,12 @@ def show_about():
     # --- IMPACT STORIES ---
     st.markdown("### User Impact Stories", unsafe_allow_html=True)
     st.write("Here’s how Wella.AI is already changing lives in rural clinics:")
+    
     col1, col2 = st.columns(2)
+    
     with col1:
-        st.video("https://www.youtube.com/watch?v=7J3KaOfYZ6M")  # Replace with actual video
+        st.video("assets/video/video00.mp4")  # Local video file
+    
     with col2:
         st.write("""
         *“Before Wella.AI, diagnosing patients took hours and paperwork. Now we can confidently make decisions with just a few taps—even without internet!”*  
