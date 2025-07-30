@@ -24,6 +24,7 @@ def show_diagnosis():
 
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
+    st.markdown(f"Welcome, **{user.get('fullname', 'User')}**")
 
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
