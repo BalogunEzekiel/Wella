@@ -4,14 +4,19 @@ FROM python:3.9-slim
 # Set working directory
 WORKDIR /app
 
-# Copy files
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy app and config files
 COPY . .
 
-# Expose port 8501 for Streamlit
+# Add Streamlit config explicitly
+RUN mkdir -p /root/.streamlit
+COPY .streamlit/config.toml /root/.streamlit/config.toml
+
+# Expose Streamlit port
 EXPOSE 8501
 
-# Command to run Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false"]
+# Start Streamlit app (uses your config)
+CMD ["streamlit", "run", "app.py"]
