@@ -30,7 +30,7 @@ def show_diagnosis():
     ############################################################################################
 
     # Connect to the database
-    conn = sqlite3.connect("your_database.db")
+    conn = sqlite3.connect("wella.db")
     cursor = conn.cursor()
     
     # Example: get user_id from session state or login system
