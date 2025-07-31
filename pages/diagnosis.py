@@ -7,6 +7,7 @@ from utils.sync_utils import sync_to_supabase
 from pages.views.admin_view import show_admin_dashboard
 from pages.views.doctor_view import show_doctor_dashboard
 from pages.views.nurse_view import show_nurse_dashboard
+import sqlite3
 
 # Load environment variables
 load_dotenv()
@@ -26,6 +27,30 @@ def show_diagnosis():
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
     st.markdown(f"Welcome, **{user.get('fullname', 'User')}**")
 
+    ############################################################################################
+
+    # Connect to the database
+    conn = sqlite3.connect("your_database.db")
+    cursor = conn.cursor()
+    
+    # Example: get user_id from session state or login system
+    user_id = st.session_state.get("user_id", None)
+    
+    # Fetch user full name from the users table
+    if user_id:
+        cursor.execute("SELECT fullname FROM users WHERE id = ?", (user_id,))
+        result = cursor.fetchone()
+        if result:
+            fullname = result[0]
+        else:
+            fullname = "User"
+    else:
+        fullname = "User"
+    
+    # Display welcome message
+    st.markdown(f"Welcome, **{fullname}**")
+
+    #############################################################################################
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
         logout()
