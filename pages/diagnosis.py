@@ -25,32 +25,7 @@ def show_diagnosis():
 
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
-    st.markdown(f"Welcome, **{user.get('name', 'User')}**")
 
-    ############################################################################################
-
-    # Connect to the database
-    conn = sqlite3.connect("wella.db")
-    cursor = conn.cursor()
-    
-    # Example: get user_id from session state or login system
-    user_id = st.session_state.get("user_id", None)
-    
-    # Fetch user full name from the users table
-    if user_id:
-        cursor.execute("SELECT name FROM users WHERE id = ?", (user_id,))
-        result = cursor.fetchone()
-        if result:
-            name = result[0]
-        else:
-            name = "User"
-    else:
-        name = "User"
-    
-    # Display welcome message
-    st.markdown(f"Welcome, **{name}**")
-
-    #############################################################################################
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
         logout()
