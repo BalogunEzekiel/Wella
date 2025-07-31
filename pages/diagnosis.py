@@ -25,7 +25,7 @@ def show_diagnosis():
 
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
-    st.markdown(f"Welcome, **{user.get('fullname', 'User')}**")
+    st.markdown(f"Welcome, **{user.get('name', 'User')}**")
 
     ############################################################################################
 
@@ -38,17 +38,17 @@ def show_diagnosis():
     
     # Fetch user full name from the users table
     if user_id:
-        cursor.execute("SELECT fullname FROM users WHERE id = ?", (user_id,))
+        cursor.execute("SELECT name FROM users WHERE id = ?", (user_id,))
         result = cursor.fetchone()
         if result:
-            fullname = result[0]
+            name = result[0]
         else:
-            fullname = "User"
+            name = "User"
     else:
-        fullname = "User"
+        name = "User"
     
     # Display welcome message
-    st.markdown(f"Welcome, **{fullname}**")
+    st.markdown(f"Welcome, **{name}**")
 
     #############################################################################################
     # Logout Button
