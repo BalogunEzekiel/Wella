@@ -24,16 +24,16 @@ def show_diagnosis():
     enforce_role(role, allowed_roles=["Nurse", "Admin", "Doctor"])
 
     st.title("🩺 Wella.AI Diagnosis Page")
-    st.markdown(f"Welcome, **{user.get('email', 'User')}**")
+#    st.markdown(f"Welcome, **{user.get('email', 'User')}**")
 #############################
     full_name = st.session_state.user.get("fullname", "User")
     st.markdown(f"Welcome, **{full_name}**")
 
-    user = st.session_state.get("user", {})
-    full_name = user.get("fullname", "User")
-    
-    st.title("🩺 Wella.AI Diagnosis Page")
-    st.markdown(f"Welcome, **{full_name}**")
+#    user = st.session_state.get("user", {})
+#    full_name = user.get("fullname", "User")
+#    
+#    st.title("🩺 Wella.AI Diagnosis Page")
+#    st.markdown(f"Welcome, **{full_name}**")
 
 ##############################
     # Logout Button
