@@ -46,7 +46,7 @@ def require_login():
                     st.session_state.user = {
                         "email": username,
                         "role": "Admin",
-                        "fullname": "Admin User"
+                        "fullname": "Admin"
                     }
                     st.success("✅ Admin login successful. Redirecting...")
                     st.rerun()
