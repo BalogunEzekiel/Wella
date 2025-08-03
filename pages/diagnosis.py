@@ -25,7 +25,12 @@ def show_diagnosis():
 
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
-
+#############################
+    # Fetch full name from user dictionary, fallback to 'User'
+    full_name = user.get('full_name') or user.get('name') or 'User'
+    
+    st.markdown(f"Welcome, **{full_name}**")
+##############################
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
         logout()
