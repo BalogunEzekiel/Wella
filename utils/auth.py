@@ -1,4 +1,4 @@
-import streamlit as st
+'import streamlit as st
 import os
 import bcrypt
 from dotenv import load_dotenv
@@ -23,23 +23,31 @@ def require_login():
                 # Connect and check DB for user
                 conn = get_connection()
                 cur = conn.cursor()
-                cur.execute("SELECT email, role, password FROM users WHERE email = ?", (username,))
+                cur.execute("SELECT fullname, email, role, password FROM users WHERE email = ?", (username,))
                 result = cur.fetchone()
                 cur.close()
                 conn.close()
 
                 if result:
-                    stored_email, stored_role, stored_password_hash = result
+                    stored_fullname, stored_email, stored_role, stored_password_hash = result
                     if bcrypt.checkpw(password.encode(), stored_password_hash.encode()):
                         st.session_state.authenticated = True
-                        st.session_state.user = {"email": stored_email, "role": stored_role}
+                        st.session_state.user = {
+                            "email": stored_email,
+                            "role": stored_role,
+                            "fullname": stored_fullname
+                        }
                         st.success(f"✅ Login successful as {stored_role}. Redirecting...")
                         st.rerun()
                     else:
                         st.warning("⚠️ Incorrect password. Please try again.")
                 elif username in ADMINS and password == ADMIN_PASSWORD:
                     st.session_state.authenticated = True
-                    st.session_state.user = {"email": username, "role": "Admin"}
+                    st.session_state.user = {
+                        "email": username,
+                        "role": "Admin",
+                        "fullname": "Admin User"
+                    }
                     st.success("✅ Admin login successful. Redirecting...")
                     st.rerun()
                 else:
