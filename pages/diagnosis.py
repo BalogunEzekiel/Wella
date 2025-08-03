@@ -26,29 +26,30 @@ def show_diagnosis():
     st.title("🩺 Wella.AI Diagnosis Page")
     st.markdown(f"Welcome, **{user.get('email', 'User')}**")
 #############################
-    # User's email (this should come from login/session)
+    # Assuming user is logged in and their email is stored in session
     user_email = st.session_state.get("user_email", None)
     
+    full_name = "User"  # Default fallback
+    
     if user_email:
-        # Connect to the SQLite database
-        conn = sqlite3.connect("wella.db")
-        cursor = conn.cursor()
+        try:
+            # Connect to the SQLite database
+            conn = sqlite3.connect("wella.db")
+            cur = conn.cursor()
     
-        # Query to get full name from users table
-        cursor.execute("SELECT fullname FROM users WHERE email = ?", (user_email,))
-        result = cursor.fetchone()
+            # Query to get fullname from users table
+            cur.execute("SELECT fullname FROM users WHERE email = ?", (user_email,))
+            result = cur.fetchone()
     
-        if result:
-            fullname = result[0]
-        else:
-            fullname = "User"
+            if result:
+                full_name = result[0]  # This is the fullname field
     
-        conn.close()
-    else:
-        fullname = "User"
+            conn.close()
+        except Exception as e:
+            st.error(f"Error fetching user: {e}")
     
-    # Show welcome message
-    st.markdown(f"Welcome, **{fullname}**")
+    # Display welcome message
+    st.markdown(f"Welcome, **{full_name}**")
 ##############################
     # Logout Button
     if st.sidebar.button("🚪 Logout"):
