@@ -111,7 +111,7 @@ def show_about():
     st.markdown("## 📸 Gallery", unsafe_allow_html=True)
 
     image_info = [
-        ("assets/AI_Me.png", "AI Avatar"),
+        ("assets/AI_Me.png", "The Visionary"),
         ("assets/homepage.jpg", "Homepage"),
         ("assets/admin dashboard.jpg", "Admin Dashboard"),
         ("assets/nurse dashboard.jpg", "Nurse Dashboard"),
