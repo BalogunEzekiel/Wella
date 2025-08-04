@@ -141,7 +141,7 @@ def show_about():
             ("assets/admin dashboard.jpg", "Admin Dashboard", "#"),
         ],
         "Nurse": [
-            ("assets/nure dashboard.jpg", "Nurse Dashboard", "#"),
+            ("assets/admin dashboard.jpg", "Nurse Dashboard", "#"),
             ("assets/diagnosis.jpg", "Diagnosis Report", "#"),
         ],
         "Doctor": [
