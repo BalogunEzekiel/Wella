@@ -85,11 +85,11 @@ def show_about():
     st.markdown("### Meet the Team", unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("assets/AI_Me.png", caption="Ezekiel BALOGUN – Data Scientist, AI/ML Engineer", use_container_width=True)
+        st.image("assets/AI_Me.png", caption="Ezekiel BALOGUN – Data Scientist, Software Developer", use_container_width=True)
     with col2:
-        st.image("assets/kemi.jpg", caption="Oluwakemi Adesanwo – Data/BI Analyst", use_container_width=True)
+        st.image("assets/kemi.jpg", caption="Oluwakemi Adesanwo – Data Analyst, AI/ML Engineer", use_container_width=True)
     with col3:
-        st.image("assets/kemi.jpg", caption="Sarah Bello – Operations Lead", use_container_width=True)
+        st.image("assets/kemi.jpg", caption="Sarah Bello – Operations/BI Analyst", use_container_width=True)
 
     # --- IMPACT STORIES ---
     st.markdown("### User Impact Stories", unsafe_allow_html=True)
@@ -114,7 +114,7 @@ def show_about():
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
         ("assets/admin dashboard.jpg", "Admin Dashboard"),
-        ("assets/admin dashboard.jpg", "Nurse Dashboard"),
+        ("assets/nurse dashboard.jpg", "Nurse Dashboard"),
         ("assets/doctor dashboard.jpg", "Doctor Dashboard"),
         ("assets/diagnosis.jpg", "Diagnosis"),
         ("assets/treatment.jpg", "Treatment")
@@ -141,7 +141,7 @@ def show_about():
             ("assets/admin dashboard.jpg", "Admin Dashboard", "#"),
         ],
         "Nurse": [
-            ("assets/admin dashboard.jpg", "Nurse Dashboard", "#"),
+            ("assets/nurse dashboard.jpg", "Nurse Dashboard", "#"),
             ("assets/diagnosis.jpg", "Diagnosis Report", "#"),
         ],
         "Doctor": [
