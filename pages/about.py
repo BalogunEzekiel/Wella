@@ -108,83 +108,8 @@ def show_about():
         """)
 
     # --- GALLERY ---
-    st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
+    st.markdown("## 📸 Gallery", unsafe_allow_html=True)
 
-    # CSS and JS for Lightbox
-    st.markdown("""
-        <style>
-            .img-card {
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                transition: transform 0.3s, box-shadow 0.3s;
-                margin-bottom: 10px;
-            }
-    
-            .img-card:hover {
-                transform: scale(1.02);
-                box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-            }
-    
-            .img-caption {
-                text-align: center;
-                font-weight: 500;
-                margin-top: 5px;
-            }
-    
-            .gallery-img {
-                width: 100%;
-                border-radius: 10px;
-                cursor: pointer;
-            }
-    
-            /* Lightbox Modal */
-            .lightbox {
-                display: none;
-                position: fixed;
-                z-index: 1000;
-                padding-top: 60px;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgba(0,0,0,0.9);
-            }
-    
-            .lightbox-content {
-                margin: auto;
-                display: block;
-                max-width: 90%;
-                max-height: 90%;
-            }
-    
-            .lightbox-close {
-                position: absolute;
-                top: 20px;
-                right: 35px;
-                color: white;
-                font-size: 40px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-        </style>
-    
-        <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
-            <span class="lightbox-close">&times;</span>
-            <img class="lightbox-content" id="lightbox-img">
-        </div>
-    
-        <script>
-            function showLightbox(src) {
-                var lightbox = document.getElementById("lightbox");
-                var lightboxImg = document.getElementById("lightbox-img");
-                lightbox.style.display = "block";
-                lightboxImg.src = src;
-            }
-        </script>
-    """, unsafe_allow_html=True)
-    
     # Image info
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
@@ -196,32 +121,81 @@ def show_about():
         ("assets/treatment.jpg", "Treatment Report")
     ]
     
-    # Helper function
-    def get_image_base64(image_path):
-        if not os.path.isfile(image_path):
+    # Helper to get base64 image string
+    def get_base64_img(path):
+        if not os.path.exists(path):
             return ""
-        with open(image_path, "rb") as f:
-            encoded = base64.b64encode(f.read()).decode()
-            ext = os.path.splitext(image_path)[1][1:]
+        with open(path, "rb") as img:
+            encoded = base64.b64encode(img.read()).decode()
+            ext = path.split('.')[-1]
             return f"data:image/{ext};base64,{encoded}"
     
-    # Display images
-    cols_per_row = 4
-    for i in range(0, len(image_info), cols_per_row):
-        row = image_info[i:i + cols_per_row]
-        cols = st.columns(len(row))
-        for col, (path, caption) in zip(cols, row):
-            with col:
-                img_data = get_image_base64(path)
-                if img_data:
-                    st.markdown(f"""
-                        <div class="img-card">
-                            <img src="{img_data}" class="gallery-img" onclick="showLightbox('{img_data}')"/>
-                            <div class="img-caption">{caption}</div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.warning(f"Image not found: {caption}")           
+    # Construct full gallery HTML
+    gallery_html = """
+    <style>
+    .gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .gallery-img {
+        width: 200px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .gallery-img:hover {
+        transform: scale(1.05);
+    }
+    .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: rgba(0,0,0,0.9);
+        justify-content: center;
+        align-items: center;
+    }
+    .lightbox img {
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+    .lightbox:target {
+        display: flex;
+    }
+    .close-btn {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        font-size: 40px;
+        color: white;
+        text-decoration: none;
+    }
+    </style>
+    
+    <div class="gallery-container">
+    """
+    
+    # Loop through images
+    for idx, (img_path, caption) in enumerate(image_info):
+        base64_img = get_base64_img(img_path)
+        if base64_img:
+            gallery_html += f"""
+            <a href="#lightbox{idx}">
+                <img src="{base64_img}" class="gallery-img" alt="{caption}">
+            </a>
+            <div id="lightbox{idx}" class="lightbox">
+                <a href="#" class="close-btn">&times;</a>
+                <img src="{base64_img}" alt="{caption}">
+            </div>
+            """
+    
+    gallery_html += "</div>"
+    
+    # Render the HTML
+    st.components.v1.html(gallery_html, height=800, scrolling=True)
             
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
