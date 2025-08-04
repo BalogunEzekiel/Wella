@@ -110,7 +110,6 @@ def show_about():
     # --- GALLERY ---
     st.markdown("## 📸 In Pictures", unsafe_allow_html=True)
 
-    # Image info
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
@@ -129,7 +128,7 @@ def show_about():
             ext = path.split('.')[-1]
             return f"data:image/{ext};base64,{encoded}"
     
-    # HTML + CSS + JS
+    # HTML Template
     gallery_html = """
     <style>
     .gallery-container {
@@ -162,39 +161,30 @@ def show_about():
     .lightbox-modal img {
         max-width: 90vw;
         max-height: 90vh;
-        transition: transform 0.3s ease;
+        border-radius: 8px;
+        transition: transform 0.2s ease-in-out;
     }
-    .caption {
+    .lightbox-modal .caption {
         color: white;
         margin-top: 15px;
         font-size: 18px;
     }
-    .close-btn {
+    .close-btn, .nav-btn {
         position: absolute;
-        top: 25px;
-        right: 30px;
         font-size: 40px;
         color: white;
         cursor: pointer;
-    }
-    .nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 40px;
-        color: white;
-        cursor: pointer;
-        padding: 10px;
         z-index: 10001;
     }
-    .nav-prev { left: 30px; }
-    .nav-next { right: 30px; }
+    .close-btn { top: 25px; right: 30px; }
+    .nav-btn.prev { left: 30px; top: 50%; transform: translateY(-50%); }
+    .nav-btn.next { right: 30px; top: 50%; transform: translateY(-50%); }
     </style>
     
     <div class="gallery-container">
     """
     
-    # Add gallery thumbnails
+    # Embed images in gallery
     for idx, (img_path, caption) in enumerate(image_info):
         base64_img = get_base64_img(img_path)
         if base64_img:
@@ -202,69 +192,77 @@ def show_about():
             <img src="{base64_img}" class="gallery-img" onclick="openLightbox({idx})">
             """
     
-    # Embed modal
-    gallery_html += f"""
+    gallery_html += """
     </div>
     
-    <div id="lightboxModal" class="lightbox-modal">
+    <div id="lightboxModal" class="lightbox-modal" onwheel="zoomImage(event)">
         <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn nav-prev" onclick="changeImage(-1)">&#10094;</span>
-        <img id="lightboxImage" src="" onwheel="zoomImage(event)">
-        <span class="nav-btn nav-next" onclick="changeImage(1)">&#10095;</span>
+        <span class="nav-btn prev" onclick="navigate(-1)">&#10094;</span>
+        <span class="nav-btn next" onclick="navigate(1)">&#10095;</span>
+        <img id="lightboxImage" src="">
         <div class="caption" id="lightboxCaption"></div>
     </div>
     
     <script>
-    const images = {[
-        {"src": get_base64_img(p), "caption": c}
-        for p, c in image_info
-    ]};
+    const images = [];
+    const captions = [];
+    """
+    
+    # Pass image data into JavaScript arrays
+    for img_path, caption in image_info:
+        base64_img = get_base64_img(img_path)
+        if base64_img:
+            safe_caption = caption.replace("'", "\\'")
+            gallery_html += f"images.push('{base64_img}'); captions.push('{safe_caption}');\n"
+    
+    gallery_html += """
     let currentIndex = 0;
-    let currentZoom = 1;
+    let zoomScale = 1;
     
     function openLightbox(index) {
         currentIndex = index;
-        updateModal();
-        document.getElementById('lightboxModal').style.display = 'flex';
+        const modal = document.getElementById('lightboxModal');
+        const modalImg = document.getElementById('lightboxImage');
+        const modalCaption = document.getElementById('lightboxCaption');
+        modal.style.display = 'flex';
+        modalImg.src = images[index];
+        modalCaption.textContent = captions[index];
+        zoomScale = 1;
+        modalImg.style.transform = `scale(${zoomScale})`;
     }
     
     function closeLightbox() {
         document.getElementById('lightboxModal').style.display = 'none';
-        resetZoom();
     }
     
-    function changeImage(direction) {
+    function navigate(direction) {
         currentIndex = (currentIndex + direction + images.length) % images.length;
-        updateModal();
-    }
-    
-    function updateModal() {
-        const img = document.getElementById('lightboxImage');
-        const caption = document.getElementById('lightboxCaption');
-        img.src = images[currentIndex].src;
-        caption.textContent = images[currentIndex].caption;
-        resetZoom();
+        const modalImg = document.getElementById('lightboxImage');
+        const modalCaption = document.getElementById('lightboxCaption');
+        modalImg.src = images[currentIndex];
+        modalCaption.textContent = captions[currentIndex];
+        zoomScale = 1;
+        modalImg.style.transform = `scale(${zoomScale})`;
     }
     
     function zoomImage(event) {
         event.preventDefault();
-        currentZoom += event.deltaY < 0 ? 0.1 : -0.1;
-        currentZoom = Math.max(0.5, Math.min(currentZoom, 5));
-        document.getElementById('lightboxImage').style.transform = `scale(${currentZoom})`;
+        const modalImg = document.getElementById('lightboxImage');
+        if (event.deltaY < 0) {
+            zoomScale += 0.1;
+        } else {
+            zoomScale = Math.max(0.5, zoomScale - 0.1);
+        }
+        modalImg.style.transform = `scale(${zoomScale})`;
     }
     
-    function resetZoom() {
-        currentZoom = 1;
-        document.getElementById('lightboxImage').style.transform = "scale(1)";
-    }
-    
-    // Keyboard nav
+    // Keyboard navigation
     document.addEventListener('keydown', function(event) {
         const modal = document.getElementById('lightboxModal');
         if (modal.style.display === 'flex') {
-            if (event.key === 'ArrowRight') changeImage(1);
-            if (event.key === 'ArrowLeft') changeImage(-1);
-            if (event.key === 'Escape') closeLightbox();
+            if (event.key === 'ArrowRight') navigate(1);
+            else if (event.key === 'ArrowLeft') navigate(-1);
+            else if (event.key === 'Escape') closeLightbox();
         }
     });
     </script>
@@ -272,6 +270,7 @@ def show_about():
     
     # Render in Streamlit
     st.components.v1.html(gallery_html, height=800)
+
 ###########
     # --- CALL TO ACTION ---
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
