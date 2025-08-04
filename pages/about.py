@@ -109,7 +109,7 @@ def show_about():
     # --- GALLERY ---
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
-    # Custom CSS for hover effects and card styling
+    # --- Custom CSS ---
     st.markdown("""
         <style>
             .img-card {
@@ -139,28 +139,42 @@ def show_about():
                 width: 100%;
                 border-radius: 10px;
             }
+    
+            .img-placeholder {
+                padding: 1rem;
+                background: #eee;
+                text-align: center;
+                border-radius: 10px;
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+            }
         </style>
     """, unsafe_allow_html=True)
     
-    # Image paths and captions
+    # --- Image data ---
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
         ("assets/admin dashboard.jpg", "Admin Dashboard"),
-        ("assets/admin dashboard.jpg", "Nurse Dashboard"),
+        ("assets/nurse dashboard.jpg", "Nurse Dashboard"),
         ("assets/doctor dashboard.jpg", "Doctor Dashboard"),
         ("assets/diagnosis.jpg", "Diagnosis Report"),
         ("assets/treatment.jpg", "Treatment Report")
     ]
     
-    # Function to convert image to base64
+    # --- Helper function ---
     def get_image_base64(image_path):
+        if not os.path.isfile(image_path):
+            return None
         with open(image_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
-            ext = os.path.splitext(image_path)[1][1:]  # e.g., 'png', 'jpg'
+            ext = os.path.splitext(image_path)[1][1:]
             return f"data:image/{ext};base64,{encoded}"
     
-    # Display images in rows
+    # --- Display Gallery ---
     cols_per_row = 4
     for i in range(0, len(image_info), cols_per_row):
         row = image_info[i:i + cols_per_row]
@@ -168,14 +182,24 @@ def show_about():
         for col, (path, caption) in zip(cols, row):
             with col:
                 img_data = get_image_base64(path)
-                st.markdown(f"""
-                    <div class="img-card">
-                        <a href="{img_data}" target="_blank" class="img-link">
-                            <img src="{img_data}" class="gallery-img" />
-                        </a>
-                        <div class="img-caption">{caption}</div>
-                    </div>
-                """, unsafe_allow_html=True)
+                if img_data:
+                    st.markdown(f"""
+                        <div class="img-card">
+                            <a href="{img_data}" target="_blank" class="img-link">
+                                <img src="{img_data}" class="gallery-img" />
+                            </a>
+                            <div class="img-caption">{caption}</div>
+                        </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                        <div class="img-card">
+                            <div class="img-placeholder">
+                                🚫 {caption}<br><small>Image not found</small>
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
+                
             
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
