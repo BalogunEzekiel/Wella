@@ -110,7 +110,7 @@ def show_about():
     # --- GALLERY ---
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
-    # --- CSS for card, hover, and lightbox popup ---
+    # CSS and JS for Lightbox
     st.markdown("""
         <style>
             .img-card {
@@ -119,7 +119,6 @@ def show_about():
                 box-shadow: 0 4px 12px rgba(0,0,0,0.1);
                 transition: transform 0.3s, box-shadow 0.3s;
                 margin-bottom: 10px;
-                cursor: pointer;
             }
     
             .img-card:hover {
@@ -136,13 +135,14 @@ def show_about():
             .gallery-img {
                 width: 100%;
                 border-radius: 10px;
+                cursor: pointer;
             }
     
-            /* Lightbox styles */
+            /* Lightbox Modal */
             .lightbox {
                 display: none;
                 position: fixed;
-                z-index: 999;
+                z-index: 1000;
                 padding-top: 60px;
                 left: 0;
                 top: 0;
@@ -155,23 +155,37 @@ def show_about():
             .lightbox-content {
                 margin: auto;
                 display: block;
-                width: 80%;
-                max-width: 700px;
+                max-width: 90%;
+                max-height: 90%;
             }
     
             .lightbox-close {
                 position: absolute;
-                top: 30px;
-                right: 45px;
-                color: #fff;
+                top: 20px;
+                right: 35px;
+                color: white;
                 font-size: 40px;
                 font-weight: bold;
                 cursor: pointer;
             }
         </style>
+    
+        <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img">
+        </div>
+    
+        <script>
+            function showLightbox(src) {
+                var lightbox = document.getElementById("lightbox");
+                var lightboxImg = document.getElementById("lightbox-img");
+                lightbox.style.display = "block";
+                lightboxImg.src = src;
+            }
+        </script>
     """, unsafe_allow_html=True)
     
-    # --- Image paths and captions ---
+    # Image info
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
@@ -182,7 +196,7 @@ def show_about():
         ("assets/treatment.jpg", "Treatment Report")
     ]
     
-    # --- Helper function to convert image to base64 ---
+    # Helper function
     def get_image_base64(image_path):
         if not os.path.isfile(image_path):
             return ""
@@ -191,25 +205,19 @@ def show_about():
             ext = os.path.splitext(image_path)[1][1:]
             return f"data:image/{ext};base64,{encoded}"
     
-    # --- Display images in rows with lightbox IDs ---
+    # Display images
     cols_per_row = 4
-    for idx, i in enumerate(range(0, len(image_info), cols_per_row)):
+    for i in range(0, len(image_info), cols_per_row):
         row = image_info[i:i + cols_per_row]
         cols = st.columns(len(row))
         for col, (path, caption) in zip(cols, row):
             with col:
                 img_data = get_image_base64(path)
                 if img_data:
-                    unique_id = f"lightbox-{idx}-{path.replace('/', '_')}"
                     st.markdown(f"""
-                        <div class="img-card" onclick="document.getElementById('{unique_id}').style.display='block'">
-                            <img src="{img_data}" class="gallery-img"/>
+                        <div class="img-card">
+                            <img src="{img_data}" class="gallery-img" onclick="showLightbox('{img_data}')"/>
                             <div class="img-caption">{caption}</div>
-                        </div>
-    
-                        <div id="{unique_id}" class="lightbox" onclick="this.style.display='none'">
-                            <span class="lightbox-close">&times;</span>
-                            <img class="lightbox-content" src="{img_data}">
                         </div>
                     """, unsafe_allow_html=True)
                 else:
