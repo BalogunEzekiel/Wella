@@ -108,7 +108,7 @@ def show_about():
         """)
 
     # --- GALLERY ---
-    st.markdown("## 📸 In Pictures", unsafe_allow_html=True)
+    st.markdown("## 📸 Gallery", unsafe_allow_html=True)
 
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
