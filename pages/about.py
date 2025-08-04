@@ -131,7 +131,7 @@ def show_about():
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
-    # Role-based grouped images with clickable URLs
+    # Role-based grouped images with paths, captions, and URLs
     grouped_images = {
         "General": [
             ("assets/AI_Me.png", "AI Avatar", "#"),
@@ -141,7 +141,7 @@ def show_about():
             ("assets/admin dashboard.jpg", "Admin Dashboard", "#"),
         ],
         "Nurse": [
-            ("assets/admin dashboard.jpg", "Nurse Dashboard", "#"),
+            ("assets/nure dashboard.jpg", "Nurse Dashboard", "#"),
             ("assets/diagnosis.jpg", "Diagnosis Report", "#"),
         ],
         "Doctor": [
@@ -159,28 +159,17 @@ def show_about():
             cols = st.columns(len(row))
             for col, (path, caption, url) in zip(cols, row):
                 with col:
-                    # Image wrapped in a markdown link for clickability
-                    st.markdown(
-                        f"""
-                        <a href="{url}" target="_blank">
-                            <img src="data:image/png;base64,{path}" alt="{caption}" style="width:100%; border-radius:10px;" />
-                            <div style="text-align:center; font-weight:500;">{caption}</div>
-                        </a>
-                        """,
-                        unsafe_allow_html=True
-                    )
-
+                    # Wrap image in a link
+                    st.markdown(f'<a href="{url}" target="_blank">', unsafe_allow_html=True)
+                    st.image(path, caption=caption, use_container_width=True)
+                    st.markdown('</a>', unsafe_allow_html=True)
+                
     # --- CALL TO ACTION ---
-    st.markdown("### 🤝 Join Us in Transforming Healthcare", unsafe_allow_html=True)
+    st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     
     st.markdown("""
     We’re on a mission to revolutionize healthcare with AI-powered solutions.  
     Whether you're a hospital, clinic, healthtech innovator, or investor — **let’s partner** to make healthcare smarter, faster, and more accessible.
     
-    _We welcome collaborations, pilot programs, and strategic partnerships._
+    _We welcome collaborations, pilot programs and strategic partnerships._
     """, unsafe_allow_html=True)
-    
-    # 👉 Button for navigation
-    if st.button("📩 Contact Us Now"):
-        st.session_state.menu_option = "Contact"
-        st.rerun()
