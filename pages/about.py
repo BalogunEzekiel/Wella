@@ -107,7 +107,40 @@ def show_about():
         """)
 
     # --- GALLERY ---
-    st.markdown("### In Pictures", unsafe_allow_html=True)
+    st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
+
+    # Custom CSS for hover effects and card styling
+    st.markdown("""
+        <style>
+            .img-card {
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+                margin-bottom: 10px;
+            }
+    
+            .img-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            }
+    
+            .img-caption {
+                text-align: center;
+                font-weight: 500;
+                margin-top: 5px;
+            }
+    
+            .img-link {
+                display: block;
+            }
+    
+            .gallery-img {
+                width: 100%;
+                border-radius: 10px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
     
     # Image paths and captions
     image_info = [
@@ -120,21 +153,37 @@ def show_about():
         ("assets/treatment.jpg", "Treatment")
     ]
     
-    # Display images in rows of 4 columns
+    # Function to convert image to base64
+    def get_image_base64(image_path):
+        with open(image_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode()
+            ext = os.path.splitext(image_path)[1][1:]  # e.g., 'png', 'jpg'
+            return f"data:image/{ext};base64,{encoded}"
+    
+    # Display images in rows
     cols_per_row = 4
     for i in range(0, len(image_info), cols_per_row):
-        row_images = image_info[i:i + cols_per_row]
-        image_cols = st.columns(len(row_images))
-        for col, (path, caption) in zip(image_cols, row_images):
+        row = image_info[i:i + cols_per_row]
+        cols = st.columns(len(row))
+        for col, (path, caption) in zip(cols, row):
             with col:
-                st.image(path, caption=caption, use_container_width=True)
+                img_data = get_image_base64(path)
+                st.markdown(f"""
+                    <div class="img-card">
+                        <a href="{img_data}" target="_blank" class="img-link">
+                            <img src="{img_data}" class="gallery-img" />
+                        </a>
+                        <div class="img-caption">{caption}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
     # Role-based grouped images with paths, captions, and URLs
     grouped_images = {
         "General": [
-            ("assets/AI_Me.png", "AI Avatar", "#"),
+            ("assets/AI_Me.png", "The Visionary", "#"),
             ("assets/homepage.jpg", "Homepage", "#"),
         ],
         "Admin": [
