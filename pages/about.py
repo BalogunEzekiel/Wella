@@ -108,8 +108,9 @@ def show_about():
         """)
 
     # --- GALLERY ---
-    st.markdown("## 📸 Gallery", unsafe_allow_html=True)
+    st.markdown("## 📸 In Pictures", unsafe_allow_html=True)
 
+    # Image info
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
@@ -128,7 +129,7 @@ def show_about():
             ext = path.split('.')[-1]
             return f"data:image/{ext};base64,{encoded}"
     
-    # HTML Template
+    # HTML + CSS + JS
     gallery_html = """
     <style>
     .gallery-container {
@@ -161,30 +162,39 @@ def show_about():
     .lightbox-modal img {
         max-width: 90vw;
         max-height: 90vh;
-        border-radius: 8px;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.3s ease;
     }
-    .lightbox-modal .caption {
+    .caption {
         color: white;
         margin-top: 15px;
         font-size: 18px;
     }
-    .close-btn, .nav-btn {
+    .close-btn {
         position: absolute;
+        top: 25px;
+        right: 30px;
         font-size: 40px;
         color: white;
         cursor: pointer;
+    }
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
         z-index: 10001;
     }
-    .close-btn { top: 25px; right: 30px; }
-    .nav-btn.prev { left: 30px; top: 50%; transform: translateY(-50%); }
-    .nav-btn.next { right: 30px; top: 50%; transform: translateY(-50%); }
+    .nav-prev { left: 30px; }
+    .nav-next { right: 30px; }
     </style>
     
     <div class="gallery-container">
     """
     
-    # Embed images in gallery
+    # Add gallery thumbnails
     for idx, (img_path, caption) in enumerate(image_info):
         base64_img = get_base64_img(img_path)
         if base64_img:
@@ -192,77 +202,69 @@ def show_about():
             <img src="{base64_img}" class="gallery-img" onclick="openLightbox({idx})">
             """
     
-    gallery_html += """
+    # Embed modal
+    gallery_html += f"""
     </div>
     
-    <div id="lightboxModal" class="lightbox-modal" onwheel="zoomImage(event)">
+    <div id="lightboxModal" class="lightbox-modal">
         <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn prev" onclick="navigate(-1)">&#10094;</span>
-        <span class="nav-btn next" onclick="navigate(1)">&#10095;</span>
-        <img id="lightboxImage" src="">
+        <span class="nav-btn nav-prev" onclick="changeImage(-1)">&#10094;</span>
+        <img id="lightboxImage" src="" onwheel="zoomImage(event)">
+        <span class="nav-btn nav-next" onclick="changeImage(1)">&#10095;</span>
         <div class="caption" id="lightboxCaption"></div>
     </div>
     
     <script>
-    const images = [];
-    const captions = [];
-    """
-    
-    # Pass image data into JavaScript arrays
-    for img_path, caption in image_info:
-        base64_img = get_base64_img(img_path)
-        if base64_img:
-            safe_caption = caption.replace("'", "\\'")
-            gallery_html += f"images.push('{base64_img}'); captions.push('{safe_caption}');\n"
-    
-    gallery_html += """
+    const images = {[
+        {"src": get_base64_img(p), "caption": c}
+        for p, c in image_info
+    ]};
     let currentIndex = 0;
-    let zoomScale = 1;
+    let currentZoom = 1;
     
     function openLightbox(index) {
         currentIndex = index;
-        const modal = document.getElementById('lightboxModal');
-        const modalImg = document.getElementById('lightboxImage');
-        const modalCaption = document.getElementById('lightboxCaption');
-        modal.style.display = 'flex';
-        modalImg.src = images[index];
-        modalCaption.textContent = captions[index];
-        zoomScale = 1;
-        modalImg.style.transform = `scale(${zoomScale})`;
+        updateModal();
+        document.getElementById('lightboxModal').style.display = 'flex';
     }
     
     function closeLightbox() {
         document.getElementById('lightboxModal').style.display = 'none';
+        resetZoom();
     }
     
-    function navigate(direction) {
+    function changeImage(direction) {
         currentIndex = (currentIndex + direction + images.length) % images.length;
-        const modalImg = document.getElementById('lightboxImage');
-        const modalCaption = document.getElementById('lightboxCaption');
-        modalImg.src = images[currentIndex];
-        modalCaption.textContent = captions[currentIndex];
-        zoomScale = 1;
-        modalImg.style.transform = `scale(${zoomScale})`;
+        updateModal();
+    }
+    
+    function updateModal() {
+        const img = document.getElementById('lightboxImage');
+        const caption = document.getElementById('lightboxCaption');
+        img.src = images[currentIndex].src;
+        caption.textContent = images[currentIndex].caption;
+        resetZoom();
     }
     
     function zoomImage(event) {
         event.preventDefault();
-        const modalImg = document.getElementById('lightboxImage');
-        if (event.deltaY < 0) {
-            zoomScale += 0.1;
-        } else {
-            zoomScale = Math.max(0.5, zoomScale - 0.1);
-        }
-        modalImg.style.transform = `scale(${zoomScale})`;
+        currentZoom += event.deltaY < 0 ? 0.1 : -0.1;
+        currentZoom = Math.max(0.5, Math.min(currentZoom, 5));
+        document.getElementById('lightboxImage').style.transform = `scale(${currentZoom})`;
     }
     
-    // Keyboard navigation
+    function resetZoom() {
+        currentZoom = 1;
+        document.getElementById('lightboxImage').style.transform = "scale(1)";
+    }
+    
+    // Keyboard nav
     document.addEventListener('keydown', function(event) {
         const modal = document.getElementById('lightboxModal');
         if (modal.style.display === 'flex') {
-            if (event.key === 'ArrowRight') navigate(1);
-            else if (event.key === 'ArrowLeft') navigate(-1);
-            else if (event.key === 'Escape') closeLightbox();
+            if (event.key === 'ArrowRight') changeImage(1);
+            if (event.key === 'ArrowLeft') changeImage(-1);
+            if (event.key === 'Escape') closeLightbox();
         }
     });
     </script>
@@ -276,7 +278,7 @@ def show_about():
     
     st.markdown("""
     We’re on a mission to revolutionize healthcare with AI-powered solutions.  
-    Whether you're a hospital, clinic, healthtech innovator, or investor — **let’s partner** to make healthcare smarter, faster, and more accessible.
+    Whether you're a hospital, clinic, healthtech innovator or investor — **let’s partner** to make healthcare smarter, faster and more accessible.
     
     _We welcome collaborations, pilot programs and strategic partnerships._
     """, unsafe_allow_html=True)
