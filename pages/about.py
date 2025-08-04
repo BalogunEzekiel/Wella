@@ -109,7 +109,7 @@ def show_about():
     # --- GALLERY ---
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
-    # --- Custom CSS ---
+    # --- CSS for card and hover effect ---
     st.markdown("""
         <style>
             .img-card {
@@ -131,30 +131,14 @@ def show_about():
                 margin-top: 5px;
             }
     
-            .img-link {
-                display: block;
-            }
-    
             .gallery-img {
                 width: 100%;
                 border-radius: 10px;
             }
-    
-            .img-placeholder {
-                padding: 1rem;
-                background: #eee;
-                text-align: center;
-                border-radius: 10px;
-                height: 200px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.9rem;
-            }
         </style>
     """, unsafe_allow_html=True)
     
-    # --- Image data ---
+    # --- Image paths and captions ---
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
@@ -165,16 +149,16 @@ def show_about():
         ("assets/treatment.jpg", "Treatment Report")
     ]
     
-    # --- Helper function ---
+    # --- Helper function to convert image to base64 ---
     def get_image_base64(image_path):
         if not os.path.isfile(image_path):
-            return None
+            return ""
         with open(image_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
-            ext = os.path.splitext(image_path)[1][1:]
+            ext = os.path.splitext(image_path)[1][1:]  # get extension like 'png'
             return f"data:image/{ext};base64,{encoded}"
     
-    # --- Display Gallery ---
+    # --- Display images in rows ---
     cols_per_row = 4
     for i in range(0, len(image_info), cols_per_row):
         row = image_info[i:i + cols_per_row]
@@ -185,20 +169,14 @@ def show_about():
                 if img_data:
                     st.markdown(f"""
                         <div class="img-card">
-                            <a href="{img_data}" target="_blank" class="img-link">
-                                <img src="{img_data}" class="gallery-img" />
+                            <a href="{img_data}" target="_blank">
+                                <img src="{img_data}" class="gallery-img"/>
                             </a>
                             <div class="img-caption">{caption}</div>
                         </div>
                     """, unsafe_allow_html=True)
                 else:
-                    st.markdown(f"""
-                        <div class="img-card">
-                            <div class="img-placeholder">
-                                🚫 {caption}<br><small>Image not found</small>
-                            </div>
-                        </div>
-                    """, unsafe_allow_html=True)
+                    st.warning(f"Image not found: {caption}")
                 
             
 #######################
