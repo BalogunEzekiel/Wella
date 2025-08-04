@@ -110,7 +110,7 @@ def show_about():
     # --- GALLERY ---
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
 
-    # --- CSS for card and hover effect ---
+    # --- CSS for card, hover, and lightbox popup ---
     st.markdown("""
         <style>
             .img-card {
@@ -119,6 +119,7 @@ def show_about():
                 box-shadow: 0 4px 12px rgba(0,0,0,0.1);
                 transition: transform 0.3s, box-shadow 0.3s;
                 margin-bottom: 10px;
+                cursor: pointer;
             }
     
             .img-card:hover {
@@ -135,6 +136,37 @@ def show_about():
             .gallery-img {
                 width: 100%;
                 border-radius: 10px;
+            }
+    
+            /* Lightbox styles */
+            .lightbox {
+                display: none;
+                position: fixed;
+                z-index: 999;
+                padding-top: 60px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.9);
+            }
+    
+            .lightbox-content {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+            }
+    
+            .lightbox-close {
+                position: absolute;
+                top: 30px;
+                right: 45px;
+                color: #fff;
+                font-size: 40px;
+                font-weight: bold;
+                cursor: pointer;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -156,29 +188,32 @@ def show_about():
             return ""
         with open(image_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
-            ext = os.path.splitext(image_path)[1][1:]  # get extension like 'png'
+            ext = os.path.splitext(image_path)[1][1:]
             return f"data:image/{ext};base64,{encoded}"
     
-    # --- Display images in rows ---
+    # --- Display images in rows with lightbox IDs ---
     cols_per_row = 4
-    for i in range(0, len(image_info), cols_per_row):
+    for idx, i in enumerate(range(0, len(image_info), cols_per_row)):
         row = image_info[i:i + cols_per_row]
         cols = st.columns(len(row))
         for col, (path, caption) in zip(cols, row):
             with col:
                 img_data = get_image_base64(path)
                 if img_data:
+                    unique_id = f"lightbox-{idx}-{path.replace('/', '_')}"
                     st.markdown(f"""
-                        <div class="img-card">
-                            <a href="{img_data}" target="_blank">
-                                <img src="{img_data}" class="gallery-img"/>
-                            </a>
+                        <div class="img-card" onclick="document.getElementById('{unique_id}').style.display='block'">
+                            <img src="{img_data}" class="gallery-img"/>
                             <div class="img-caption">{caption}</div>
+                        </div>
+    
+                        <div id="{unique_id}" class="lightbox" onclick="this.style.display='none'">
+                            <span class="lightbox-close">&times;</span>
+                            <img class="lightbox-content" src="{img_data}">
                         </div>
                     """, unsafe_allow_html=True)
                 else:
-                    st.warning(f"Image not found: {caption}")
-                
+                    st.warning(f"Image not found: {caption}")           
             
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
