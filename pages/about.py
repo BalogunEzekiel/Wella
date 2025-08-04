@@ -108,12 +108,41 @@ def show_about():
 
     # --- GALLERY ---
     st.markdown("### In Pictures", unsafe_allow_html=True)
-    image_cols = st.columns(4)
-    for i in range(4):
-        image_cols[i].image(f"assets/AI_Me.png", "assets/homepage.jpg", "assets/admin dashboard.jpg", "assets/nure dashboard.jpg", use_container_width=True)
+    
+    # Image paths and captions
+    image_info = [
+        ("assets/AI_Me.png", "AI Avatar"),
+        ("assets/homepage.jpg", "Homepage"),
+        ("assets/admin dashboard.jpg", "Admin Dashboard"),
+        ("assets/nure dashboard.jpg", "Nurse Dashboard"),
+        ("assets/doctor dashboard.jpg", "Doctor Dashboard"),
+        ("assets/diagnosis.jpg", "Diagnosis"),
+        ("assets/treatment.jpg", "Treatment")
+    ]
+    
+    # Display images in rows of 4 columns
+    cols_per_row = 4
+    for i in range(0, len(image_info), cols_per_row):
+        row_images = image_info[i:i + cols_per_row]
+        image_cols = st.columns(len(row_images))
+        for col, (path, caption) in zip(image_cols, row_images):
+            with col:
+                st.image(path, caption=caption, use_container_width=True)
 
     # --- CALL TO ACTION ---
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     st.markdown("""
     We are open to collaborations, pilots and partnerships. Let’s make healthcare smarter, together.
     """)
+
+    # --- CALL TO ACTION ---
+    st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
+    
+    st.markdown("""
+    We’re on a mission to revolutionize healthcare with AI-powered solutions.  
+    Whether you're a hospital, clinic, healthtech innovator or investor — **let’s partner** to make healthcare smarter, faster and more accessible.
+    
+    _We welcome collaborations, pilot programs and strategic partnerships._
+
+    👉 **[Contact Us](?page=Contact)** or connect directly within the app.
+    """, unsafe_allow_html=True)
