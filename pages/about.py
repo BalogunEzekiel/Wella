@@ -147,10 +147,10 @@ def show_about():
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
         ("assets/admin dashboard.jpg", "Admin Dashboard"),
-        ("assets/nurse dashboard.jpg", "Nurse Dashboard"),
+        ("assets/admin dashboard.jpg", "Nurse Dashboard"),
         ("assets/doctor dashboard.jpg", "Doctor Dashboard"),
-        ("assets/diagnosis.jpg", "Diagnosis"),
-        ("assets/treatment.jpg", "Treatment")
+        ("assets/diagnosis.jpg", "Diagnosis Report"),
+        ("assets/treatment.jpg", "Treatment Report")
     ]
     
     # Function to convert image to base64
