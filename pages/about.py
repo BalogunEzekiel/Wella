@@ -130,7 +130,7 @@ def show_about():
             ext = path.split('.')[-1]
             return f"data:image/{ext};base64,{encoded}"
     
-    # Construct full gallery HTML
+    # --- HTML, CSS, JS for modal gallery ---
     gallery_html = """
     <style>
     .gallery-container {
@@ -148,54 +148,76 @@ def show_about():
     .gallery-img:hover {
         transform: scale(1.05);
     }
-    .lightbox {
+    .lightbox-modal {
         display: none;
         position: fixed;
-        z-index: 9999;
+        z-index: 10000;
         top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background-color: rgba(0,0,0,0.9);
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.95);
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
-    .lightbox img {
+    .lightbox-modal img {
         max-width: 90vw;
         max-height: 90vh;
+        border-radius: 8px;
     }
-    .lightbox:target {
-        display: flex;
+    .lightbox-modal .caption {
+        color: white;
+        margin-top: 15px;
+        font-size: 18px;
     }
     .close-btn {
         position: absolute;
-        top: 30px;
-        right: 40px;
+        top: 25px;
+        right: 30px;
         font-size: 40px;
         color: white;
-        text-decoration: none;
+        cursor: pointer;
     }
     </style>
     
     <div class="gallery-container">
     """
     
-    # Loop through images
+    # Add gallery items
     for idx, (img_path, caption) in enumerate(image_info):
         base64_img = get_base64_img(img_path)
         if base64_img:
             gallery_html += f"""
-            <a href="#lightbox{idx}">
-                <img src="{base64_img}" class="gallery-img" alt="{caption}">
-            </a>
-            <div id="lightbox{idx}" class="lightbox">
-                <a href="#" class="close-btn">&times;</a>
-                <img src="{base64_img}" alt="{caption}">
-            </div>
+            <img src="{base64_img}" class="gallery-img" onclick="openLightbox('{base64_img}', '{caption}')">
             """
     
-    gallery_html += "</div>"
+    gallery_html += """
+    </div>
     
-    # Render the HTML
-    st.components.v1.html(gallery_html, height=800, scrolling=True)
+    <div id="lightboxModal" class="lightbox-modal">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img id="lightboxImage" src="">
+        <div class="caption" id="lightboxCaption"></div>
+    </div>
+    
+    <script>
+    function openLightbox(imgSrc, caption) {
+        const modal = document.getElementById('lightboxModal');
+        const modalImg = document.getElementById('lightboxImage');
+        const modalCaption = document.getElementById('lightboxCaption');
+        modal.style.display = 'flex';
+        modalImg.src = imgSrc;
+        modalCaption.textContent = caption;
+    }
+    
+    function closeLightbox() {
+        document.getElementById('lightboxModal').style.display = 'none';
+    }
+    </script>
+    """
+    
+    # Display in Streamlit
+    st.components.v1.html(gallery_html, height=800)
             
 #######################
     st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
