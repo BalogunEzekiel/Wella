@@ -110,7 +110,6 @@ def show_about():
     # --- GALLERY ---
     st.markdown("## 📸 Gallery", unsafe_allow_html=True)
 
-    # Image info
     image_info = [
         ("assets/AI_Me.png", "AI Avatar"),
         ("assets/homepage.jpg", "Homepage"),
@@ -121,7 +120,6 @@ def show_about():
         ("assets/treatment.jpg", "Treatment Report")
     ]
     
-    # Helper to get base64 image string
     def get_base64_img(path):
         if not os.path.exists(path):
             return ""
@@ -130,7 +128,7 @@ def show_about():
             ext = path.split('.')[-1]
             return f"data:image/{ext};base64,{encoded}"
     
-    # --- HTML, CSS, JS for modal gallery ---
+    # HTML Template
     gallery_html = """
     <style>
     .gallery-container {
@@ -164,97 +162,115 @@ def show_about():
         max-width: 90vw;
         max-height: 90vh;
         border-radius: 8px;
+        transition: transform 0.2s ease-in-out;
     }
     .lightbox-modal .caption {
         color: white;
         margin-top: 15px;
         font-size: 18px;
     }
-    .close-btn {
+    .close-btn, .nav-btn {
         position: absolute;
-        top: 25px;
-        right: 30px;
         font-size: 40px;
         color: white;
         cursor: pointer;
+        z-index: 10001;
     }
+    .close-btn { top: 25px; right: 30px; }
+    .nav-btn.prev { left: 30px; top: 50%; transform: translateY(-50%); }
+    .nav-btn.next { right: 30px; top: 50%; transform: translateY(-50%); }
     </style>
     
     <div class="gallery-container">
     """
     
-    # Add gallery items
+    # Embed images in gallery
     for idx, (img_path, caption) in enumerate(image_info):
         base64_img = get_base64_img(img_path)
         if base64_img:
             gallery_html += f"""
-            <img src="{base64_img}" class="gallery-img" onclick="openLightbox('{base64_img}', '{caption}')">
+            <img src="{base64_img}" class="gallery-img" onclick="openLightbox({idx})">
             """
     
     gallery_html += """
     </div>
     
-    <div id="lightboxModal" class="lightbox-modal">
+    <div id="lightboxModal" class="lightbox-modal" onwheel="zoomImage(event)">
         <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <span class="nav-btn prev" onclick="navigate(-1)">&#10094;</span>
+        <span class="nav-btn next" onclick="navigate(1)">&#10095;</span>
         <img id="lightboxImage" src="">
         <div class="caption" id="lightboxCaption"></div>
     </div>
     
     <script>
-    function openLightbox(imgSrc, caption) {
+    const images = [];
+    const captions = [];
+    """
+    
+    # Pass image data into JavaScript arrays
+    for img_path, caption in image_info:
+        base64_img = get_base64_img(img_path)
+        if base64_img:
+            safe_caption = caption.replace("'", "\\'")
+            gallery_html += f"images.push('{base64_img}'); captions.push('{safe_caption}');\n"
+    
+    gallery_html += """
+    let currentIndex = 0;
+    let zoomScale = 1;
+    
+    function openLightbox(index) {
+        currentIndex = index;
         const modal = document.getElementById('lightboxModal');
         const modalImg = document.getElementById('lightboxImage');
         const modalCaption = document.getElementById('lightboxCaption');
         modal.style.display = 'flex';
-        modalImg.src = imgSrc;
-        modalCaption.textContent = caption;
+        modalImg.src = images[index];
+        modalCaption.textContent = captions[index];
+        zoomScale = 1;
+        modalImg.style.transform = `scale(${zoomScale})`;
     }
     
     function closeLightbox() {
         document.getElementById('lightboxModal').style.display = 'none';
     }
+    
+    function navigate(direction) {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        const modalImg = document.getElementById('lightboxImage');
+        const modalCaption = document.getElementById('lightboxCaption');
+        modalImg.src = images[currentIndex];
+        modalCaption.textContent = captions[currentIndex];
+        zoomScale = 1;
+        modalImg.style.transform = `scale(${zoomScale})`;
+    }
+    
+    function zoomImage(event) {
+        event.preventDefault();
+        const modalImg = document.getElementById('lightboxImage');
+        if (event.deltaY < 0) {
+            zoomScale += 0.1;
+        } else {
+            zoomScale = Math.max(0.5, zoomScale - 0.1);
+        }
+        modalImg.style.transform = `scale(${zoomScale})`;
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        const modal = document.getElementById('lightboxModal');
+        if (modal.style.display === 'flex') {
+            if (event.key === 'ArrowRight') navigate(1);
+            else if (event.key === 'ArrowLeft') navigate(-1);
+            else if (event.key === 'Escape') closeLightbox();
+        }
+    });
     </script>
     """
     
-    # Display in Streamlit
+    # Render in Streamlit
     st.components.v1.html(gallery_html, height=800)
-            
-#######################
-    st.markdown("### 🖼️ In Pictures", unsafe_allow_html=True)
-
-    # Role-based grouped images with paths, captions, and URLs
-    grouped_images = {
-        "General": [
-            ("assets/AI_Me.png", "The Visionary", "#"),
-            ("assets/homepage.jpg", "Homepage", "#"),
-        ],
-        "Admin": [
-            ("assets/admin dashboard.jpg", "Admin Dashboard", "#"),
-        ],
-        "Nurse": [
-            ("assets/nurse dashboard.jpg", "Nurse Dashboard", "#"),
-            ("assets/diagnosis.jpg", "Diagnosis Report", "#"),
-        ],
-        "Doctor": [
-            ("assets/doctor dashboard.jpg", "Doctor Dashboard", "#"),
-            ("assets/treatment.jpg", "Treatment Report", "#"),
-        ]
-    }
-    
-    cols_per_row = 4
-    
-    for role, image_list in grouped_images.items():
-        st.markdown(f"#### 👤 {role} View", unsafe_allow_html=True)
-        for i in range(0, len(image_list), cols_per_row):
-            row = image_list[i:i+cols_per_row]
-            cols = st.columns(len(row))
-            for col, (path, caption, url) in zip(cols, row):
-                with col:
-                    # Wrap image in a link
-                    st.markdown(f'<a href="{url}" target="_blank">', unsafe_allow_html=True)
-                    st.image(path, caption=caption, use_container_width=True)
-                    st.markdown('</a>', unsafe_allow_html=True)
-                
+###########
     # --- CALL TO ACTION ---
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     
