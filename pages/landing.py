@@ -199,7 +199,7 @@ def landing_page():
 
     # Testimonials    
     st.subheader("🗣️ What People Are Saying")
-    
+
     def image_to_base64(image_path):
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
@@ -222,7 +222,7 @@ def landing_page():
     }}
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Exactly two per row */
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         align-items: stretch;
         transition: transform 0.5s ease-in-out;
@@ -233,9 +233,14 @@ def landing_page():
         align-items: center;
         padding: 20px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #e0f7fa, #fce4ec);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #d9f7f9, #f9e2ec);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         min-height: 260px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }}
+    .testimonial-card:hover {{
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
     }}
     .testimonial-card img {{
         width: 120px;
@@ -249,7 +254,8 @@ def landing_page():
     .testimonial-text {{
         font-size: 1rem;
         font-style: italic;
-        color: #333;
+        color: #222;
+        line-height: 1.5;
     }}
     .testimonial-name {{
         margin-top: 10px;
@@ -280,11 +286,12 @@ def landing_page():
     }}
     @media (max-width: 768px) {{
         .testimonial-grid {{
-            grid-template-columns: 1fr; /* Stack on small screens */
+            grid-template-columns: 1fr;
         }}
         .testimonial-card {{
             flex-direction: column;
             text-align: center;
+            padding: 16px;
         }}
         .testimonial-card img {{
             margin-right: 0;
@@ -390,7 +397,7 @@ def landing_page():
     </script>
     """
     
-    components.html(testimonials_html, height=800)
+    components.html(testimonials_html, height=820)
     
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
