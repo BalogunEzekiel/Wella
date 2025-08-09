@@ -107,14 +107,14 @@ def landing_page():
     """
     st.markdown(hero_html, unsafe_allow_html=True)
     
-    # Action buttons below
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("🚀 Launch Wella.AI"):
-            switch_page("diagnosis")
-    with col2:
-        if st.button("✨ Partner With Us"):
-            switch_page("contact")
+#    # Action buttons below
+#    col1, col2 = st.columns(2)
+#    with col1:
+#        if st.button("🚀 Launch Wella.AI"):
+#            switch_page("diagnosis")
+#    with col2:
+#        if st.button("✨ Partner With Us"):
+#            switch_page("contact")
                 
     st.markdown("---")
 
