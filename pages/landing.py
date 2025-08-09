@@ -216,7 +216,7 @@ def landing_page():
     .testimonial-carousel {{
         max-width: 100%;
         margin: auto;
-        overflow: hidden;
+        overflow: visible;
         position: relative;
         padding: 10px;
     }}
@@ -387,7 +387,7 @@ def landing_page():
     </script>
     """
     
-    components.html(testimonials_html, height=800)
+    components.html(testimonials_html, height=1200, scrolling=True)
     
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
