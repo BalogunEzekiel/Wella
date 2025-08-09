@@ -190,12 +190,10 @@ def landing_page():
     testimonials_html = f"""
     <style>
     .testimonial-carousel {{
-        width: 100vw; /* Full page width */
-        margin-left: -50vw;
-        left: 50%;
-        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
         overflow: hidden;
-        padding: 0;
     }}
     .testimonial-grid {{
         display: grid;
@@ -302,7 +300,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
-              <div class="testimonial-name">Amaka Udo, Community Health Worker</div>
+              <div class="testimonial-name">Amaka Udo</div>
             </div>
           </div>
           <div class="testimonial-card">
@@ -310,7 +308,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
-              <div class="testimonial-name">John Mensah, MedServe Africa</div>
+              <div class="testimonial-name">John Mensah</div>
             </div>
           </div>
         </div>
@@ -321,7 +319,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
-              <div class="testimonial-name">Hon. Aisha Bello, Health Commissioner</div>
+              <div class="testimonial-name">Hon. Aisha Bello</div>
             </div>
           </div>
           <div class="testimonial-card">
@@ -347,28 +345,24 @@ def landing_page():
     const slides = document.querySelectorAll('.testimonial-grid');
     const dots = document.querySelectorAll('.dot');
     
-    function showSlide(index) {{
-        slides.forEach((s, i) => {{
-            if (i === index) {{
-                s.classList.remove('hidden');
-            }} else {{
-                s.classList.add('hidden');
-            }}
-        }});
+    function showSlide(index) {
+        slides.forEach((s, i) => {
+            s.classList.toggle('hidden', i !== index);
+        });
         dots.forEach((d, i) => d.className = i === index ? 'dot active-dot' : 'dot');
-    }}
+    }
     
-    function nextSlide() {{
+    function nextSlide() {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
-    }}
+    }
     
-    dots.forEach((dot, index) => {{
-        dot.onclick = () => {{
+    dots.forEach((dot, index) => {
+        dot.onclick = () => {
             currentSlide = index;
             showSlide(index);
-        }};
-    }});
+        };
+    });
     
     showSlide(currentSlide);
     setInterval(nextSlide, 6000);
@@ -376,5 +370,5 @@ def landing_page():
     """
     
     components.html(testimonials_html, height=1000)
-    
+        
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
