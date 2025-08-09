@@ -411,7 +411,7 @@ def landing_page():
     </script>
     """
     
-    components.html(testimonials_html, height=850)
+    components.html(testimonials_html, height=540)
     
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
