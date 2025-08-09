@@ -83,7 +83,7 @@ def landing_page():
             return base64.b64encode(img_file.read()).decode()
     
     # Convert image
-    encoded_img = image_to_base64("assets/Image_2.png")
+    encoded_img = image_to_base64("assets/illustration.jpg")
     
     # Hero section with red-colored text
     hero_html = f"""
