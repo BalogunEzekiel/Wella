@@ -218,7 +218,7 @@ def landing_page():
         width: 100vw;
         margin-left: calc(-50vw + 50%);
         box-sizing: border-box;
-        overflow: visible;
+        overflow: hidden;
         padding: 20px 40px;
         position: relative;
     }}
