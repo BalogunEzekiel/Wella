@@ -179,14 +179,15 @@ def landing_page():
     def image_to_base64(image_path):
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
-    
+
     testimonial1_img = image_to_base64("assets/image.jpg")
     testimonial2_img = image_to_base64("assets/nurse.png")
     testimonial3_img = image_to_base64("assets/commissioner.jpg")
     testimonial4_img = image_to_base64("assets/john.jpg")
     testimonial5_img = image_to_base64("assets/commission.png")
     testimonial6_img = image_to_base64("assets/commissioner.jpg")
-    
+
+    # Use f-string: escape braces by doubling {{ ... }} everywhere except Python placeholders like {testimonial1_img}
     testimonials_html = f"""
     <style>
     .testimonial-carousel {{
@@ -227,11 +228,12 @@ def landing_page():
         font-size: 1rem;
         font-style: italic;
         color: #333;
+        line-height: 1.4;
     }}
     .testimonial-name {{
         margin-top: 10px;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         color: #0077b6;
     }}
     .stars {{
@@ -241,7 +243,7 @@ def landing_page():
     }}
     .dot-container {{
         text-align: center;
-        margin-top: 10px;
+        margin-top: 12px;
     }}
     .dot {{
         height: 12px;
@@ -250,7 +252,8 @@ def landing_page():
         background-color: #bbb;
         border-radius: 50%;
         display: inline-block;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.25s ease;
+        cursor: pointer;
     }}
     .active-dot {{
         background-color: #0077b6;
@@ -258,6 +261,7 @@ def landing_page():
     .hidden {{
         display: none !important;
     }}
+    /* Slightly wider breakpoint so Streamlit iframe won't collapse prematurely */
     @media (max-width: 900px) {{
         .testimonial-grid {{
             grid-template-columns: 1fr;
@@ -272,7 +276,7 @@ def landing_page():
         }}
     }}
     </style>
-    
+
     <div class="testimonial-carousel">
       <div id="testimonial-slides">
         <div class="testimonial-grid">
@@ -280,7 +284,7 @@ def landing_page():
             <img src="data:image/png;base64,{testimonial1_img}">
             <div>
               <div class="testimonial-text">“Wella.AI is a game-changer for rural healthcare. We diagnose faster and more accurately, even offline.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">Dr. Amina Yusuf</div>
             </div>
           </div>
@@ -288,18 +292,18 @@ def landing_page():
             <img src="data:image/png;base64,{testimonial2_img}">
             <div>
               <div class="testimonial-text">“We no longer panic during network outages—Wella.AI is always ready.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">Nurse Michael Todo</div>
             </div>
           </div>
         </div>
-    
+
         <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial3_img}">
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">Amaka Udo</div>
             </div>
           </div>
@@ -307,18 +311,18 @@ def landing_page():
             <img src="data:image/png;base64,{testimonial4_img}">
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">John Mensah</div>
             </div>
           </div>
         </div>
-    
+
         <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial5_img}">
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">Hon. Aisha Bello</div>
             </div>
           </div>
@@ -326,48 +330,51 @@ def landing_page():
             <img src="data:image/png;base64,{testimonial6_img}">
             <div>
               <div class="testimonial-text">“Wella.AI has revolutionized how we handle patients in our village clinic.”</div>
-              <div class="stars">★★★★★ <span style="font-size: 0.9rem;">5/5</span></div>
+              <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
               <div class="testimonial-name">Dr. Grace Okoro</div>
             </div>
           </div>
         </div>
       </div>
-    
+
       <div class="dot-container">
         <span class="dot active-dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
       </div>
     </div>
-    
+
     <script>
     let currentSlide = 0;
     const slides = document.querySelectorAll('.testimonial-grid');
     const dots = document.querySelectorAll('.dot');
-    
+
     function showSlide(index) {{
         slides.forEach((s, i) => {{
             s.classList.toggle('hidden', i !== index);
         }});
         dots.forEach((d, i) => d.className = i === index ? 'dot active-dot' : 'dot');
     }}
-    
+
     function nextSlide() {{
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }}
-    
+
     dots.forEach((dot, index) => {{
         dot.onclick = () => {{
             currentSlide = index;
             showSlide(index);
         }};
     }});
-    
+
     showSlide(currentSlide);
     setInterval(nextSlide, 6000);
     </script>
     """
-    
-    components.html(testimonials_html, height=1000, width=1200)
-    st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
+
+    # Suggest a reasonable iframe width to help keep two columns on desktop in Streamlit
+    components.html(testimonials_html, height=1000, width=1100, scrolling=False)
+
+    # small footer area
+    st.markdown('<div class="footer" style="text-align:center; margin-top:12px;">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
