@@ -198,7 +198,7 @@ def landing_page():
     }}
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Force two equal columns */
+        grid-template-columns: repeat(2, 1fr); /* Always two columns on desktop */
         gap: 20px;
         align-items: stretch;
         width: 100%;
@@ -254,6 +254,9 @@ def landing_page():
     .active-dot {{
         background-color: #0077b6;
     }}
+    .hidden {{
+        display: none !important;
+    }}
     @media (max-width: 768px) {{
         .testimonial-grid {{
             grid-template-columns: 1fr; /* Single column on mobile */
@@ -272,7 +275,7 @@ def landing_page():
     <div class="testimonial-carousel">
       <div id="testimonial-slides">
         <!-- Slide 1 -->
-        <div class="testimonial-grid" style="display: grid;">
+        <div class="testimonial-grid">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial1_img}">
             <div>
@@ -292,7 +295,7 @@ def landing_page():
         </div>
     
         <!-- Slide 2 -->
-        <div class="testimonial-grid" style="display: none;">
+        <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial3_img}">
             <div>
@@ -312,7 +315,7 @@ def landing_page():
         </div>
     
         <!-- Slide 3 -->
-        <div class="testimonial-grid" style="display: none;">
+        <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial5_img}">
             <div>
@@ -345,7 +348,13 @@ def landing_page():
     const dots = document.querySelectorAll('.dot');
     
     function showSlide(index) {{
-        slides.forEach((s, i) => s.style.display = i === index ? 'grid' : 'none');
+        slides.forEach((s, i) => {{
+            if (i === index) {{
+                s.classList.remove('hidden');
+            }} else {{
+                s.classList.add('hidden');
+            }}
+        }});
         dots.forEach((d, i) => d.className = i === index ? 'dot active-dot' : 'dot');
     }}
     
