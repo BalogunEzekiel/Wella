@@ -107,15 +107,6 @@ def landing_page():
     """
     st.markdown(hero_html, unsafe_allow_html=True)
     
-#    # Action buttons below
-#    col1, col2 = st.columns(2)
-#    with col1:
-#        if st.button("🚀 Launch Wella.AI"):
-#            switch_page("diagnosis")
-#    with col2:
-#        if st.button("✨ Partner With Us"):
-#            switch_page("contact")
-                
     st.markdown("---")
 
     # ========== Hero Banner ==========
@@ -127,21 +118,6 @@ def landing_page():
         </a>
     </div>
     """, unsafe_allow_html=True)
-
-    # ========== Auto-Rotating Images ==========
-#    image_files = ["assets/AI_Me.png", "assets/AI_Me.png", "assets/AI_Me.png"]
-#    images = [Image.open(img) for img in image_files]
-#    caption = ["AI-powered Health", "Wella.AI in Action", "Smart Medical Future"]
-
-#    for i in range(len(images)):
-#        st.image(images[i], caption=caption[i], use_container_width=True)
-#        time.sleep(1.5)
-#        st.empty()
-
-#    st.markdown("""
-#    <h1><b>Smart Diagnosis Anytime, Anywhere</b></h1>
-#    <p><b>Empowering rural clinics with AI-powered medical diagnosis – even offline.</b></p>
-#    """, unsafe_allow_html=True)
     
     # ========== Footer ==========
     st.markdown("""
@@ -222,10 +198,10 @@ def landing_page():
     }}
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(2, 1fr); /* Force two equal columns */
         gap: 20px;
         align-items: stretch;
-        transition: transform 0.5s ease-in-out;
+        width: 100%;
     }}
     .testimonial-card {{
         display: flex;
@@ -279,6 +255,9 @@ def landing_page():
         background-color: #0077b6;
     }}
     @media (max-width: 768px) {{
+        .testimonial-grid {{
+            grid-template-columns: 1fr; /* Single column on mobile */
+        }}
         .testimonial-card {{
             flex-direction: column;
             text-align: center;
