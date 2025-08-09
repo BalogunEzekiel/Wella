@@ -190,15 +190,16 @@ def landing_page():
     testimonials_html = f"""
     <style>
     .testimonial-carousel {{
-        max-width: 100%;
-        margin: auto;
-        overflow: hidden;
+        width: 100vw; /* Full page width */
+        margin-left: -50vw;
+        left: 50%;
         position: relative;
-        padding: 10px;
+        overflow: hidden;
+        padding: 0;
     }}
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Always two columns on desktop */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 20px;
         align-items: stretch;
         width: 100%;
@@ -212,6 +213,7 @@ def landing_page():
         background: linear-gradient(135deg, #e0f7fa, #fce4ec);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         min-height: 260px;
+        height: 100%;
     }}
     .testimonial-card img {{
         width: 120px;
@@ -221,6 +223,7 @@ def landing_page():
         margin-right: 20px;
         border: 4px solid #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
     }}
     .testimonial-text {{
         font-size: 1rem;
@@ -259,7 +262,7 @@ def landing_page():
     }}
     @media (max-width: 768px) {{
         .testimonial-grid {{
-            grid-template-columns: 1fr; /* Single column on mobile */
+            grid-template-columns: 1fr;
         }}
         .testimonial-card {{
             flex-direction: column;
@@ -274,7 +277,6 @@ def landing_page():
     
     <div class="testimonial-carousel">
       <div id="testimonial-slides">
-        <!-- Slide 1 -->
         <div class="testimonial-grid">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial1_img}">
@@ -294,7 +296,6 @@ def landing_page():
           </div>
         </div>
     
-        <!-- Slide 2 -->
         <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial3_img}">
@@ -314,7 +315,6 @@ def landing_page():
           </div>
         </div>
     
-        <!-- Slide 3 -->
         <div class="testimonial-grid hidden">
           <div class="testimonial-card">
             <img src="data:image/png;base64,{testimonial5_img}">
@@ -375,7 +375,6 @@ def landing_page():
     </script>
     """
     
-    components.html(testimonials_html, height=750)
+    components.html(testimonials_html, height=1000)
     
-    # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
