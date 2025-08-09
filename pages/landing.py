@@ -213,20 +213,25 @@ def landing_page():
     
     testimonials_html = f"""
     <style>
+    /* Force full-width inside Streamlit iframe */
     .testimonial-carousel {{
-        max-width: 100%;
-        margin: auto;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        box-sizing: border-box;
         overflow: visible;
+        padding: 20px 40px;
         position: relative;
-        padding: 10px;
     }}
+    
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: 20px;
         align-items: stretch;
         transition: transform 0.5s ease-in-out;
+        width: 100%;
     }}
+    
     .testimonial-card {{
         display: flex;
         flex-direction: row;
@@ -238,10 +243,12 @@ def landing_page():
         min-height: 260px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }}
+    
     .testimonial-card:hover {{
         transform: translateY(-4px);
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
     }}
+    
     .testimonial-card img {{
         width: 120px;
         height: 120px;
@@ -251,27 +258,32 @@ def landing_page():
         border: 4px solid #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }}
+    
     .testimonial-text {{
         font-size: 1rem;
         font-style: italic;
         color: #222;
         line-height: 1.5;
     }}
+    
     .testimonial-name {{
         margin-top: 10px;
         font-weight: bold;
         font-size: 1.1rem;
         color: #0077b6;
     }}
+    
     .stars {{
         color: #ffa500;
         margin-bottom: 6px;
         font-size: 1.05rem;
     }}
+    
     .dot-container {{
         text-align: center;
         margin-top: 10px;
     }}
+    
     .dot {{
         height: 12px;
         width: 12px;
@@ -281,9 +293,11 @@ def landing_page():
         display: inline-block;
         transition: background-color 0.3s ease;
     }}
+    
     .active-dot {{
         background-color: #0077b6;
     }}
+    
     @media (max-width: 768px) {{
         .testimonial-grid {{
             grid-template-columns: 1fr;
@@ -397,7 +411,7 @@ def landing_page():
     </script>
     """
     
-    components.html(testimonials_html, height=820)
+    components.html(testimonials_html, height=850)
     
     # Footer
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
