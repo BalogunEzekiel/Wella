@@ -1,4 +1,4 @@
-import streamlit as st
+]import streamlit as st
 from langdetect import detect, LangDetectException
 from components import render_header
 import streamlit.components.v1 as components
@@ -370,5 +370,5 @@ def landing_page():
     """
     
     components.html(testimonials_html, height=1000)
-        
+    
     st.markdown('<div class="footer">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
