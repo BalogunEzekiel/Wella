@@ -213,42 +213,30 @@ def landing_page():
     
     testimonials_html = f"""
     <style>
-    /* Force full-width inside Streamlit iframe */
     .testimonial-carousel {{
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
-        box-sizing: border-box;
+        max-width: 100%;
+        margin: auto;
         overflow: hidden;
-        padding: 20px 40px;
         position: relative;
+        padding: 10px;
     }}
-    
     .testimonial-grid {{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 20px;
         align-items: stretch;
         transition: transform 0.5s ease-in-out;
-        width: 100%;
     }}
-    
     .testimonial-card {{
         display: flex;
         flex-direction: row;
         align-items: center;
         padding: 20px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #d9f7f9, #f9e2ec);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         min-height: 260px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }}
-    
-    .testimonial-card:hover {{
-        transform: translateY(-4px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-    }}
-    
     .testimonial-card img {{
         width: 120px;
         height: 120px;
@@ -258,32 +246,26 @@ def landing_page():
         border: 4px solid #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }}
-    
     .testimonial-text {{
         font-size: 1rem;
         font-style: italic;
-        color: #222;
-        line-height: 1.5;
+        color: #333;
     }}
-    
     .testimonial-name {{
         margin-top: 10px;
         font-weight: bold;
         font-size: 1.1rem;
         color: #0077b6;
     }}
-    
     .stars {{
         color: #ffa500;
         margin-bottom: 6px;
         font-size: 1.05rem;
     }}
-    
     .dot-container {{
         text-align: center;
         margin-top: 10px;
     }}
-    
     .dot {{
         height: 12px;
         width: 12px;
@@ -293,19 +275,13 @@ def landing_page():
         display: inline-block;
         transition: background-color 0.3s ease;
     }}
-    
     .active-dot {{
         background-color: #0077b6;
     }}
-    
     @media (max-width: 768px) {{
-        .testimonial-grid {{
-            grid-template-columns: 1fr;
-        }}
         .testimonial-card {{
             flex-direction: column;
             text-align: center;
-            padding: 16px;
         }}
         .testimonial-card img {{
             margin-right: 0;
