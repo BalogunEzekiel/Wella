@@ -374,7 +374,7 @@ def landing_page():
     """
 
     # Suggest a reasonable iframe width to help keep two columns on desktop in Streamlit
-    components.html(testimonials_html, height=1000, width=1100, scrolling=False)
+    components.html(testimonials_html, height=800)
 
     # small footer area
     st.markdown('<div class="footer" style="text-align:center; margin-top:12px;">&copy; 2025 Wella.AI. All rights reserved.</div>', unsafe_allow_html=True)
