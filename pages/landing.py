@@ -304,7 +304,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“Thanks to Wella.AI, I can now confidently assist in patient triage even without a doctor around.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
-              <div class="testimonial-name">Amaka Udo</div>
+              <div class="testimonial-name">Amaka Udo, Community Health Worker</div>
             </div>
           </div>
           <div class="testimonial-card">
@@ -312,7 +312,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“Wella.AI aligns perfectly with our mission to reduce healthcare disparities in underserved regions.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
-              <div class="testimonial-name">John Mensah</div>
+              <div class="testimonial-name">John Mensah, MedServe Africa</div>
             </div>
           </div>
         </div>
@@ -323,7 +323,7 @@ def landing_page():
             <div>
               <div class="testimonial-text">“We’ve seen a significant improvement in diagnosis speed in our primary healthcare centers.”</div>
               <div class="stars">★★★★★ <span style="font-size: 0.85rem;">5/5</span></div>
-              <div class="testimonial-name">Hon. Aisha Bello</div>
+              <div class="testimonial-name">Hon. Aisha Bello, Health Commissioner</div>
             </div>
           </div>
           <div class="testimonial-card">
