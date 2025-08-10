@@ -69,7 +69,7 @@ def show_contact():
     st.markdown('<div class="contact-header">Contact Us</div>', unsafe_allow_html=True)
     st.markdown('<div class="contact-subheader">Don’t hesitate to reach out, our Healthcare Team is here to help 24/7.</div>', unsafe_allow_html=True)
 
-    st.image("./assets/AI_Me.png", caption="24/7 Emergency Support", use_container_width=True)
+    st.image("./assets/logo.png", caption="24/7 Emergency Support", use_container_width=True)
 
     st.markdown('<div class="emergency">🚨 24/7 Emergency Support — Call Our Emergency Line: +234-806-2529-172</div>', unsafe_allow_html=True)
 
