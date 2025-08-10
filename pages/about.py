@@ -90,7 +90,7 @@ def show_about():
     with col2:
         st.image("assets/kemi.jpg", caption="Oluwakemi Adesanwo – Data Analyst, AI/ML Engineer", use_container_width=True)
     with col3:
-        st.image("assets/kemi.jpg", caption="Sarah Bello – Operations/BI Analyst", use_container_width=True)
+        st.image("assets/favourite.png", caption="Favourite Bello – Operations/BI Analyst", use_container_width=True)
 
     # --- IMPACT STORIES ---
     st.markdown("### User Impact Stories", unsafe_allow_html=True)
