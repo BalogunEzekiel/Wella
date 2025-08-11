@@ -271,10 +271,6 @@ def show_about():
     # Render in Streamlit
     st.components.v1.html(gallery_html, height=800, width=1100)
 
-#components.html(testimonials_html, height=750, width=1100)
-
-
-###########
     # --- CALL TO ACTION ---
     st.markdown("### Join Us in Transforming Healthcare", unsafe_allow_html=True)
     
